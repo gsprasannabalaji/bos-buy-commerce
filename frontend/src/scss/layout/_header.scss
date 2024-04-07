@@ -1,0 +1,8 @@
+.header {
+    &__cart {
+        &__badge {
+            top: toRem(-4px);
+            right: toRem(-12px);
+        }
+    }
+}
