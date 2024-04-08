@@ -1,0 +1,7 @@
+.product-card {
+    &.card {
+        & > .card-img {
+            width: toRem(300px);
+        }
+    }
+}
