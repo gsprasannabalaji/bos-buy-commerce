@@ -2,37 +2,38 @@ import { useSearchParams } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, updateQuantity } from "../features/cart/cartSlice";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { setSearchedProducts } from "../features/products/productsSlice";
+import CustomToast from "../common-components/CustomToast";
 
 const SearchResults = () => {
-  const productData = [
-    {
-      productId: 1,
-      name: "laptop1",
-      price: 1000,
-      imageURL:
-        "https://m.media-amazon.com/images/I/71WV1hwFr1L._AC_SX679_.jpg",
-      description: "laptop1 description",
-      rating: 5,
-    },
-    {
-      productId: 2,
-      name: "laptop2",
-      price: 2000,
-      imageURL:
-        "https://m.media-amazon.com/images/I/61ZCdzmymsL._AC_UY218_.jpg",
-      description:
-        "laptop2 description Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque a odio perspiciatis tenetur soluta illum ducimus minus. Quibusdam, minus quam quo inventore nihil ut maiores, consequuntur, ab officiis tenetur nesciunt?",
-
-      rating: 3,
-    },
-  ];
+  const productData = useSelector((state) => state?.products?.productsList);
   const [searchParams] = useSearchParams();
   const cartItems = useSelector((state) => state?.cart?.cartItems);
+  const [showToast, setShowToast] = useState(false);
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const results = await axios.get(
+          `${
+            import.meta.env.VITE_BACKEND_ENDPOINT_URL
+          }/product/search?name=${searchParams?.get("q")}`
+        );
+        dispatch(setSearchedProducts(results?.data));
+      } catch (error) {
+        setShowToast(true);
+      }
+    })();
+  }, [searchParams?.get("q")]);
+
   const addToCartHandler = (product) => {
-    const isItemsExist = cartItems?.find((item) => item?.id === product?.productId);
+    const isItemsExist = cartItems?.find(
+      (item) => item?.id === product?.productId
+    );
     if (isItemsExist) {
       dispatch(
         updateQuantity({
@@ -63,12 +64,12 @@ const SearchResults = () => {
   return (
     <div className="search-results container">
       <h2>Results for {searchParams?.get("q")}</h2>
-      {productData?.map((item, index) => {
+      {productData?.length > 0 ? productData?.map((item, index) => {
         return (
           <ProductCard
             key={index}
             productId={item?.productId}
-            productName={item?.name}
+            productName={item?.productName}
             productDesc={item?.description}
             productImg={item?.imageURL}
             productRating={item?.rating}
@@ -78,7 +79,18 @@ const SearchResults = () => {
             btnName="Add to Cart"
           />
         );
-      })}
+      })
+        :
+        <h1 className="d-flex justify-content-center align-items-center font-weight-bold">No results found</h1>
+      }
+      {showToast && (
+        <CustomToast
+          toastMessage="Network Failed. Please try again later"
+          showToast={showToast}
+          toggleToast={() => setShowToast(false)}
+          position="top-end"
+        />
+      )}
     </div>
   );
 };
