@@ -8,6 +8,8 @@ import WithLayout from './common-components/WithLayout';
 import Cart from './pages/Cart';
 import './scss/style.scss';
 import Orders from "./pages/Orders";
+import ProductDetail from "./pages/ProductDetail";
+import AddProducts from "./pages/AddProducts";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +26,13 @@ const router = createBrowserRouter([
   }, {
     path: '/orders',
     element: WithLayout(Orders),
+  }, {
+    path: "/products/:productId",
+    element: WithLayout(ProductDetail),
+  },
+  {
+    path: "/addproducts",
+    element: <AddProducts />
   }
 ]);
 
