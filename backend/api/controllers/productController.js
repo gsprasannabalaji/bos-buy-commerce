@@ -15,3 +15,14 @@ exports.search = async (req, res) => {
         res.status(500).send({ message: 'An error occurred while fetching the product' });
     }
 };
+exports.create = async (req, res) => {
+    try {
+      const product = await productService.create(req, res);
+      res.json(product);
+    } catch (err) {
+      console.error(err);
+      res
+        .status(500)
+        .send({ message: "An error occurred while fetching the product" });
+    }
+  };

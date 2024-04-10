@@ -5,7 +5,10 @@ const mongoose=require('mongoose');
 
 // import mongoose from "mongoose";
 const dbURi='mongodb+srv://bosbuy:Welcome%401@bosbuy.u5yqb7e.mongodb.net/Bosbuy?retryWrites=true&w=majority&appName=BOSbuy';
-mongoose.connect(dbURi)
+mongoose.connect(dbURi, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => console.log(err));
+
 // import path from "path";
 
 const cors =require('cors');
