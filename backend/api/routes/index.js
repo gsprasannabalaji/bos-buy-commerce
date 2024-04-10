@@ -1,13 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const productRoute=require('./productroute');
 
-// ./routes/index.js
+
 module.exports = function(app) {
-    app.use('/some-path', router.get('/', (req, res) => {
-        res.send('Hello World!');
-       }));
+    app.use('/product', productRoute);
   };
   
 
 
-// module.exports = router;
