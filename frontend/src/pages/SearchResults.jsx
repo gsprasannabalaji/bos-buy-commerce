@@ -10,7 +10,7 @@ const SearchResults = () => {
       name: "laptop1",
       price: 1000,
       imageURL:
-        "https://m.media-amazon.com/images/I/71-R1TOTtwL._AC_UY218_.jpg",
+        "https://m.media-amazon.com/images/I/71WV1hwFr1L._AC_SX679_.jpg",
       description: "laptop1 description",
       rating: 5,
     },

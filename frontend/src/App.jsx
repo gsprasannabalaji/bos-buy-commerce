@@ -5,7 +5,6 @@ import WithLayout from "./common-components/WithLayout";
 import Cart from "./pages/Cart";
 import "./scss/style.scss";
 import Orders from "./pages/Orders";
-import Admin from "./pages/Admin";
 
 const router = createBrowserRouter([
   {
@@ -23,11 +22,7 @@ const router = createBrowserRouter([
   {
     path: "/orders",
     element: WithLayout(Orders),
-  },
-  {
-    path: "/admin",
-    element: <Admin/>,
-  },
+  }
 ]);
 
 const App = () => {
