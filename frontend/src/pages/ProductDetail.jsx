@@ -70,7 +70,7 @@ const ProductDetail = () => {
             </Col>
             <Col md={6} sm={12}>
               <h2>{productDetailsData?.productName}</h2>
-              <p>{productDetailsData?.description}</p>
+              <p dangerouslySetInnerHTML={{__html: productDetailsData?.description}} />
               <p>Price: ${productDetailsData?.price}</p>
               <Button
                 variant="primary"
