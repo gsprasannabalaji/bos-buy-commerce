@@ -20,7 +20,7 @@ const ProductCard = ({
         <Card.Img src={productImg} className="p-4" />
         <Card.Body>
           <Card.Title><Link to={`/products/${productId}`}>{productName}</Link></Card.Title>
-          <Card.Text>{productDesc}</Card.Text>
+          <Card.Text dangerouslySetInnerHTML={{__html: productDesc}} />
           <Card.Text>Price : {productPrice}</Card.Text>
           <p>Rating: {productRating}</p>
           <Button variant="primary" onClick={() => handlerClick(product)}>
