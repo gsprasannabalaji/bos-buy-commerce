@@ -1,5 +1,4 @@
 const Product = require("../models/product");
-const upload = require("../routes/upload-config");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const path = require("path");
