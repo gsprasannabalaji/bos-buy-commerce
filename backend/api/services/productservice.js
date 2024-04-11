@@ -1,6 +1,6 @@
 const Product = require("../models/product");
-const express = require('express');
 const upload = require("../routes/uploadConfig");
+
 exports.search = async (id) => {
   try {
     const product = await Product.findOne({ productId: id.trim() });
@@ -9,6 +9,7 @@ exports.search = async (id) => {
     throw err;
   }
 };
+
 exports.create = async(req, res) => {
   await upload.single("file")(req, res, async (err) => {
     console.log("Above all"+req.file);
@@ -44,6 +45,15 @@ exports.searchByName = async (title) => {
     const regex = new RegExp(".*" + title + ".*", "i");
     const product = await Product.find({ productName: regex });
     return product;
+  } catch (err) {
+    throw err;
+  }
+};
+
+exports.getRandomLaptopProducts = async () => {
+  try {
+    const products = await Product.aggregate([{ $sample: { size: 4 } }]);
+    return products;
   } catch (err) {
     throw err;
   }

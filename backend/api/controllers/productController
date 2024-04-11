@@ -29,3 +29,12 @@ exports.searchName = async (req, res) => {
         res.status(500).send({ message: 'An error occurred while fetching the product' });
     }
 };
+
+exports.getTopProducts = async (req, res) => {
+    try {
+        const products = await productService.getRandomLaptopProducts(req, res);
+        res.json(products);
+    } catch (err) {
+        res.status(500).send({ message: 'An error occurred while fetching the product' });
+    }
+};

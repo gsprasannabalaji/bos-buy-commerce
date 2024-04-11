@@ -1,20 +1,32 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Container, Row, Col, Image, Button } from "react-bootstrap";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { addToCart, updateQuantity } from "../features/cart/cartSlice";
+import { setProductDetailsData } from "../features/products/productsSlice";
+import axios from "axios";
+import CustomToast from "../common-components/CustomToast";
 
 const ProductDetail = () => {
-  const product = useSelector((state) => state?.products?.productsList[0]);
+  const productDetailsData = useSelector((state) => state?.products?.productDetailsData);
 
   const { productId } = useParams();
   const cartItems = useSelector((state) => state?.cart?.cartItems);
+  const [showToast, setShowToast] = useState(false);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // api logic should be updated and this snippet refactored once backend is ready.
-    console.log("product id: " + productId);
+    (async () => {
+      try {
+        const results = await axios.get(
+          `${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/product/${productId}`
+        );
+        dispatch(setProductDetailsData(results?.data));
+      } catch (error) {
+        setShowToast(true);
+      }
+    })();
   }, []);
 
   const addToCartHandler = (product) => {
@@ -37,7 +49,7 @@ const ProductDetail = () => {
       dispatch(
         addToCart({
           id: product?.productId,
-          name: product?.name,
+          name: product?.productName,
           imageURL: product?.imageURL,
           rating: product?.rating,
           description: product?.description,
@@ -51,17 +63,36 @@ const ProductDetail = () => {
   return (
     <>
       <Container className="mt-5">
-        <Row>
-          <Col md={6} sm={12}>
-            <Image src={product?.imageURL} fluid />
-          </Col>
-          <Col md={6} sm={12}>
-            <h2>{product?.name}</h2>
-            <p>{product?.description}</p>
-            <p>Price: ${product?.price}</p>
-            <Button variant="primary" onClick={() => addToCartHandler(product)}>Add to Cart</Button>
-          </Col>
-        </Row>
+        {productDetailsData ? (
+          <Row>
+            <Col md={6} sm={12}>
+              <Image src={productDetailsData?.imageURL} fluid />
+            </Col>
+            <Col md={6} sm={12}>
+              <h2>{productDetailsData?.productName}</h2>
+              <p>{productDetailsData?.description}</p>
+              <p>Price: ${productDetailsData?.price}</p>
+              <Button
+                variant="primary"
+                onClick={() => addToCartHandler(productDetailsData)}
+              >
+                Add to Cart
+              </Button>
+            </Col>
+          </Row>
+        ) : (
+          <h1 className="d-flex justify-content-center align-items-center font-weight-bold">
+            Page Not found
+          </h1>
+        )}
+        {showToast && (
+          <CustomToast
+            toastMessage="Network Failed. Please try again later"
+            showToast={showToast}
+            toggleToast={() => setShowToast(false)}
+            position="top-end"
+          />
+        )}
       </Container>
     </>
   );
