@@ -1,11 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const productRoute=require('./productroute');
+const productRoute = require("./productroute");
+const stripeRouter = require("./stripe-route");
 
-
-module.exports = function(app) {
-    app.use('/product', productRoute);
-  };
-  
-
-
+module.exports = function (app) {
+  app.use("/product", productRoute);
+  app.use("/stripe", stripeRouter);
+};
