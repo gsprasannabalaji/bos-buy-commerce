@@ -26,7 +26,6 @@ const upload = multer({ storage: storage });
 exports.create = async (req, res) => {
   await upload.single("file")(req, res, async (err) => {
     if (!req.file) {
-      console.log("print file");
       return res.status(400).json({
         message: "Missing required fields: Image File",
       });
@@ -44,7 +43,7 @@ exports.create = async (req, res) => {
       });
       await value.save();
       return {
-        message: "Namma Jaichitom Maara",
+        message: "Product created successfully",
       };
     } catch (err) {
       console.log(err);

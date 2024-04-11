@@ -3,7 +3,6 @@ const productService = require("../services/product-service");
 exports.search = async (req, res) => {
     try {
         const { id } = req.params;
-        console.log(id);
         const product = await productService.search(id);
         if (product) {
             res.json(product);
@@ -31,7 +30,6 @@ exports.create = async (req, res, next) => {
 exports.searchName = async (req, res) => {
     try {
         const title  = req.query.name;
-        console.log(title);
         const product = await productService.searchByName(title);
         if (product) {
             res.json(product);
@@ -46,11 +44,9 @@ exports.searchName = async (req, res) => {
 
 exports.getTopProducts = async (req, res) => {
     try {
-        console.log("top products found");
         const products = await productService.getRandomLaptopProducts(req, res);
         res.json(products);
     } catch (err) {
-        console.log("error " + err);
         res.status(500).send({ message: 'An error occurred while fetching the product' });
     }
 };
