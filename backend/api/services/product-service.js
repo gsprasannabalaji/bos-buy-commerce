@@ -1,6 +1,8 @@
 const Product = require("../models/product");
 const upload = require("../routes/upload-config");
 const mongoose = require("mongoose");
+const multer = require("multer");
+const path = require("path");
 
 exports.search = async (id) => {
   try {
@@ -10,6 +12,18 @@ exports.search = async (id) => {
     throw err;
   }
 };
+
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, 'assets/productImages');
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now())
+  }
+});
+
+const upload = multer({ storage: storage });
+module.exports = upload;
 
 exports.create = async (req, res) => {
   await upload.single("file")(req, res, async (err) => {
