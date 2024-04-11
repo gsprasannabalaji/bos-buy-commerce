@@ -1,4 +1,4 @@
-const productService = require('../services/product-service');
+const productService = require("../services/product-service");
 
 exports.search = async (req, res) => {
     try {
@@ -15,6 +15,7 @@ exports.search = async (req, res) => {
         res.status(500).send({ message: 'An error occurred while creating the product' });
     }
 };
+
 exports.create = async (req, res, next) => {
     try {
       const uploadResponse = await productService.create(req, res, next);
@@ -26,9 +27,11 @@ exports.create = async (req, res, next) => {
         .send({ message: "An error occurred while fetching the product" });
     }
   };
+  
 exports.searchName = async (req, res) => {
     try {
         const title  = req.query.name;
+        console.log(title);
         const product = await productService.searchByName(title);
         if (product) {
             res.json(product);
@@ -43,9 +46,11 @@ exports.searchName = async (req, res) => {
 
 exports.getTopProducts = async (req, res) => {
     try {
+        console.log("top products found");
         const products = await productService.getRandomLaptopProducts(req, res);
         res.json(products);
     } catch (err) {
+        console.log("error " + err);
         res.status(500).send({ message: 'An error occurred while fetching the product' });
     }
 };
