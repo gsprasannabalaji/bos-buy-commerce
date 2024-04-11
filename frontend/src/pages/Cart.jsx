@@ -14,18 +14,17 @@ const Cart = () => {
   };
 
   const handleCheckout = async () => {
-    // this has to be integrated once the backed is ready
-    // try {
-    //   const result  = await axios.post("http://localhost:3002/api/Stripe/create-checkout-session", {
-    //     cartItems,
-    //     userId: 1
-    //   });
-    //   if(result?.data?.url) {
-    //     window.location.href = result?.data?.url;
-    //   }
-    // } catch (err) {
-    //   console.error(err);
-    // }
+    try {
+      const result  = await axios.post(`${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/stripe/create-checkout-session`, {
+        cartItems,
+        userId: 1 // TODO - this need to be updated once the login feature is done.
+      });
+      if(result?.data?.url) {
+        window.location.href = result?.data?.url;
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
   
   return (
