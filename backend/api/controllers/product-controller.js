@@ -1,4 +1,4 @@
-const productService = require('../services/productservice');
+const productService = require('../services/product-service');
 
 exports.search = async (req, res) => {
     try {
@@ -12,9 +12,20 @@ exports.search = async (req, res) => {
         }
     } catch (err) {
         console.error(err); 
-        res.status(500).send({ message: 'An error occurred while fetching the product' });
+        res.status(500).send({ message: 'An error occurred while creating the product' });
     }
 };
+exports.create = async (req, res, next) => {
+    try {
+      const uploadResponse = await productService.create(req, res, next);
+      res.json(uploadResponse);
+    } catch (err) {
+      console.error(err);
+      res
+        .status(500)
+        .send({ message: "An error occurred while fetching the product" });
+    }
+  };
 exports.searchName = async (req, res) => {
     try {
         const title  = req.query.name;
