@@ -2,41 +2,28 @@ import { Carousel, Image, Container, Row, Col, Card } from "react-bootstrap";
 import banner1 from "../assets/banner1.webp";
 import banner2 from "../assets/banner2.webp";
 import { Link } from "react-router-dom";
+import { setTopProducts } from "../features/products/productsSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import axios from "axios";
 
 const Home = () => {
-  const products = [
-    {
-      productId: 1,
-      name: "laptop1",
-      price: 1000,
-      imageURL:
-        "https://m.media-amazon.com/images/I/71WV1hwFr1L.__AC_SX300_SY300_QL70_FMwebp_.jpg",
-      description: "laptop1 description",
-      rating: 5,
-    },
-    {
-      productId: 2,
-      name: "laptop2",
-      price: 2000,
-      imageURL:
-        "https://m.media-amazon.com/images/I/61ZCdzmymsL._AC_UY218_.jpg",
-      description:
-        "laptop2 description Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque a odio perspiciatis tenetur soluta illum ducimus minus. Quibusdam, minus quam quo inventore nihil ut maiores, consequuntur, ab officiis tenetur nesciunt?",
+  const topProducts = useSelector((state) => state?.products?.topProducts);
+  const dispatch = useDispatch();
 
-      rating: 3,
-    },
-    {
-      productId: 3,
-      name: "laptop3",
-      price: 4000,
-      imageURL:
-        "https://m.media-amazon.com/images/I/71WV1hwFr1L.__AC_SX300_SY300_QL70_FMwebp_.jpg",
-      description:
-        "laptop2 description Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque a odio perspiciatis tenetur soluta illum ducimus minus. Quibusdam, minus quam quo inventore nihil ut maiores, consequuntur, ab officiis tenetur nesciunt?",
+  useEffect(()=> {
+    (async () => {
+      try {
+        const results = await axios.get(
+          `${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/product/getTopProducts`
+        );
+        dispatch(setTopProducts(results?.data));
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, []);
 
-      rating: 5,
-    },
-  ];
   return (
     <>
       <Carousel>
@@ -50,7 +37,7 @@ const Home = () => {
       <Container>
         <h1 className="my-4">Laptops</h1>
         <Row>
-          {products?.map((product, index) => {
+          {topProducts?.length > 0 && topProducts?.map((product, index) => {
             return (
               <Col sm={4} key={index}>
                 <Card>
@@ -58,7 +45,7 @@ const Home = () => {
                   <Card.Body>
                     <Card.Title>
                       <Link to={`/products/${product?.productId}`}>
-                        {product?.name}
+                        {product?.productName}
                       </Link>
                     </Card.Title>
                     <Card.Text>Price: {product?.price}</Card.Text>
