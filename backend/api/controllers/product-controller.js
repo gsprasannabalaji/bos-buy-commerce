@@ -33,11 +33,18 @@ exports.delete = async (req, res) => {
   try {
     const { id } = req.params;
     const deleteData = await productService.delete(id);
-    res.json(deleteData);
+    if(deleteData.status===404){
+      res
+      .status(404)
+      .send({ message: "No product found with that ID" });
+    }else{
+      res.json(deleteData);
+    }
+
   } catch (err) {
     console.error(err);
     res
-      .status(500)
+      .status(404)
       .send({ message: "An error occurred while fetching the product" });
   }
 };

@@ -56,7 +56,7 @@ exports.delete = async (id) => {
   try {
     const product = await Product.findOne({ productId: id.trim() });
     if (!product) {
-      return { message: "No product found with that ID" };
+      return { status: 404 };
     }
     await Product.deleteOne({ _id: product._id });
     return { message: "Product deleted successfully" };
