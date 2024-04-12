@@ -30,6 +30,21 @@ const SearchResults = () => {
     })();
   }, [searchParams?.get("q")]);
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const results = await axios.get(
+          `${
+            import.meta.env.VITE_BACKEND_ENDPOINT_URL
+          }/product/category?category=${searchParams?.get("category")}`
+        );
+        dispatch(setSearchedProducts(results?.data));
+      } catch (error) {
+        setShowToast(true);
+      }
+    })();
+  }, [searchParams?.get("category")]);
+
   const addToCartHandler = (product) => {
     const isItemsExist = cartItems?.find(
       (item) => item?.id === product?.productId
@@ -43,6 +58,7 @@ const SearchResults = () => {
           rating: isItemsExist?.rating,
           description: isItemsExist?.description,
           price: isItemsExist?.price,
+          currentPrice: isItemsExist?.price,
           quantity: isItemsExist?.quantity + 1,
         })
       );
@@ -55,15 +71,21 @@ const SearchResults = () => {
           rating: product?.rating,
           description: product?.description,
           price: product?.price,
+          currentPrice: product?.price,
           quantity: 1,
         })
       );
     }
   };
+  const headingText = searchParams.get("q") 
+    ? `Results for ${searchParams.get("q")}`
+    : searchParams.get("category")
+    ? `Category: ${searchParams.get("category")}`
+    : 'Search Results';
 
   return (
     <div className="search-results container">
-      <h2>Results for {searchParams?.get("q")}</h2>
+      <h2>{headingText}</h2>
       {productData?.length > 0 ? productData?.map((item, index) => {
         return (
           <ProductCard
