@@ -42,6 +42,7 @@ const ProductDetail = () => {
           rating: isItemsExist?.rating,
           description: isItemsExist?.description,
           price: isItemsExist?.price,
+          currentPrice: product?.price,
           quantity: isItemsExist?.quantity + 1,
         })
       );
@@ -54,6 +55,7 @@ const ProductDetail = () => {
           rating: product?.rating,
           description: product?.description,
           price: product?.price,
+          currentPrice: product?.price,
           quantity: 1,
         })
       );
