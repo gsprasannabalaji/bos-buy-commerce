@@ -6,6 +6,7 @@ import { setTopProducts } from "../features/products/productsSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import axios from "axios";
+import CategoryComponent from './ProductCategory';
 
 const Home = () => {
   const topProducts = useSelector((state) => state?.products?.topProducts);
@@ -35,6 +36,10 @@ const Home = () => {
         </Carousel.Item>
       </Carousel>
       <Container>
+      <div className="mt-4">
+      <h1 className="my-4">Category</h1>
+        <CategoryComponent />
+      </div>
         <h1 className="my-4">Laptops</h1>
         <Row>
           {topProducts?.length > 0 && topProducts?.map((product, index) => {
