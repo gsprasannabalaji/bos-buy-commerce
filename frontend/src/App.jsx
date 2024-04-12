@@ -10,6 +10,7 @@ import './scss/style.scss';
 import Orders from "./pages/Orders";
 import ProductDetail from "./pages/ProductDetail";
 import AddProducts from "./pages/AddProducts";
+import ProductCategory from "./pages/ProductCategory";
 
 const router = createBrowserRouter([
   {
@@ -29,8 +30,11 @@ const router = createBrowserRouter([
   }, {
     path: "/products/:productId",
     element: WithLayout(ProductDetail),
-  },
-  {
+  }, {
+    path: "/products/category",
+    element: WithLayout(ProductCategory),
+    
+  },{
     path: "/addproducts",
     element: <AddProducts />
   }
