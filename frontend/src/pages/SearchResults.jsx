@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useLocation } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, updateQuantity } from "../features/cart/cartSlice";
@@ -12,37 +12,43 @@ const SearchResults = () => {
   const [searchParams] = useSearchParams();
   const cartItems = useSelector((state) => state?.cart?.cartItems);
   const [showToast, setShowToast] = useState(false);
+  let location = useLocation();
+  let queryParams = new URLSearchParams(location?.search);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    (async () => {
-      try {
-        const results = await axios.get(
-          `${
-            import.meta.env.VITE_BACKEND_ENDPOINT_URL
-          }/product/search?name=${searchParams?.get("q")}`
-        );
-        dispatch(setSearchedProducts(results?.data));
-      } catch (error) {
-        setShowToast(true);
-      }
-    })();
+    if (queryParams.has("q")) {
+      (async () => {
+        try {
+          const results = await axios.get(
+            `${
+              import.meta.env.VITE_BACKEND_ENDPOINT_URL
+            }/product/search?name=${searchParams?.get("q")}`
+          );
+          dispatch(setSearchedProducts(results?.data));
+        } catch (error) {
+          setShowToast(true);
+        }
+      })();
+    }
   }, [searchParams?.get("q")]);
 
   useEffect(() => {
-    (async () => {
-      try {
-        const results = await axios.get(
-          `${
-            import.meta.env.VITE_BACKEND_ENDPOINT_URL
-          }/product/category?category=${searchParams?.get("category")}`
-        );
-        dispatch(setSearchedProducts(results?.data));
-      } catch (error) {
-        setShowToast(true);
-      }
-    })();
+    if (queryParams.has("category")) {
+      (async () => {
+        try {
+          const results = await axios.get(
+            `${
+              import.meta.env.VITE_BACKEND_ENDPOINT_URL
+            }/product/category?category=${searchParams?.get("category")}`
+          );
+          dispatch(setSearchedProducts(results?.data));
+        } catch (error) {
+          setShowToast(true);
+        }
+      })();
+    }
   }, [searchParams?.get("category")]);
 
   const addToCartHandler = (product) => {
@@ -77,34 +83,37 @@ const SearchResults = () => {
       );
     }
   };
-  const headingText = searchParams.get("q") 
+  const headingText = searchParams.get("q")
     ? `Results for ${searchParams.get("q")}`
     : searchParams.get("category")
     ? `Category: ${searchParams.get("category")}`
-    : 'Search Results';
+    : "Search Results";
 
   return (
     <div className="search-results container">
       <h2>{headingText}</h2>
-      {productData?.length > 0 ? productData?.map((item, index) => {
-        return (
-          <ProductCard
-            key={index}
-            productId={item?.productId}
-            productName={item?.productName}
-            productDesc={item?.description}
-            productImg={item?.imageURL}
-            productRating={item?.rating}
-            productPrice={item?.price}
-            product={item}
-            handlerClick={(product) => addToCartHandler(product)}
-            btnName="Add to Cart"
-          />
-        );
-      })
-        :
-        <h1 className="d-flex justify-content-center align-items-center font-weight-bold">No results found</h1>
-      }
+      {productData?.length > 0 ? (
+        productData?.map((item, index) => {
+          return (
+            <ProductCard
+              key={index}
+              productId={item?.productId}
+              productName={item?.productName}
+              productDesc={item?.description}
+              productImg={item?.imageURL}
+              productRating={item?.rating}
+              productPrice={item?.price}
+              product={item}
+              handlerClick={(product) => addToCartHandler(product)}
+              btnName="Add to Cart"
+            />
+          );
+        })
+      ) : (
+        <h1 className="d-flex justify-content-center align-items-center font-weight-bold">
+          No results found
+        </h1>
+      )}
       {showToast && (
         <CustomToast
           toastMessage="Network Failed. Please try again later"
