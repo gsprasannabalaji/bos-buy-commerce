@@ -26,6 +26,10 @@ const productSchema = new Schema({
     imageURL: {
         type: String,
         required: true
+    },
+    category: {
+        type: String,
+        required: true
     }   
 }, {collection: "Productlist"});
 
