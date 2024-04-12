@@ -2,6 +2,7 @@ const Product = require("../models/product");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
 
 exports.search = async (id) => {
   try {
@@ -17,7 +18,8 @@ const storage = multer.diskStorage({
     cb(null, 'assets/productImages');
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now())
+    const ext = path.extname(file.originalname).toLowerCase();
+    cb(null, file.fieldname + '-' + Date.now() + (ext === '.jpeg' || ext === '.jpg' ? ext : '.jpg'));
   }
 });
 
@@ -30,7 +32,7 @@ exports.create = async (req, res) => {
         message: "Missing required fields: Image File",
       });
     }
-    const pathfile = `http://localhost:3000/user/${req.file.filename}`;
+    const pathfile = `http://localhost:3002/assets/productImages/${req.file.filename}`;
     const productId = new mongoose.Types.ObjectId();
     try {
       const value = new Product({
@@ -50,6 +52,22 @@ exports.create = async (req, res) => {
     }
   });
 };
+
+exports.delete = async (id) => {
+  try {
+    const product = await Product.findOne({ productId: id.trim() });
+    if (!product) {
+      return { status: 404, message: "No product found with that ID" };
+    }
+    const imagePath = path.join(__dirname, '..', '..', 'assets', 'productImages', path.basename(product.imageURL));
+    await Product.deleteOne({ _id: product._id });
+    fs.unlink(imagePath);
+    return { message: "Product deleted successfully" };
+  } catch (err) {
+    throw err;
+  }
+};
+
 
 exports.searchByName = async (title) => {
   try {
