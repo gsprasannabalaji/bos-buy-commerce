@@ -69,12 +69,3 @@ exports.getRandomLaptopProducts = async () => {
     throw err;
   }
 };
-
-exports.searchByCategory= async (category) => {
-  try {
-    const product = await Product.find({ category: category  });
-    return product;
-  } catch (err) {
-    throw err;
-  }
-};
