@@ -1,32 +1,24 @@
-const express= require('express');
+const express = require("express");
 
-const initializeRoutes =require('./routes/index');
-const mongoose=require('mongoose');
+const initializeRoutes = require("./routes/index");
+const mongoose = require("mongoose");
+const path = require("path");
 
-// import mongoose from "mongoose";
-const dbURi='mongodb+srv://bosbuy:Welcome%401@bosbuy.u5yqb7e.mongodb.net/Bosbuy?retryWrites=true&w=majority&appName=BOSbuy';
-mongoose.connect(dbURi)
-// import path from "path";
+const dbURi =
+  "mongodb+srv://bosbuy:Welcome%401@bosbuy.u5yqb7e.mongodb.net/Bosbuy?retryWrites=true&w=majority&appName=BOSbuy";
+mongoose.connect(dbURi);
 
-const cors =require('cors');
-
-
+const cors = require("cors");
 
 const initialize = (app) => {
-
   app.use(express.json());
-
   app.use(express.urlencoded({ extended: true }));
-
-
- app.use(cors({ origin: true, credentials: true }));
-
-
-
- initializeRoutes(app);
-
-}
-
-
+  app.use(
+    "/assets/productImages",
+    express.static(path.join(__dirname, "../assets/productImages"))
+  );
+  app.use(cors({ origin: true, credentials: true }));
+  initializeRoutes(app);
+};
 
 module.exports = initialize;
