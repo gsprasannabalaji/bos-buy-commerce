@@ -31,7 +31,7 @@ exports.create = async (req, res) => {
         message: "Missing required fields: Image File",
       });
     }
-    const pathfile = `http://localhost:3002/assets/productImages${req.file.filename}`;
+    const pathfile = `http://localhost:3002/assets/productImages/${req.file.filename}`;
     const productId = new mongoose.Types.ObjectId();
     try {
       const value = new Product({
