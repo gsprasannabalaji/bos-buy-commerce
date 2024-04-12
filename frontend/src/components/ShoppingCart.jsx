@@ -10,6 +10,7 @@ const ShoppingCart = ({
   addToCartHandler,
   removeFromCartHandler,
   checkQuantityLength,
+  updatedCartQuantity,
 }) => {
   const cartItems = useSelector((state) => state?.cart?.cartItems);
   const purchaseLimit = useSelector((state) => state?.cart?.purchaseLimit);
@@ -29,27 +30,39 @@ const ShoppingCart = ({
                     <img src={item?.imageURL} className="col-12" />
                   </Col>
                   <Col xs={4}>{item?.name}</Col>
-                  <Col xs={3} className="d-flex">
-                    {
-                      <MdOutlineRemoveCircleOutline
+                  <Col xs={3} className="d-flex flex-column align-items-center">
+                    <div className="d-flex">
+                      {
+                        <MdOutlineRemoveCircleOutline
+                          size={24}
+                          style={{
+                            color: item?.quantity > 1 ? "black" : "grey",
+                          }}
+                          onClick={() => {
+                            if (item?.quantity > 1) {
+                              updatedCartQuantity(item);
+                            }
+                          }}
+                        />
+                      }
+                      <p className="mx-3">{item?.quantity}</p>
+                      <MdAddCircleOutline
                         size={24}
-                        style={{
-                          color: item?.quantity > 1 ? "black" : "grey",
-                        }}
-                        onClick={() => {
-                          if(item?.quantity > 1) {
-                            removeFromCartHandler(item);
-                          }
-                        }}
+                        onClick={() => addToCartHandler(item)}
                       />
-                    }
-                    <p className="mx-3">{item?.quantity}</p>
-                    <MdAddCircleOutline
-                      size={24}
-                      onClick={() => addToCartHandler(item)}
-                    />
+                    </div>
+                    <Button
+                      className="d-flex p-0 align-items-center"
+                      variant="link"
+                      onClick={() => removeFromCartHandler(item)}
+                    >
+                      Remove
+                    </Button>
                   </Col>
-                  <Col xs={3}>{`$${item?.currentPrice}`}</Col>
+                  <Col
+                    xs={3}
+                    className="text-center"
+                  >{`$${item?.currentPrice}`}</Col>
                 </Row>
               );
             })}

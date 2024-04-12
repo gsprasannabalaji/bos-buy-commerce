@@ -13,13 +13,7 @@ export const cartSlice = createSlice({
             state?.cartItems?.push(action.payload);
         },
         removeFromCart: (state, action) => {
-            state.cartItems = state?.cartItems?.map((item) => {
-                if(item?.id === action?.payload?.id){
-                    item.quantity = action?.payload?.quantity - 1;
-                    item.currentPrice = action?.payload?.price * (action?.payload?.quantity - 1);
-                };
-                return item;
-            })
+            state.cartItems = state?.cartItems?.filter((item) => item?.id !== action?.payload?.id);
         },
         updateQuantity: (state, action) => {
             state.cartItems = state?.cartItems?.map(item => {

@@ -1,7 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Alert } from "react-bootstrap";
 import axios from "axios";
-import { addToCart, removeFromCart, updateQuantity } from "../features/cart/cartSlice";
+import {
+  addToCart,
+  removeFromCart,
+  updateQuantity,
+} from "../features/cart/cartSlice";
 import ShoppingCart from "../components/ShoppingCart";
 
 const Cart = () => {
@@ -14,9 +18,7 @@ const Cart = () => {
   };
 
   const addToCartHandler = (product) => {
-    const isItemsExist = cartItems?.find(
-      (item) => item?.id === product?.id
-    );
+    const isItemsExist = cartItems?.find((item) => item?.id === product?.id);
     if (isItemsExist) {
       dispatch(
         updateQuantity({
@@ -46,6 +48,22 @@ const Cart = () => {
     }
   };
 
+  const updatedCartQuantity = (product) => {
+    const isItemsExist = cartItems?.find((item) => item?.id === product?.id);
+    dispatch(
+      updateQuantity({
+        id: isItemsExist?.id,
+        name: isItemsExist?.name,
+        imageURL: isItemsExist?.imageURL,
+        rating: isItemsExist?.rating,
+        description: isItemsExist?.description,
+        price: isItemsExist?.price,
+        currentPrice: isItemsExist?.price,
+        quantity: isItemsExist?.quantity - 1,
+      })
+    );
+  };
+
   const handleCheckout = async () => {
     try {
       const result = await axios.post(
@@ -68,22 +86,29 @@ const Cart = () => {
   const checkQuantityLength = () => {
     const totalLength = cartItems?.reduce((acc, item) => {
       return acc + item?.quantity;
-    }, 0)
+    }, 0);
     return totalLength > purchaseLimit;
-  }
+  };
 
   return (
     <Container className="cart">
       <h1>Shopping Cart</h1>
       <hr />
-      {(cartItems?.length > purchaseLimit) || (checkQuantityLength()) && (
-        <Alert key={"danger"} variant={"danger"}>
-          Purchasing limit reached. To complete your order, please place maximum
-          of {purchaseLimit} items per order.
-        </Alert>
-      )}
+      {cartItems?.length > purchaseLimit ||
+        (checkQuantityLength() && (
+          <Alert key={"danger"} variant={"danger"}>
+            Purchasing limit reached. To complete your order, please place
+            maximum of {purchaseLimit} items per order.
+          </Alert>
+        ))}
       {cartItems?.length ? (
-        <ShoppingCart handleCheckout={handleCheckout} checkQuantityLength={checkQuantityLength} addToCartHandler={addToCartHandler} removeFromCartHandler={removeFromCartHandler} />
+        <ShoppingCart
+          handleCheckout={handleCheckout}
+          checkQuantityLength={checkQuantityLength}
+          addToCartHandler={addToCartHandler}
+          removeFromCartHandler={removeFromCartHandler}
+          updatedCartQuantity={updatedCartQuantity}
+        />
       ) : (
         <p>Cart is empty</p>
       )}
