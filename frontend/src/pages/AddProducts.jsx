@@ -29,16 +29,17 @@ const AddProducts = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData();
-    formData.append("name", event.target.productName.value);
-    formData.append("description", event.target.description.value);
-    formData.append("price", event.target.price.value);
-    formData.append("category", event.target.category.value);
-    if (event.target.imageURL.files[0]) {
-      formData.append("file", event.target.imageURL.files[0]);
-    } else {
-      alert("Please select a file to upload");
-      return;
-    }
+    Object.entries(newProductData).forEach(([key, value]) => {
+      if (Array.isArray(value)) { 
+        value.forEach((item) => {
+          formData.append(`${key}[]`, item); 
+        });
+      } else if (value instanceof File) { 
+        formData.append('file', value, value.name);
+      } else {
+        formData.append(key, value);
+      }
+    });
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/product/create`,
@@ -60,15 +61,15 @@ const AddProducts = () => {
       <Container className="mt-5">
         <h1>Add Product</h1>
         <Form onSubmit={handleSubmit}>
-          <Form.Group htmlFor="productName" className="mb-3">
+          <Form.Group htmlFor="name" className="mb-3">
             <Form.Label>Product Name</Form.Label>
             <Form.Control
               type="text"
               placeholder="Enter product name"
-              value={newProductData?.productName}
+              value={newProductData?.name}
               onChange={handleChange}
-              name="productName"
-              id="productName"
+              name="name"
+              id="name"
             />
           </Form.Group>
 
