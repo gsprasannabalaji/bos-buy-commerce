@@ -52,6 +52,20 @@ exports.create = async (req, res) => {
   });
 };
 
+exports.delete = async (id) => {
+  try {
+    const product = await Product.findOne({ productId: id.trim() });
+    if (!product) {
+      return { message: "No product found with that ID" };
+    }
+    await Product.deleteOne({ _id: product._id });
+    return { message: "Product deleted successfully" };
+  } catch (err) {
+    throw err;
+  }
+};
+
+
 exports.searchByName = async (title) => {
   try {
     const regex = new RegExp(".*" + title + ".*", "i");
