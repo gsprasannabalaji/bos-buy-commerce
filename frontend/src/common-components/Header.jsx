@@ -48,7 +48,7 @@ const Header = () => {
 
   return (
     <>
-      <Navbar key={expand} expand={expand} className="bg-body-tertiary mb-3">
+      <Navbar sticky="top" key={expand} expand={expand} className="bg-body-tertiary mb-3">
         <Container className="gap-3 flex-nowrap">
           <Navbar.Brand onClick={() => navigate("/")}>BOSBuy</Navbar.Brand>
           <InputGroup className="w-auto flex-grow-1">
