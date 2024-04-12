@@ -72,7 +72,7 @@ const SearchResults = () => {
       dispatch(
         addToCart({
           id: product?.productId,
-          name: product?.name,
+          name: product?.productName,
           imageURL: product?.imageURL,
           rating: product?.rating,
           description: product?.description,
