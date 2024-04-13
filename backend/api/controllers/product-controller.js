@@ -89,7 +89,7 @@ exports.getAll = async (req, res) => {
   }
 };
 
-exports.editAll = async (req, res) => {
+exports.edit = async (req, res) => {
     const { id } = req.params;
     const data = req.body;
     try{

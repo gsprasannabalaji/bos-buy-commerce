@@ -92,7 +92,7 @@ exports.getAll = async (req, res) => {
   }
 };
 
-exports.editAll = async (id, data) => {
+exports.edit = async (id, data) => {
   try {
     const product = await Product.findOneAndUpdate({ productId: id.trim() }, data, { new: true });
     if (!product) {

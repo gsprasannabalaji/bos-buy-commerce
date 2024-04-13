@@ -8,7 +8,7 @@ router.delete("/delete/:id", productController.delete);
 router.get('/getTopProducts', productController?.getTopProducts);
 router.get('/category', productController.searchCategory);
 router.get('/getAll', productController.getAll);
-router.put('/edit/:id', productController.editAll);
+router.put('/edit/:id', productController.edit);
 router.get('/:id', productController.search);
 
 module.exports = router;
