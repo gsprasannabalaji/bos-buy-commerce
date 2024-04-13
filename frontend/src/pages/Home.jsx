@@ -4,6 +4,7 @@ import banner2 from "../assets/banner2.webp";
 import ProductCategory from "../components/ProductCategory";
 import TopProducts from "../components/TopProducts";
 
+
 const Home = () => {
   return (
     <>
