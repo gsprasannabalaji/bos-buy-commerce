@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Table, Button, Nav, Modal, Form, Toast, ToastContainer } from "react-bootstrap";
 import axios from "axios";
+import SuccessToast from "../common-components/SuccessToast";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -8,7 +9,9 @@ function App() {
   const [editProduct, setEditProduct] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [productIdToDelete, setProductIdToDelete] = useState(null);
-  const [showToast, setShowToast] = useState(false);  // State for showing the success toast
+  const [showToast, setShowToast] = useState(false);
+  const [toastConfig, setToastConfig] = useState({ header: 'Success', message: 'Product has been successfully deleted!', bgColor: '#198754' });
+
 
   useEffect(() => {
     fetchProducts();
@@ -188,14 +191,13 @@ function App() {
         </Modal.Footer>
       </Modal>
 
-      <ToastContainer className="p-3" position="top-end" style={{ position: 'fixed', top: 0, right: 0, zIndex: 1050 }}>
-        <Toast onClose={() => setShowToast(false)} show={showToast} delay={3000} autohide style={{ backgroundColor: '#28a745', color: 'white' }}>
-          <Toast.Header style={{ backgroundColor: '#28a745', color: 'white' }}>
-            <strong className="me-auto">Product Deleted</strong>
-          </Toast.Header>
-          <Toast.Body style={{ backgroundColor: '#28a745', color: 'white' }}>Product has been successfully deleted!</Toast.Body>
-        </Toast>
-      </ToastContainer>
+      <SuccessToast 
+        show={showToast} 
+        onClose={() => setShowToast(false)} 
+        message={toastConfig.message} 
+        header={toastConfig.header} 
+        bgColor={toastConfig.bgColor}
+      />
     </>
   );
 }
