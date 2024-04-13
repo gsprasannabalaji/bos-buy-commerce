@@ -83,6 +83,28 @@ exports.delete = async (id) => {
   }
 };
 
+exports.getAll = async (req, res) => {
+  try {
+    const result = await Product.find({});
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+exports.editAll = async (id, data) => {
+  try {
+    const product = await Product.findOneAndUpdate({ productId: id.trim() }, data, { new: true });
+    if (!product) {
+      return { status: 404, message: "No product found with that ID" };
+    }else{
+      return product;
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
 exports.searchByName = async (title) => {
   try {
     const regex = new RegExp(".*" + title + ".*", "i");

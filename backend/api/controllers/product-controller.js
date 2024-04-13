@@ -78,6 +78,34 @@ exports.getTopProducts = async (req, res) => {
   }
 };
 
+exports.getAll = async (req, res) => {
+  try {
+    const response = await productService.getAll(req, res);
+    res.json(response);
+  } catch (err) {
+    res
+      .status(500)
+      .send({ message: "An error occurred while fetching the product" });
+  }
+};
+
+exports.editAll = async (req, res) => {
+    const { id } = req.params;
+    const data = req.body;
+    try{
+    const response = await productService.editAll(id, data);
+    if (response.status === 404) {
+      res.status(404).send({ message: "No product found with that ID" });
+    } else {
+      res.json({ message: "Product updated successfully", product: data });
+    }
+  } catch (err) {
+    res
+      .status(500)
+      .send({ message: "An error occurred while editing the product" });
+  }
+};
+
 exports.searchCategory = async (req, res) => {
   try {
     const category = req.query.category;
