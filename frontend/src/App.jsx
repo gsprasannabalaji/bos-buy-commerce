@@ -10,7 +10,7 @@ import './scss/style.scss';
 import Orders from "./pages/Orders";
 import ProductDetail from "./pages/ProductDetail";
 import AddProducts from "./pages/AddProducts";
-import ProductCategory from "./pages/ProductCategory";
+import ProductCategory from "./components/ProductCategory";
 
 const router = createBrowserRouter([
   {
