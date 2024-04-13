@@ -5,4 +5,31 @@
             right: toRem(-12px);
         }
     }
+
+    &__dropdown {
+        &__toggle {
+            color: $primary-black;
+            border: none;
+            &::after {
+                display: none;
+            }
+
+            &:hover {
+                color: $primary-black;
+                text-decoration: underline;
+            }
+
+            &:active, &:first-child:active, &.show {
+                border: none;
+            }
+        }
+    }
+
+    &__cta {
+        &--login {
+            &:active , &:first-child:active {
+                border:none;
+            }
+        }
+    }
 }
