@@ -20,7 +20,11 @@ exports.search = async (req, res) => {
 exports.create = async (req, res, next) => {
   try {
     const uploadResponse = await productService.create(req, res, next);
-    res.json(uploadResponse);
+    if (uploadResponse.status === 404) {
+      res.status(404).send({ message: "Error Occured" });
+    } else {
+      res.json(uploadResponse);
+    }
   } catch (err) {
     console.error(err);
     res
@@ -30,24 +34,21 @@ exports.create = async (req, res, next) => {
 };
 
 exports.delete = async (req, res) => {
-    try {
-      const { id } = req.params;
-      const deleteData = await productService.delete(id);
-      if(deleteData.status===404){
-        res
-        .status(404)
-        .send({ message: "No product found with that ID" });
-      }else{
-        res.json(deleteData);
-      }
-  
-    } catch (err) {
-      console.error(err);
-      res
-        .status(404)
-        .send({ message: "An error occurred while fetching the product" });
+  try {
+    const { id } = req.params;
+    const deleteData = await productService.delete(id);
+    if (deleteData.status === 404) {
+      res.status(404).send({ message: "No product found with that ID" });
+    } else {
+      res.json(deleteData);
     }
-  };
+  } catch (err) {
+    console.error(err);
+    res
+      .status(404)
+      .send({ message: "An error occurred while fetching the product" });
+  }
+};
 
 exports.searchName = async (req, res) => {
   try {
@@ -74,6 +75,34 @@ exports.getTopProducts = async (req, res) => {
     res
       .status(500)
       .send({ message: "An error occurred while fetching the product" });
+  }
+};
+
+exports.getAll = async (req, res) => {
+  try {
+    const response = await productService.getAll(req, res);
+    res.json(response);
+  } catch (err) {
+    res
+      .status(500)
+      .send({ message: "An error occurred while fetching the product" });
+  }
+};
+
+exports.edit = async (req, res) => {
+    const { id } = req.params;
+    const data = req.body;
+    try{
+    const response = await productService.edit(id, data);
+    if (response.status === 404) {
+      res.status(404).send({ message: "No product found with that ID" });
+    } else {
+      res.json({ message: "Product updated successfully", product: data });
+    }
+  } catch (err) {
+    res
+      .status(500)
+      .send({ message: "An error occurred while editing the product" });
   }
 };
 

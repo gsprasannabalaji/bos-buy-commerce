@@ -3,10 +3,12 @@ const express = require("express");
 const initializeRoutes = require("./routes/index");
 const mongoose = require("mongoose");
 const path = require("path");
+const dotenv =require('dotenv');
 
-const dbURi =
-  "mongodb+srv://bosbuy:Welcome%401@bosbuy.u5yqb7e.mongodb.net/Bosbuy?retryWrites=true&w=majority&appName=BOSbuy";
-mongoose.connect(dbURi);
+dotenv.config();
+
+const dbURI=process.env.dbURi;
+mongoose.connect(dbURI);
 
 const cors = require("cors");
 
