@@ -4,6 +4,7 @@ const initializeRoutes = require("./routes/index");
 const mongoose = require("mongoose");
 const path = require("path");
 const dotenv =require('dotenv');
+const cookieParser = require("cookie-parser");
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ const cors = require("cors");
 const initialize = (app) => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+  app.use(cookieParser());
   app.use(
     "/assets/productImages",
     express.static(path.join(__dirname, "../assets/productImages"))
