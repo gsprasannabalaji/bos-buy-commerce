@@ -39,7 +39,7 @@ exports.create = (req, res) => {
     if (!req.file) {
       return { status: 404 };
     }
-    const { name, description, price, category } = req.body;
+    const { name, description, price, category, stock } = req.body;
     const pathfile = `http://localhost:3002/assets/productImages/${req.file.filename}`;
     const productId = new mongoose.Types.ObjectId();
     try {
@@ -49,6 +49,7 @@ exports.create = (req, res) => {
         price: price,
         category: category,
         productId: productId,
+        stock: stock,
         imageURL: pathfile,
       });
       await value.save();
