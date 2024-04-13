@@ -10,4 +10,6 @@ router.route('/login').post(validateEmail, validatePassword, userController?.log
 
 router?.route("/check-admin").get(authenticateToken, userController?.checkIsAdminCookie);
 
+router.route('/clearCookies').get(userController?.clearCookies);
+
 module.exports = router;

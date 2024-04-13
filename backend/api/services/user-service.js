@@ -19,14 +19,14 @@ const login = async (req, res) => {
   res.cookie("user-creds", token, { httpOnly: true });
   return {
     isUserValid: isMatch,
-    userName: user?.fullName,
+    userName: user?.userName,
     role: user?.type,
   };
 };
 
 const clearCookies = async (req, res) => {
   res.clearCookie("user-creds");
-  return { message: "cleared the data" };
+  return { message: "logged out successfully" };
 };
 
 const isAdminCookie = (role) => {
