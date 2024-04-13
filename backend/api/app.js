@@ -4,8 +4,7 @@ const initializeRoutes = require("./routes/index");
 const mongoose = require("mongoose");
 const path = require("path");
 
-const dbURi =
-  "mongodb+srv://bosbuy:Welcome%401@bosbuy.u5yqb7e.mongodb.net/Bosbuy?retryWrites=true&w=majority&appName=BOSbuy";
+dbURi;
 mongoose.connect(dbURi);
 
 const cors = require("cors");
