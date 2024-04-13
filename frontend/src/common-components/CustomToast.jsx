@@ -1,18 +1,40 @@
-import Toast from 'react-bootstrap/Toast';
+import React from 'react';
+import { Toast, ToastContainer } from 'react-bootstrap';
 
-const CustomToast = ({ toastMessage = "", toastHeader = "", showToast, toggleToast, position }) => {
+const CustomToast = ({ show, onClose, message, header, bgColor = 'success', delay = 3000 }) => {
+  const headerStyle = {
+    backgroundColor: bgColor, 
+    color: 'white', 
+    fontWeight: 'bold'
+  };
+
+  const bodyStyle = {
+    backgroundColor: bgColor,
+    color: 'white',
+    opacity: 1  
+  };
+
   return (
-    <Toast className='custom-toast' onClose={toggleToast} show={showToast} animation={false} autohide={true} position={position}>
-      {toastHeader && (
-        <Toast.Header>
-          <p className="me-auto">{toastHeader}</p>
+    <ToastContainer className="p-3" position="top-end" style={{ position: 'fixed', top: 0, right: 0, zIndex: 1050 }}>
+      <Toast onClose={onClose} show={show} delay={delay} autohide style={bodyStyle}>
+        <Toast.Header style={headerStyle}>
+          <strong className="me-auto">{header}</strong>
         </Toast.Header>
-      )}
-      {toastMessage && (
-        <Toast.Body>{toastMessage}</Toast.Body>
-      )}
-    </Toast>
+        <Toast.Body>{message}</Toast.Body>
+      </Toast>
+    </ToastContainer>
   );
 };
 
 export default CustomToast;
+
+
+/*
+This is for success message: 
+setToastConfig({ header: 'Success', message: 'Product has been successfully deleted!', bgColor: '#198754' });
+
+This is for error message:
+setToastConfig({ header: 'Error', message: 'Failed to delete product!', bgColor: '#dc3545' });
+
+
+*/

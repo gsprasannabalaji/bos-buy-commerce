@@ -2,12 +2,14 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SearchResults from "./pages/SearchResults";
 import Home from "./pages/Home";
 import WithLayout from "./common-components/WithLayout";
+import AdminWithLayout from "./common-components/AdminWithLayout";
 import Cart from "./pages/Cart";
 import "./scss/style.scss";
 import Orders from "./pages/Orders";
 import ProductDetail from "./pages/ProductDetail";
 import AddProducts from "./pages/AddProducts";
 import ProductCategory from "./components/ProductCategory";
+import Admin from "./pages/AdminHome";
 import Login from "./pages/Login";
 
 const router = createBrowserRouter([
@@ -22,18 +24,26 @@ const router = createBrowserRouter([
   {
     path: "/cart",
     element: WithLayout(Cart),
-  }, {
-    path: '/orders',
+  },
+  {
+    path: "/orders",
     element: WithLayout(Orders),
-  }, {
+  },
+  {
     path: "/products/:productId",
     element: WithLayout(ProductDetail),
-  },{
+  },
+  {
     path: "/products/category",
     element: WithLayout(ProductCategory),
-  },{
+  },
+  {
     path: "/addproducts",
-    element: <AddProducts />,
+    element: AdminWithLayout(AddProducts),
+  },
+  {
+    path: "/admin",
+    element: AdminWithLayout(Admin),
   },
   {
     path: "/login",
@@ -42,12 +52,11 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-
   return (
     <>
       <RouterProvider router={router} />
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
