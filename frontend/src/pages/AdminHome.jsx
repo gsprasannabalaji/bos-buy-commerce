@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Table, Button, Nav, Modal, Form, Toast, ToastContainer } from "react-bootstrap";
 import axios from "axios";
-import SuccessToast from "../common-components/SuccessToast";
+import CustomToast from "../common-components/CustomToast";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -18,8 +18,12 @@ function App() {
   }, []);
 
   const fetchProducts = async () => {
+    try{
     const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/product/getAll`);
     setProducts(data);
+    }catch(error){
+      throw error;
+    }
   };
 
   const handleEdit = (product) => {
@@ -191,7 +195,7 @@ function App() {
         </Modal.Footer>
       </Modal>
 
-      <SuccessToast 
+      <CustomToast 
         show={showToast} 
         onClose={() => setShowToast(false)} 
         message={toastConfig.message} 
