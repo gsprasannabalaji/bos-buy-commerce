@@ -1,8 +1,8 @@
 import { Carousel, Image, Container } from "react-bootstrap";
 import banner1 from "../assets/banner1.webp";
 import banner2 from "../assets/banner2.webp";
-import CategoryComponent from "./ProductCategory";
-import TopProducts from "./TopProducts";
+import ProductCategory from "../components/ProductCategory";
+import TopProducts from "../components/TopProducts";
 
 const Home = () => {
   return (
@@ -18,7 +18,7 @@ const Home = () => {
       <Container>
         <div className="mt-4">
           <h2 className="my-4">Category</h2>
-          <CategoryComponent />
+          <ProductCategory />
         </div>
         <h2 className="my-4">Top Products</h2>
         <TopProducts />

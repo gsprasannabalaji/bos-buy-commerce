@@ -23,7 +23,7 @@ const TopProducts = () => {
   }, []);
 
   return (
-    <Row className="product-grid__row">
+    <Row className="top-products__row">
       {topProducts?.length > 0 &&
         topProducts?.map((product, index) => {
           return (
@@ -33,18 +33,18 @@ const TopProducts = () => {
               md={6}
               lg={3}
               key={index}
-              className="product-grid__card"
+              className="top-products__card"
             >
-              <div className="product-grid__card__img-container">
+              <div className="top-products__card__img-container">
                 <Card.Img variant="top" src={product?.imageURL} />
               </div>
-              <div className="product-grid__card__info">
-                <div className="product-grid__card__info__title">
+              <div className="top-products__card__info">
+                <div className="top-products__card__info__title">
                   <Link to={`/products/${product?.productId}`}>
                     {product?.productName}
                   </Link>
                 </div>
-                <div className="product-grid__card__info__price">
+                <div className="top-products__card__info__price">
                   Price: ${product?.price}
                 </div>
               </div>

@@ -10,7 +10,7 @@ const categories = [
   { name: "Gaming", imageUrl: gamingcategory, path: "gaming" },
 ];
 
-const CategoryComponent = () => {
+const ProductCategory = () => {
   let navigate = useNavigate();
 
   const navigateToCategory = (category) => {
@@ -43,4 +43,4 @@ const CategoryComponent = () => {
   );
 };
 
-export default CategoryComponent;
+export default ProductCategory;
