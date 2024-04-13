@@ -25,7 +25,6 @@ exports.create = async (req, res, next) => {
     } else {
       res.json(uploadResponse);
     }
-    res.json(uploadResponse);
   } catch (err) {
     console.error(err);
     res
