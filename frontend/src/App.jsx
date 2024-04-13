@@ -10,6 +10,7 @@ import ProductDetail from "./pages/ProductDetail";
 import AddProducts from "./pages/AddProducts";
 import ProductCategory from "./components/ProductCategory";
 import Admin from "./pages/AdminHome";
+import Login from "./pages/Login";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: AdminWithLayout(Admin),
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 ]);
 

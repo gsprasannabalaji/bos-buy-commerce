@@ -7,12 +7,16 @@ import {
   InputGroup,
   Nav,
   Offcanvas,
+  Dropdown,
 } from "react-bootstrap";
 import { BiSearch } from "react-icons/bi";
 import { FaShoppingCart } from "react-icons/fa";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import axios from "axios";
+import useCookieVerifier from "../custom-hooks/useCookieVerifier";
+import { setUser } from "../features/user/userSlice";
 
 const Header = () => {
   const [searchParams] = useSearchParams();
@@ -26,6 +30,33 @@ const Header = () => {
   });
   const [expand] = useState("lg");
   const navigate = useNavigate();
+  const [showDropdown, setShowDropdown] = useState(false);
+  const { isLoading, currentUserDetails } = useCookieVerifier();
+  const { isUserValid } = useSelector((state) => state?.user?.user);
+  const dispatch = useDispatch();
+
+  const handleToggleDropdown = () => setShowDropdown(!showDropdown);
+
+  const handleLogOut = async () => {
+    try {
+      await axios.get(
+        `${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/user/clearCookies`,
+        { withCredentials: true }
+      );
+      localStorage.removeItem("userDetails");
+      dispatch(
+        setUser({
+          email: "",
+          password: "",
+          role: "",
+          isUserValid: false,
+        })
+      );
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleSearchChange = (event) => {
     setSearchQuery(event?.target?.value);
@@ -46,9 +77,18 @@ const Header = () => {
     navigate("/cart");
   };
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
-      <Navbar sticky="top" key={expand} expand={expand} className="bg-body-tertiary mb-3">
+      <Navbar
+        sticky="top"
+        key={expand}
+        expand={expand}
+        className="bg-body-tertiary mb-3"
+      >
         <Container className="gap-3 flex-nowrap">
           <Navbar.Brand onClick={() => navigate("/")}>BOSBuy</Navbar.Brand>
           <InputGroup className="w-auto flex-grow-1">
@@ -96,7 +136,35 @@ const Header = () => {
             </Offcanvas.Header>
             <Offcanvas.Body>
               <Nav className="justify-content-end flex-grow-1 flex-lg-grow-0 pe-3">
-                <Button variant="tertiary">Login</Button>
+                {isUserValid ? (
+                  <Dropdown
+                    show={showDropdown}
+                    onToggle={handleToggleDropdown}
+                    className="header__dropdown"
+                  >
+                    <Dropdown.Toggle
+                      variant="tertiary"
+                      id="dropdown-basic"
+                      className="header__dropdown__toggle"
+                    >
+                      {`Hi ${currentUserDetails?.userName}`}
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      <Dropdown.Item onClick={handleLogOut}>
+                        Logout
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                ) : (
+                  <Button
+                    variant="tertiary"
+                    className="header__cta--login"
+                    onClick={() => navigate("/login")}
+                  >
+                    Login
+                  </Button>
+                )}
                 {/* <Nav.Link href="#action1">Profile</Nav.Link> */}
               </Nav>
             </Offcanvas.Body>
