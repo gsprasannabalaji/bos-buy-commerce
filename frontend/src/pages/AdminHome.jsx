@@ -80,6 +80,7 @@ function App() {
       <td>{product.productName}</td>
       <td>{product.productId}</td>
       <td>${product.price}</td>
+      <td>{product.stock}</td>
       <td>{product.description}</td>
       <td>
         <Button
@@ -121,6 +122,7 @@ function App() {
                     <th>Name</th>
                     <th>Product Id</th>
                     <th>Price</th>
+                    <th>Stock</th>
                     <th>Description</th>
                     <th>Actions</th>
                   </tr>

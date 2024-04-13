@@ -109,6 +109,18 @@ const AddProducts = () => {
             />
           </Form.Group>
 
+          <Form.Group htmlFor="stock" className="mb-3">
+            <Form.Label>Stock</Form.Label>
+            <Form.Control
+              type="number"
+              placeholder="Enter Stock"
+              value={newProductData?.stock || ""}
+              onChange={handleChange}
+              name="stock"
+              id="stock"
+            />
+          </Form.Group>
+
           <Form.Group htmlFor="description" className="mb-3">
             <Form.Label>Category</Form.Label>
             <Form.Control
