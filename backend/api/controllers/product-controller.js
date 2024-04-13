@@ -77,3 +77,15 @@ exports.getTopProducts = async (req, res) => {
       .send({ message: "An error occurred while fetching the product" });
   }
 };
+
+exports.searchCategory = async (req, res) => {
+  try {
+    const category = req.query.category;
+    const products = await productService.searchByCategory(category);
+    res.json(products);
+  } catch (err) {
+    res
+      .status(500)
+      .send({ message: "An error occurred while fetching the product" });
+  }
+};
