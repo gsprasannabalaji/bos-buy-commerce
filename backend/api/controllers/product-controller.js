@@ -93,7 +93,7 @@ exports.edit = async (req, res) => {
     const { id } = req.params;
     const data = req.body;
     try{
-    const response = await productService.editAll(id, data);
+    const response = await productService.edit(id, data);
     if (response.status === 404) {
       res.status(404).send({ message: "No product found with that ID" });
     } else {
