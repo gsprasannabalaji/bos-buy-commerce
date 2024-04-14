@@ -10,6 +10,7 @@ const authenticateToken = (req, res, next) => {
         if(req?.url === "/check-admin") {
             req.userRole = decodeToken?.role;
         }
+        req.userEmail = decodeToken?.email;
         next();
     })
 };

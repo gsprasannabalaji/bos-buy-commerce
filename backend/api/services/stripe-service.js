@@ -47,6 +47,7 @@ exports.makePayments = async (req) => {
         },
       },
     ],
+    customer_email: req?.userEmail,
     phone_number_collection: {
       enabled: true,
     },
