@@ -18,6 +18,24 @@ const login = async (req, res) => {
   }
 };
 
+const signup = async (req, res) => {
+  try {
+    const user = await userService.createUser(req.body);
+
+    res.status(201).json({
+      _id: user._id,
+      userName: user.userName,
+      email: user.email,
+      type: user.type
+    });
+  } catch (error) {
+    const statusCode = error.message === 'User already exists' ? 400 : 500;
+    res.status(statusCode).json({ message: 'Error creating the user', error: error.toString() });
+  }
+};
+
+
+
 const clearCookies = async (req, res) => {
   try {
     const result = await userService?.clearCookies(req, res);
@@ -42,6 +60,7 @@ const checkIsAdminCookie = async (req, res) => {
 
 module.exports = {
   login,
+  signup,
   clearCookies,
   checkIsAdminCookie,
 };

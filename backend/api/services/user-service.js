@@ -24,6 +24,32 @@ const login = async (req, res) => {
   };
 };
 
+const createUser = async (userData) =>{
+  const { username, email, password } = userData;
+
+  // Check if the user already exists
+  const userExists = await User.findOne({ email });
+  if (userExists) {
+    throw new Error('User already exists');
+  }
+
+  // Hash the password
+  const hashedPassword = await bcrypt.hash(password, 12);
+
+  // Create a new user with the hashed password
+  const user = new User({
+    userName: username,
+    email,
+    password: hashedPassword,
+    type: 'customer'
+  });
+
+  await user.save();
+  return user;
+};
+
+
+
 const clearCookies = async (req, res) => {
   res.clearCookie("user-creds");
   return { message: "logged out successfully" };
@@ -35,6 +61,7 @@ const isAdminCookie = (role) => {
 
 module.exports = {
     login,
+    createUser,
     clearCookies,
     isAdminCookie
 };

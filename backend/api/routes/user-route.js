@@ -7,6 +7,7 @@ const validatePassword = require("../middlewares/validatePassword");
 const authenticateToken = require("../middlewares/authenticateToken");
 
 router.route('/login').post(validateEmail, validatePassword, userController?.login);
+router.route('/signup').post(userController?.signup);
 
 router?.route("/check-admin").get(authenticateToken, userController?.checkIsAdminCookie);
 
