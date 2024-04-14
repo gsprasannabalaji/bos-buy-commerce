@@ -8,3 +8,12 @@ exports.stripePayment = async (req, res) => {
         res.status(500).send({ message: 'An error occurred in payement service' });
     }
 }
+
+exports.createOrder = async (req, res) => {
+    try {
+        const redirectUrl = await stripeService?.createOrder(req, res);
+        res.redirect(redirectUrl);
+    } catch(error) {
+        res.redirect("http://localhost:5173/cart");
+    }
+}
