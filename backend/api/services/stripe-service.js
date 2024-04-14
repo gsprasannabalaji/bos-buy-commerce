@@ -5,6 +5,7 @@ dotenv.config();
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 exports.makePayments = async (req) => {
+  // console.log("print the make payment request   ");
   const line_items = req?.body?.cartItems?.map((item) => {
     return {
       price_data: {
@@ -19,7 +20,8 @@ exports.makePayments = async (req) => {
       quantity: item?.quantity,
     };
   });
-
+console.log("print the make payment request " , req.userEmail);
+  const encodedBody = encodeURIComponent(JSON.stringify(req.body));
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     shipping_address_collection: {
@@ -56,7 +58,7 @@ exports.makePayments = async (req) => {
     invoice_creation: {
       enabled: true,
     },
-    success_url: "http://localhost:5173/Orders",
+    success_url: `http://localhost:3002/stripe/Orders?session_id={CHECKOUT_SESSION_ID}&order=${encodedBody}`,
     cancel_url: "http://localhost:5173/cart",
   });
 
