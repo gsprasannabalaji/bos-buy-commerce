@@ -20,6 +20,18 @@ exports.makePayments = async (req) => {
     };
   });
 
+exports.getSuccessfulPayments = async () => {
+  const payments = await stripe.paymentIntents.list({
+    limit: 10, // Adjust limit to the number of records you want to retrieve
+  });
+
+  // Filter for successful payments
+  const successfulPayments = payments.data.filter(payment => payment.status === 'succeeded');
+
+  return successfulPayments;
+};
+
+
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     shipping_address_collection: {

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Table, Button, Nav, Modal, Form, Toast, ToastContainer } from "react-bootstrap";
 import axios from "axios";
 import CustomToast from "../common-components/CustomToast";
+import { useNavigate } from "react-router-dom";
+import { LinkContainer } from 'react-router-bootstrap';
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -11,6 +13,8 @@ function App() {
   const [productIdToDelete, setProductIdToDelete] = useState(null);
   const [showToast, setShowToast] = useState(false);
   const [toastConfig, setToastConfig] = useState({ header: 'Success', message: 'Product has been successfully deleted!', bgColor: '#198754' });
+
+  const navigate = useNavigate(); 
 
 
   useEffect(() => {
@@ -75,6 +79,9 @@ function App() {
     }
   };
 
+  const handleAddProduct = () => {
+    navigate("/addproducts");
+  };
   const renderTableRows = products.map((product) => (
     <tr key={product._id}>
       <td>{product.productName}</td>
@@ -110,6 +117,9 @@ function App() {
               <Nav.Item><Nav.Link href="#orders">Orders</Nav.Link></Nav.Item>
               <Nav.Item><Nav.Link href="#products">Products</Nav.Link></Nav.Item>
               <Nav.Item><Nav.Link href="#customers">Customers</Nav.Link></Nav.Item>
+              <LinkContainer to="/addproducts">
+                <Nav.Link>Add Product</Nav.Link>
+              </LinkContainer>
             </Nav>
           </Col>
           <Col md={9} lg={10} className="ml-sm-auto px-md-4">

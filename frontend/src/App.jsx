@@ -11,6 +11,7 @@ import AddProducts from "./pages/AddProducts";
 import ProductCategory from "./components/ProductCategory";
 import Admin from "./pages/AdminHome";
 import Login from "./pages/Login";
+import Footer from "./common-components/Footer";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/footer",
+    element: <Footer />,
   },
 ]);
 
