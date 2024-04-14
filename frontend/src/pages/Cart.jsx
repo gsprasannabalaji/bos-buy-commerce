@@ -72,7 +72,9 @@ const Cart = () => {
         }/stripe/create-checkout-session`,
         {
           cartItems,
-          userId: 1, // TODO - this need to be updated once the login feature is done.
+        },
+        {
+          withCredentials: true,
         }
       );
       if (result?.data?.url) {
