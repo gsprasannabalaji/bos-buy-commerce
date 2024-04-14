@@ -1,5 +1,7 @@
 const Stripe = require("stripe");
 const dotenv = require('dotenv');
+const Order = require("../models/orders");
+const mongoose = require("mongoose");
 dotenv.config();
 
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
@@ -64,3 +66,46 @@ console.log("print the make payment request " , req.userEmail);
 
   return session?.url;
 };
+
+exports.createOrder = async (req, res) => {
+  let { order, session_id } = req.query;
+  try {
+    const session = await stripe?.checkout?.sessions?.retrieve(session_id);
+    const customer = await stripe?.customers?.retrieve(session?.customer);
+    const paymentIntent = await stripe?.paymentIntents.retrieve(
+      session?.payment_intent
+    );
+
+    const orderId = new mongoose.Types.ObjectId();
+    const { cartItems = [] } = JSON?.parse(order);
+    console.log("printing the customers ", customer);
+    const { email = "", shipping : { address : shippingAddress = null } } = customer;
+    const products = cartItems?.map((item) => {
+      return {
+        productId: item?.id,
+        productName: item?.name,
+        price: item?.price,
+        quantity: item?.quantity,
+        imageUrl: item?.imageURL,
+        description: item?.description,
+        category: item?.category || "",
+        stock: item?.stock || 0,
+      };
+    });
+    try {
+      const newOrder = new Order({
+        orderId,
+        email,
+        totalPrice: paymentIntent?.amount / 100,
+        // products,
+      });
+      await newOrder?.save();
+      
+      return "http://localhost:5173/Orders?payment=done";
+    } catch (err) {
+      throw err;
+    }
+  } catch (err) {
+    throw err;
+  }
+}
