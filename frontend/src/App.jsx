@@ -11,6 +11,7 @@ import AddProducts from "./pages/AddProducts";
 import ProductCategory from "./components/ProductCategory";
 import Admin from "./pages/AdminHome";
 import Login from "./pages/Login";
+import AllOrders from "./pages/AllOrders";
 import CustomToast from "./common-components/CustomToast";
 import { useSelector, useDispatch } from "react-redux";
 import { setToast } from "./features/toast/toastSlice";
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: AdminWithLayout(Admin),
+  },
+  {
+    path: "/allorders",
+    element: AdminWithLayout(AllOrders),
   },
   {
     path: "/login",
