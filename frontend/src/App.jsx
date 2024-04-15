@@ -4,7 +4,6 @@ import Home from "./pages/Home";
 import WithLayout from "./common-components/WithLayout";
 import AdminWithLayout from "./common-components/AdminWithLayout";
 import Cart from "./pages/Cart";
-import "./scss/style.scss";
 import Orders from "./pages/Orders";
 import ProductDetail from "./pages/ProductDetail";
 import AddProducts from "./pages/AddProducts";
@@ -14,6 +13,7 @@ import Login from "./pages/Login";
 import CustomToast from "./common-components/CustomToast";
 import { useSelector, useDispatch } from "react-redux";
 import { setToast } from "./features/toast/toastSlice";
+import "./scss/style.scss";
 
 const router = createBrowserRouter([
   {
@@ -61,19 +61,21 @@ const App = () => {
   return (
     <>
       <RouterProvider router={router} />
-      <CustomToast 
-        show={showToast} 
+      <CustomToast
+        show={showToast}
         onClose={() => {
-          dispatch(setToast({
-            toast: {
-              ...toast,
-              message: "",
-            },
-            showToast: false,
-          }))
-        }} 
-        message={toast?.message} 
-        header={""} 
+          dispatch(
+            setToast({
+              toast: {
+                ...toast,
+                message: "",
+              },
+              showToast: false,
+            })
+          );
+        }}
+        message={toast?.message}
+        header={""}
         variant={toast?.variant}
       />
     </>

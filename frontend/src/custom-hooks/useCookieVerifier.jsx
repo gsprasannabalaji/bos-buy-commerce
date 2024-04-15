@@ -6,7 +6,6 @@ import { setUser } from "../features/user/userSlice";
 const useCookieVerifier = () => {
   const user = useSelector((state) => state?.user?.user);
   const [isAdminRole, setIsAdminRole] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
   const currentUserDetails = localStorage.getItem("userDetails")
     ? JSON?.parse(localStorage.getItem("userDetails"))
@@ -27,7 +26,6 @@ const useCookieVerifier = () => {
             ...user,
             isUserValid: true
           }))
-          setIsLoading(false);
         } catch (error) {
           console.error("Error verifying cookie:", error);
           setIsAdminRole(false);
@@ -35,11 +33,9 @@ const useCookieVerifier = () => {
             ...user,
             isUserValid: false
           }))
-          setIsLoading(false);
         }
       })();
     } else {
-      setIsLoading(false);
       dispatch(setUser({
         ...user,
         isUserValid: true
@@ -47,7 +43,7 @@ const useCookieVerifier = () => {
     }
   }, []);
 
-  return { isAdminRole, isLoading, currentUserDetails };
+  return { isAdminRole, currentUserDetails };
 };
 
 export default useCookieVerifier;

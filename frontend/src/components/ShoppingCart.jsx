@@ -4,6 +4,7 @@ import {
   MdOutlineRemoveCircleOutline,
 } from "react-icons/md";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const ShoppingCart = ({
   handleCheckout,
@@ -14,6 +15,8 @@ const ShoppingCart = ({
 }) => {
   const cartItems = useSelector((state) => state?.cart?.cartItems);
   const purchaseLimit = useSelector((state) => state?.cart?.purchaseLimit);
+  const { isUserValid } = useSelector((state) => state?.user?.user);
+  const navigate = useNavigate();
   const subTotal = cartItems?.reduce((acc, item) => {
     return acc + item?.price * item?.quantity;
   }, 0);
@@ -92,17 +95,28 @@ const ShoppingCart = ({
               </Row>
             </Col>
           </div>
-          {cartItems?.length > 0 && (
+          {isUserValid ? (
+            cartItems?.length > 0 && (
+              <Button
+                variant="warning"
+                disabled={
+                  cartItems?.length > purchaseLimit || checkQuantityLength()
+                }
+                onClick={() => {
+                  handleCheckout();
+                }}
+              >
+                Proceed to Checkout
+              </Button>
+            )
+          ) : (
             <Button
               variant="warning"
-              disabled={
-                cartItems?.length > purchaseLimit || checkQuantityLength()
-              }
               onClick={() => {
-                handleCheckout();
+                navigate("/login");
               }}
             >
-              Proceed to Checkout
+              Login to Checkout
             </Button>
           )}
         </Col>

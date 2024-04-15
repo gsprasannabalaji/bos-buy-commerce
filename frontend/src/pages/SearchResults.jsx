@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { setSearchedProducts } from "../features/products/productsSlice";
 import CustomToast from "../common-components/CustomToast";
+import Loader from "../common-components/Loader";
+import { setIsLoading } from "../features/loader/loaderSlice";
 
 const SearchResults = () => {
   const productData = useSelector((state) => state?.products?.productsList);
@@ -14,6 +16,7 @@ const SearchResults = () => {
   const [showToast, setShowToast] = useState(false);
   let location = useLocation();
   let queryParams = new URLSearchParams(location?.search);
+  const isLoading = useSelector((state) => state?.loader?.isLoading);
 
   const dispatch = useDispatch();
 
@@ -21,14 +24,21 @@ const SearchResults = () => {
     if (queryParams.has("q")) {
       (async () => {
         try {
+          dispatch(setIsLoading(true));
           const results = await axios.get(
             `${
               import.meta.env.VITE_BACKEND_ENDPOINT_URL
             }/product/search?name=${searchParams?.get("q")}`
           );
           dispatch(setSearchedProducts(results?.data));
+          setTimeout(() => {
+            dispatch(setIsLoading(false));
+          }, 500);
         } catch (error) {
-          setShowToast(true);
+          setTimeout(() => {
+            dispatch(setIsLoading(false));
+            setShowToast(true);
+          }, 500);
         }
       })();
     }
@@ -38,14 +48,21 @@ const SearchResults = () => {
     if (queryParams.has("category")) {
       (async () => {
         try {
+          dispatch(setIsLoading(true));
           const results = await axios.get(
             `${
               import.meta.env.VITE_BACKEND_ENDPOINT_URL
             }/product/category?category=${searchParams?.get("category")}`
           );
           dispatch(setSearchedProducts(results?.data));
+          setTimeout(() => {
+            dispatch(setIsLoading(false));
+          }, 500);
         } catch (error) {
-          setShowToast(true);
+          setTimeout(() => {
+            dispatch(setIsLoading(false));
+            setShowToast(true);
+          }, 500);
         }
       })();
     }
@@ -90,39 +107,45 @@ const SearchResults = () => {
     : "Search Results";
 
   return (
-    <div className="search-results container">
-      <h2>{headingText}</h2>
-      {productData?.length > 0 ? (
-        productData?.map((item, index) => {
-          return (
-            <ProductCard
-              key={index}
-              productId={item?.productId}
-              productName={item?.productName}
-              productDesc={item?.description}
-              productImg={item?.imageURL}
-              productRating={item?.rating}
-              productPrice={item?.price}
-              product={item}
-              handlerClick={(product) => addToCartHandler(product)}
-              btnName="Add to Cart"
-            />
-          );
-        })
+    <>
+      {isLoading ? (
+        <Loader />
       ) : (
-        <h1 className="d-flex justify-content-center align-items-center font-weight-bold">
-          No results found
-        </h1>
+        <div className="search-results container">
+          <h2>{headingText}</h2>
+          {productData?.length > 0 ? (
+            productData?.map((item, index) => {
+              return (
+                <ProductCard
+                  key={index}
+                  productId={item?.productId}
+                  productName={item?.productName}
+                  productDesc={item?.description}
+                  productImg={item?.imageURL}
+                  productRating={item?.rating}
+                  productPrice={item?.price}
+                  product={item}
+                  handlerClick={(product) => addToCartHandler(product)}
+                  btnName="Add to Cart"
+                />
+              );
+            })
+          ) : (
+            <h1 className="d-flex justify-content-center align-items-center font-weight-bold">
+              No results found
+            </h1>
+          )}
+          {showToast && (
+            <CustomToast
+              toastMessage="Network Failed. Please try again later"
+              showToast={showToast}
+              toggleToast={() => setShowToast(false)}
+              position="top-end"
+            />
+          )}
+        </div>
       )}
-      {showToast && (
-        <CustomToast
-          toastMessage="Network Failed. Please try again later"
-          showToast={showToast}
-          toggleToast={() => setShowToast(false)}
-          position="top-end"
-        />
-      )}
-    </div>
+    </>
   );
 };
 
