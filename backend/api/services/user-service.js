@@ -41,7 +41,7 @@ const createUser = async (userData) =>{
     userName: username,
     email,
     password: hashedPassword,
-    type: 'customer'
+    type: 'customer',
   });
 
   await user.save();

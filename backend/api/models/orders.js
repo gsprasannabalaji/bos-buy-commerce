@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const Product = require('./product');
+const Product = require("./product");
 
 const shippingAddressSchema = new Schema({
   city: { type: String, required: true },
@@ -10,8 +10,40 @@ const shippingAddressSchema = new Schema({
   postal_code: { type: String, required: true },
   state: { type: String, required: true },
 });
+const productItemSchema = new Schema({
+  productId: {
+    type: String,
+    required: true,
+  },
+  quantity: {
+    type: Number,
+    required: true,
+    min: 1,
+  },
+  productName: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  productId: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  imageURL: {
+    type: String,
+    required: true,
+  },
+});
 
-// Define the Order schema
+
 const orderSchema = new Schema(
   {
     orderId: {
@@ -31,7 +63,7 @@ const orderSchema = new Schema(
       type: String,
       required: true,
     },
-    // products: [{ type: Schema.Types.ObjectId, ref: 'Product', unique: false, }],
+    products: [productItemSchema],
     shippingAddress: shippingAddressSchema,
   },
   {
