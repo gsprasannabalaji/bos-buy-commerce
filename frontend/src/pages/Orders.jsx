@@ -31,7 +31,6 @@ const ProductItem = ({ product }) => {
 };
 
 const OrderItem = ({ order }) => {
-  // Parse the total price and convert the date from a timestamp
   const totalPrice = order.totalPrice;
   const date = new Date(order.date).toLocaleDateString();
 
@@ -89,7 +88,6 @@ const Orders = () => {
         dispatch(clearCart());
       }
 
-      // Fetch orders from your API
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/order/getUserOrders`,
@@ -97,7 +95,6 @@ const Orders = () => {
             withCredentials: true,
           }
         );
-        console.log("test: " + JSON.stringify(response.data, null, 2));
         const ordersData = response.data.map((order) => ({
           ...order,
           orderId: order.orderId,
