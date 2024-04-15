@@ -56,7 +56,11 @@ const Login = () => {
         );
         setTimeout(() => {
           dispatch(setIsLoading(false));
-          navigate("/");
+          if(result?.data?.role == "admin") {
+            navigate("/admin");
+          } else {
+            navigate("/");
+          }
         }, 500);
       }
     } catch (err) {
