@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../features/user/userSlice";
 import axios from "axios";
@@ -113,6 +113,9 @@ const Login = () => {
             >
               Sign In
             </Button>
+            <div className="text-center mt-3">
+  New user? <Link to="/signup" className="text-primary">Sign up</Link>
+</div>
           </Form>
         </section>
       )}

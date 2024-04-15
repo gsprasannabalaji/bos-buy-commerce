@@ -1,0 +1,101 @@
+.signup-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 40px;
+    box-sizing: border-box;
+  
+    .signup-form-section {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-width: 480px; // max width for form container
+      width: 100%; // responsive width
+      
+  
+        h1 {
+          font-size: 2rem;
+          color: #333;
+          margin-bottom: 0.5rem;
+        }
+      
+  
+      Form {
+        h3 {
+          font-size: 1.5rem;
+          color: #333;
+          margin-bottom: 1.5rem;
+        }
+  
+        .form-group {
+          margin-bottom: 1rem;
+  
+          .form-label {
+            font-size: 1rem;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+          }
+  
+          .form-control {
+            font-size: 1rem;
+            border-radius: 0.25rem;
+            border: 1px solid #ced4da;
+            padding: 0.75rem 1rem;
+          }
+  
+          .text-muted {
+            font-size: 0.875rem;
+            color: #6c757d;
+          }
+        }
+  
+        .btn-warning {
+          background-color: #eaddbc; 
+          color: #333;
+          border: none;
+          padding: 0.75rem 1rem;
+          font-size: 1rem;
+          border-radius: 0.25rem;
+          transition: background-color 0.3s ease;
+  
+          &:hover {
+            background-color: darken(#D3D4C4, 10%);
+          }
+        }
+      }
+  
+      .text-center {
+        margin-top: 1.5rem;
+        font-size: 0.9rem;
+  
+        a {
+          color: #007bff;
+          text-decoration: none;
+  
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  
+    .graphic-section {
+      flex: 1;
+      max-width: 700px; // custom 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        width: 100%;
+        max-width: 100%;
+        height: 600px; // customm
+        display: block; 
+        object-fit: cover;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px; 
+      }
+    }
+  }

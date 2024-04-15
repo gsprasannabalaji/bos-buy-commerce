@@ -14,6 +14,7 @@ import CustomToast from "./common-components/CustomToast";
 import { useSelector, useDispatch } from "react-redux";
 import { setToast } from "./features/toast/toastSlice";
 import "./scss/style.scss";
+import SignUp from "./pages/Signup";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login />,
   },
+  {
+    path:"/signup",
+    element: <SignUp />,
+  }
 ]);
 
 const App = () => {
