@@ -31,8 +31,9 @@ const Header = () => {
   const [expand] = useState("lg");
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
-  const { isLoading, currentUserDetails } = useCookieVerifier();
+  const { currentUserDetails } = useCookieVerifier();
   const { isUserValid } = useSelector((state) => state?.user?.user);
+  const isLoading = useSelector((state) => state?.loader?.isLoading);
   const dispatch = useDispatch();
 
   const handleToggleDropdown = () => setShowDropdown(!showDropdown);
@@ -77,8 +78,10 @@ const Header = () => {
     navigate("/cart");
   };
 
-  if (isLoading) {
-    return <div>Loading...</div>;
+  if(isLoading) {
+    return (
+      <></>
+    )
   }
 
   return (
