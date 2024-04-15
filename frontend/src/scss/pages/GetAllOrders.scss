@@ -1,28 +1,26 @@
-// Define color and font standards
 $font-family-base: 'Arial', sans-serif;
-$header-bg-color: #007bff; // Bootstrap primary blue
+$header-bg-color: #007bff; 
 $header-text-color: #ffffff;
 $row-odd-color: #f9f9f9;
 $row-even-color: #ffffff;
 $hover-color: #f1f1f1;
 
-// Global styles
 body {
   font-family: $font-family-base;
 }
 
-// Custom styles for the table
+
 .table-custom {
   th, td {
     text-align: left;
     vertical-align: middle;
-    padding: 12px; // Adequate padding for content
+    padding: 12px; 
   }
 
   th {
     background-color: $header-bg-color;
     color: $header-text-color;
-    text-align: center; // Center align the header titles
+    text-align: center; 
   }
 
   tbody tr:nth-child(odd) {
@@ -34,13 +32,12 @@ body {
   }
 
   tbody tr:hover {
-    background-color: $hover-color; // Color change on hover for better user interaction
+    background-color: $hover-color; 
   }
 }
 
-// Responsive layout adjustments
 @media (max-width: 768px) {
   .table-custom {
-    font-size: 14px; // Smaller font size for small devices
+    font-size: 14px;
   }
 }
