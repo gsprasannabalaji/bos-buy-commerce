@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Table, Button, Nav, Modal, Form, Toast, ToastContainer } from "react-bootstrap";
 import axios from "axios";
-import CustomToast from "../common-components/CustomToast";
+import { useDispatch } from "react-redux";
+import { setToast } from "../features/toast/toastSlice";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -9,8 +10,7 @@ function App() {
   const [editProduct, setEditProduct] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [productIdToDelete, setProductIdToDelete] = useState(null);
-  const [showToast, setShowToast] = useState(false);
-  const [toastConfig, setToastConfig] = useState({ header: 'Success', message: 'Product has been successfully deleted!', bgColor: '#198754' });
+  const dispatch = useDispatch();
 
 
   useEffect(() => {
@@ -19,10 +19,16 @@ function App() {
 
   const fetchProducts = async () => {
     try{
-    const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/product/getAll`);
-    setProducts(data);
+      const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/product/getAll`);
+      setProducts(data);
     }catch(error){
-      throw error;
+      dispatch(setToast({
+        toast: {
+          message: err?.response?.data?.message || "Network Error",
+          variant: 'error'
+        },
+        showToast: true
+      }))
     }
   };
 
@@ -41,7 +47,13 @@ function App() {
       await axios.delete(`${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/product/delete/${productIdToDelete}`)
         .then(() => {
           fetchProducts(); 
-          setShowToast(true);  
+          dispatch(setToast({
+            toast: {
+              message: 'Product has been successfully deleted!',
+              variant: 'success'
+            },
+            showToast: true
+          }))
         })
         .catch(error => console.error("Failed to delete product:", error));
       setShowDeleteModal(false);
@@ -196,14 +208,6 @@ function App() {
           </Button>
         </Modal.Footer>
       </Modal>
-
-      <CustomToast 
-        show={showToast} 
-        onClose={() => setShowToast(false)} 
-        message={toastConfig.message} 
-        header={toastConfig.header} 
-        bgColor={toastConfig.bgColor}
-      />
     </>
   );
 }
