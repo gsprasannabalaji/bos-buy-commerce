@@ -14,7 +14,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setToast } from "../features/toast/toastSlice";
 
-function App() {
+const AdminHome = () => {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -268,4 +268,4 @@ function App() {
   );
 }
 
-export default App;
+export default AdminHome;

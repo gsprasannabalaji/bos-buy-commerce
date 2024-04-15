@@ -1,7 +1,7 @@
 import React from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 
-const AdminNavbar = () => {
+const AdminHeader = () => {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container fluid>
@@ -20,4 +20,4 @@ const AdminNavbar = () => {
   );
 };
 
-export default AdminNavbar;
+export default AdminHeader;

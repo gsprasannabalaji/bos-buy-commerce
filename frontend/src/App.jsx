@@ -2,19 +2,18 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SearchResults from "./pages/SearchResults";
 import Home from "./pages/Home";
 import WithLayout from "./common-components/WithLayout";
-import AdminWithLayout from "./common-components/AdminWithLayout";
 import Cart from "./pages/Cart";
-import "./scss/style.scss";
 import Orders from "./pages/Orders";
 import ProductDetail from "./pages/ProductDetail";
 import AddProducts from "./pages/AddProducts";
 import ProductCategory from "./components/ProductCategory";
-import Admin from "./pages/AdminHome";
+import AdminHome from "./pages/AdminHome";
 import Login from "./pages/Login";
 import AllOrders from "./pages/AllOrders";
 import CustomToast from "./common-components/CustomToast";
 import { useSelector, useDispatch } from "react-redux";
 import { setToast } from "./features/toast/toastSlice";
+import "./scss/style.scss";
 
 const router = createBrowserRouter([
   {
@@ -43,11 +42,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/addproducts",
-    element: AdminWithLayout(AddProducts),
+    element: WithLayout(AddProducts),
   },
   {
     path: "/admin",
-    element: AdminWithLayout(Admin),
+    element: WithLayout(AdminHome),
   },
   {
     path: "/allorders",
@@ -55,7 +54,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login />,
+    element: WithLayout(Login),
+  },
+  {
+    path: "*",
+    element: WithLayout(Home),
   },
 ]);
 
@@ -66,19 +69,21 @@ const App = () => {
   return (
     <>
       <RouterProvider router={router} />
-      <CustomToast 
-        show={showToast} 
+      <CustomToast
+        show={showToast}
         onClose={() => {
-          dispatch(setToast({
-            toast: {
-              ...toast,
-              message: "",
-            },
-            showToast: false,
-          }))
-        }} 
-        message={toast?.message} 
-        header={""} 
+          dispatch(
+            setToast({
+              toast: {
+                ...toast,
+                message: "",
+              },
+              showToast: false,
+            })
+          );
+        }}
+        message={toast?.message}
+        header={""}
         variant={toast?.variant}
       />
     </>

@@ -6,48 +6,43 @@ import { setUser } from "../features/user/userSlice";
 const useCookieVerifier = () => {
   const user = useSelector((state) => state?.user?.user);
   const [isAdminRole, setIsAdminRole] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isCookieLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
   const currentUserDetails = localStorage.getItem("userDetails")
     ? JSON?.parse(localStorage.getItem("userDetails"))
     : "";
 
   useEffect(() => {
-    if (!user?.isUserValid) {
-      (async () => {
-        try {
-          const isAdminRole = await axios?.get(
-            `${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/user/check-admin`,
-            {
-              withCredentials: true,
-            }
-          );
-          setIsAdminRole(isAdminRole || false);
-          dispatch(setUser({
+    (async () => {
+      try {
+        const isAdminRole = await axios?.get(
+          `${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/user/check-admin`,
+          {
+            withCredentials: true,
+          }
+        );
+        setIsAdminRole(isAdminRole?.data?.isAdmin || false);
+        dispatch(
+          setUser({
             ...user,
-            isUserValid: true
-          }))
-          setIsLoading(false);
-        } catch (error) {
-          console.error("Error verifying cookie:", error);
-          setIsAdminRole(false);
-          dispatch(setUser({
+            role: isAdminRole?.data?.isAdmin ? "admin" : "customer",
+            isUserValid: true,
+          })
+        );
+        setIsLoading(false);
+      } catch (error) {
+        setIsAdminRole(false);
+        dispatch(
+          setUser({
             ...user,
-            isUserValid: false
-          }))
-          setIsLoading(false);
-        }
-      })();
-    } else {
-      setIsLoading(false);
-      dispatch(setUser({
-        ...user,
-        isUserValid: true
-      }))
-    }
+          })
+        );
+        setIsLoading(false);
+      }
+    })();
   }, []);
 
-  return { isAdminRole, isLoading, currentUserDetails };
+  return { isAdminRole, isCookieLoading, currentUserDetails };
 };
 
 export default useCookieVerifier;
