@@ -11,7 +11,7 @@ export const store = configureStore({
     products: productsSliceReducer,
     user: userReducer,
     toast: toastReducer,
-    orders: ordersReducer
+    orders: ordersReducer,
     loader: loaderReducer,
   },
 })
