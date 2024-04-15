@@ -27,6 +27,6 @@ exports.getUserOrders = async (req, res) => {
     console.error(err);
     res
       .status(500)
-      .send({ message: "An error occurred while fetching the orders" });
+      .send({ message: "An error occurred while fetching the user orders" });
   }
 };
