@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Table } from "react-bootstrap";
+import { Container, Row, Col, Table, InputGroup, FormControl, Nav } from "react-bootstrap";
 import axios from "axios";
 
 function App() {
   const [orders, setOrders] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     fetchOrders();
@@ -18,48 +19,82 @@ function App() {
     }
   };
 
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value.toLowerCase());
+  };
+
   const renderTableRows = () => {
-    let rows = [];
-    orders.forEach((order) => {
-      order.products.forEach((product, index) => {
-        rows.push(
-          <tr key={`${order._id}-${product.productId}`}>
-            {index === 0 ? (
-              <td rowSpan={order.products.length}>{order.orderId}</td>
-            ) : null}
-            <td>{product.productName}</td>
-            {index === 0 ? (
-              <td rowSpan={order.products.length}>{order.email}</td>
-            ) : null}
-            {index === 0 ? (
-              <td rowSpan={order.products.length}>
-                {`${order.shippingAddress.line1}, ${order.shippingAddress.line2 || ''} ${order.shippingAddress.city}, ${order.shippingAddress.state}, ${order.shippingAddress.postal_code}, ${order.shippingAddress.country}`}
-              </td>
-            ) : null}
-          </tr>
-        );
-      });
-    });
-    return rows;
+    const filteredOrders = orders.filter((order) => 
+      order.orderId.toLowerCase().includes(searchTerm) ||
+      order.email.toLowerCase().includes(searchTerm) ||
+      order.products.some(product => 
+        product.productName.toLowerCase().includes(searchTerm) ||
+        product.description.toLowerCase().includes(searchTerm)
+      ) ||
+      Object.values(order.shippingAddress).join(" ").toLowerCase().includes(searchTerm)
+    );
+
+    return filteredOrders.flatMap((order) => 
+      order.products.map((product, index) => (
+        <tr key={`${order._id}-${product.productId}`}>
+          {index === 0 ? <td rowSpan={order.products.length}>{order.orderId}</td> : null}
+          <td>{product.productName}</td>
+          {index === 0 ? <td rowSpan={order.products.length}>{order.email}</td> : null}
+          {index === 0 ? (
+            <td rowSpan={order.products.length}>
+              {`${order.shippingAddress.line1}, ${order.shippingAddress.line2 || ""} ${order.shippingAddress.city}, ${order.shippingAddress.state}, ${order.shippingAddress.postal_code}, ${order.shippingAddress.country}`}
+            </td>
+          ) : null}
+        </tr>
+      ))
+    );
   };
 
   return (
     <>
-      <Container fluid className="p-3">
+      <Container fluid>
         <Row>
-          <Col lg={12}>
-            <h1 className="mb-4">Order List</h1>
-            <Table responsive="sm" striped bordered hover className="table-custom">
-              <thead className="table-header">
-                <tr>
-                  <th>Order ID</th>
-                  <th>Product Name</th>
-                  <th>Email</th>
-                  <th>Shipping Address</th>
-                </tr>
-              </thead>
-              <tbody>{renderTableRows()}</tbody>
-            </Table>
+          <Col md={2} className="d-none d-md-block bg-light sidebar">
+            <Nav className="flex-column">
+              <Nav.Item><Nav.Link href="#dashboard">Dashboard</Nav.Link></Nav.Item>
+              <Nav.Item><Nav.Link href="#orders">Orders</Nav.Link></Nav.Item>
+              <Nav.Item><Nav.Link href="#products">Products</Nav.Link></Nav.Item>
+              <Nav.Item><Nav.Link href="#customers">Customers</Nav.Link></Nav.Item>
+            </Nav>
+          </Col>
+          <Col md={10} className="p-0">
+            <Container fluid>
+              <Row className="align-items-center">
+                <Col md={6}>
+                  <h1>Order List</h1>
+                </Col>
+                <Col md={6}>
+                  <InputGroup>
+                    <FormControl
+                      placeholder="Search orders"
+                      aria-label="Search orders"
+                      onChange={handleSearchChange}
+                    />
+                    <InputGroup.Text><i className="fa fa-search"></i></InputGroup.Text>
+                  </InputGroup>
+                </Col>
+              </Row>
+              <Row>
+                <Col md={12}>
+                  <Table responsive striped bordered hover>
+                    <thead>
+                      <tr>
+                        <th>Order ID</th>
+                        <th>Product Name</th>
+                        <th>Email</th>
+                        <th>Shipping Address</th>
+                      </tr>
+                    </thead>
+                    <tbody>{renderTableRows()}</tbody>
+                  </Table>
+                </Col>
+              </Row>
+            </Container>
           </Col>
         </Row>
       </Container>
