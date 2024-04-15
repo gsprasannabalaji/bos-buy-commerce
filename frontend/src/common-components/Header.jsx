@@ -31,8 +31,10 @@ const Header = () => {
   const [expand] = useState("lg");
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
-  const { isLoading, currentUserDetails } = useCookieVerifier();
+  const { currentUserDetails } = useCookieVerifier();
   const { isUserValid } = useSelector((state) => state?.user?.user);
+  const isLoading = useSelector((state) => state?.loader?.isLoading);
+  const [showOffcanvas, setShowOffcanvas] = useState(false);
   const dispatch = useDispatch();
 
   const handleToggleDropdown = () => setShowDropdown(!showDropdown);
@@ -78,7 +80,7 @@ const Header = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <></>;
   }
 
   return (
@@ -122,20 +124,31 @@ const Header = () => {
               </Badge>
             )}
           </div>
-          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
+          <Navbar.Toggle
+            aria-controls={`offcanvasNavbar-expand-${expand}`}
+            onClick={() => {
+              setShowOffcanvas(true);
+            }}
+          />
           <Navbar.Offcanvas
             id={`offcanvasNavbar-expand-${expand}`}
             aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
             placement="end"
             className="flex-grow-1 flex-lg-grow-0"
+            show={showOffcanvas}
+            onHide={() => setShowOffcanvas(false)}
           >
             <Offcanvas.Header closeButton>
-              <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
-                Hi Prasanna
-              </Offcanvas.Title>
+              {currentUserDetails?.userName ? (
+                <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
+                  {`Hi ${currentUserDetails?.userName}`}
+                </Offcanvas.Title>
+              ) : (
+                ""
+              )}
             </Offcanvas.Header>
             <Offcanvas.Body>
-              <Nav className="justify-content-end flex-grow-1 flex-lg-grow-0 pe-3">
+              <Nav className="justify-content-end flex-grow-1 flex-lg-grow-0 pe-3 d-none d-lg-block">
                 {isUserValid ? (
                   <Dropdown
                     show={showDropdown}
@@ -151,6 +164,9 @@ const Header = () => {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
+                      <Dropdown.Item onClick={() => navigate("/orders")}>
+                        Orders
+                      </Dropdown.Item>
                       <Dropdown.Item onClick={handleLogOut}>
                         Logout
                       </Dropdown.Item>
@@ -165,7 +181,40 @@ const Header = () => {
                     Login
                   </Button>
                 )}
-                {/* <Nav.Link href="#action1">Profile</Nav.Link> */}
+              </Nav>
+              <Nav className="align-items-start d-lg-none">
+                {isUserValid ? (
+                  <>
+                    <Button
+                      variant="tertiary"
+                      className="header__cta--profile"
+                      onClick={() => {
+                        setShowOffcanvas(false);
+                        navigate("/orders");
+                      }}
+                    >
+                      My Orders
+                    </Button>
+                    <Button
+                      variant="tertiary"
+                      className="header__cta--profile"
+                      onClick={() => {
+                        setShowOffcanvas(false);
+                        handleLogOut();
+                      }}
+                    >
+                      Log Out
+                    </Button>
+                  </>
+                ) : (
+                  <Button
+                    variant="tertiary"
+                    className="header__cta--login"
+                    onClick={() => navigate("/login")}
+                  >
+                    Login
+                  </Button>
+                )}
               </Nav>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
