@@ -11,6 +11,9 @@ import AddProducts from "./pages/AddProducts";
 import ProductCategory from "./components/ProductCategory";
 import Admin from "./pages/AdminHome";
 import Login from "./pages/Login";
+import CustomToast from "./common-components/CustomToast";
+import { useSelector, useDispatch } from "react-redux";
+import { setToast } from "./features/toast/toastSlice";
 
 const router = createBrowserRouter([
   {
@@ -52,9 +55,27 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
+  const { showToast, toast } = useSelector((state) => state?.toast);
+  const dispatch = useDispatch();
+
   return (
     <>
       <RouterProvider router={router} />
+      <CustomToast 
+        show={showToast} 
+        onClose={() => {
+          dispatch(setToast({
+            toast: {
+              ...toast,
+              message: "",
+            },
+            showToast: false,
+          }))
+        }} 
+        message={toast?.message} 
+        header={""} 
+        variant={toast?.variant}
+      />
     </>
   );
 };

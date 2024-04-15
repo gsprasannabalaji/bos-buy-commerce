@@ -1,4 +1,21 @@
 .custom-toast {
     background-color: $danger;
     color: $primary-white;
+    
+    &__header--success, &__header--error {
+        color: $primary-white;
+    }
+
+    &__header--success, &--success {
+        background-color: $green; 
+    }
+
+    &__header--error, &--error {
+        background-color: $danger; 
+    }
+
+    &--success, &--error {
+        color: $primary-white;
+        opacity: 1 
+    }
 }

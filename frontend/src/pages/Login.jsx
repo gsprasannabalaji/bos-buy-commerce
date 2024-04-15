@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../features/user/userSlice";
 import axios from "axios";
+import { setToast } from "../features/toast/toastSlice";
 
 const Login = () => {
   const user = useSelector((state) => state?.user?.user);
@@ -55,6 +56,13 @@ const Login = () => {
       }
     } catch (err) {
       console.error(err);
+      dispatch(setToast({
+        toast: {
+          message: err?.response?.data?.message || "Network Error",
+          variant: "error",
+        },
+        showToast: true,
+      }))
     }
   };
 
