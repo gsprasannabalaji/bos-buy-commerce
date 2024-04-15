@@ -50,7 +50,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/allorders",
-    element: AdminWithLayout(AllOrders),
+    element: WithLayout(AllOrders),
   },
   {
     path: "/login",
