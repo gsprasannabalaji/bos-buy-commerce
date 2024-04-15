@@ -1,23 +1,67 @@
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useDispatch } from "react-redux";
-import { clearCart } from '../features/cart/cartSlice';
+// Orders.js
+import { useEffect } from "react";
+import axios from "axios";
+import { useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { clearCart } from "../features/cart/cartSlice";
+import OrderItem from '../components/OrderItem'; // Make sure this path is correct
+import { Container } from "react-bootstrap";
+import { setOrders } from "../features/orders/ordersSlice";
 
 const Orders = () => {
-    const location = useLocation();
-    const dispatch = useDispatch();
+  const orders = useSelector((state) => state?.orders?.orders);
+  const location = useLocation();
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        const searchParams = new URLSearchParams(location.search);
-        if (searchParams.get('payment') === 'done') {
-          dispatch(clearCart());
-        }
+  useEffect(() => {
+    const fetchOrders = async () => {
+      const searchParams = new URLSearchParams(location.search);
+      if (searchParams.get("payment") === "done") {
+        dispatch(clearCart());
+      }
 
-      }, [location.search]);
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/order/getUserOrders`,
+          {
+            withCredentials: true,
+          }
+        );
+        const ordersData = response.data.map((order) => ({
+          ...order,
+          orderId: order.orderId,
+          totalPrice: order.totalPrice,
+          date: order.date,
+          products: order.products.map((product) => ({
+            ...product,
+            price: product.price,
+            quantity: product.quantity,
+          })),
+          shippingAddress: {
+            ...order.shippingAddress,
+          },
+        }));
+        dispatch(setOrders(ordersData));
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+      }
+    };
 
-    return (
-        <h1>Orders page</h1>
-    );
-}
+    fetchOrders();
+  }, [location.search, dispatch]);
+
+  return (
+    <Container className="container">
+      <h1>Your Orders</h1>
+      {orders.length > 0 ? (
+        orders.map((order) => (
+          <OrderItem key={order._id.$oid} order={order} />
+        ))
+      ) : (
+        <p>No orders found.</p>
+      )}
+    </Container>
+  );
+};
 
 export default Orders;
