@@ -23,14 +23,11 @@ const signup = async (req, res) => {
     const user = await userService.createUser(req.body);
 
     res.status(201).json({
-      _id: user._id,
-      userName: user.userName,
-      email: user.email,
-      type: user.type
+      message: 'User Created Successfully'
     });
   } catch (error) {
     const statusCode = error.message === 'User already exists' ? 400 : 500;
-    res.status(statusCode).json({ message: 'Error creating the user', error: error.toString() });
+    res.status(statusCode).json({ message: 'Error creating the user'});
   }
 };
 
