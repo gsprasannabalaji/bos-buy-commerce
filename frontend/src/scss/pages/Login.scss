@@ -1,10 +1,4 @@
 .login {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: toRem(16px);
-    height: 100vh;
 
     &__form {
         border: 1px solid #ddd;
@@ -30,6 +24,13 @@
                 border-color: #F2C200;
                 cursor: pointer;
             }
+        }
+    }
+
+    &__wrapper-left {
+        &__img {
+            height: 100%;
+            width: 100%;
         }
     }
 }
