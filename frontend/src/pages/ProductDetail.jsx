@@ -23,13 +23,6 @@ const ProductDetail = () => {
   const primaryImageURL = useSelector(
     (state) => state?.products?.primaryImageURL
   );
-  const additionalImages = [
-    "http://localhost:3002/assets/productImages/Acer.jpeg",
-    "http://localhost:3002/assets/productImages/Acer.jpeg",
-    "http://localhost:3002/assets/productImages/Asus.jpeg",
-    "http://localhost:3002/assets/productImages/laptop.jpeg",
-  ]; // this has to be updated once api is integrated with respective changes
-
   const { productId } = useParams();
   const cartItems = useSelector((state) => state?.cart?.cartItems);
   const dispatch = useDispatch();
@@ -100,12 +93,12 @@ const ProductDetail = () => {
                 fluid
               />
               <div className="product-detail__imgwrapper">
-                {additionalImages?.map((imageUrl, index) => {
+                {productDetailsData?.previewImages?.map((item, index) => {
                   return (
                     <Image
-                      src={imageUrl}
+                      src={item?.path}
                       onClick={() => {
-                        dispatch(setPrimaryImageURL(additionalImages[index]));
+                        dispatch(setPrimaryImageURL(item?.path));
                       }}
                       className="mt-3 product-detail__imgwrapper__img"
                       key={index}
