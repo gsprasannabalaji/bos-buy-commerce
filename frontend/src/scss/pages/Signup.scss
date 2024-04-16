@@ -1,24 +1,13 @@
-.signup-page {
+.signup_page {
   @extend %grid-center;
-  .signup-form-section {
+  .signup_form_section {
     padding: toRem(32px);
     border-radius: toRem(8px);
     box-shadow: $box-shadow-1;
 
-    h1 {
-      font-size: toRem(32px);
-      color: $primary-black;
-      margin-bottom: toRem(8px);
-    }
+    &__form {
 
-    Form {
-      h3 {
-        font-size: toRem(24px);
-        color: $primary-black;
-        margin-bottom: toRem(24px);
-      }
-
-      .btn-warning {
+      &__button {
         background-color: $greyish-green;
         color: $primary-black;
         border: none;
@@ -30,7 +19,7 @@
         }
       }
     }
-    a {
+    &__login {
       color: $primary-blue;
       text-decoration: none;
 

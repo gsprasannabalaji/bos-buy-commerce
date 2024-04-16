@@ -52,6 +52,7 @@ const SignUp = () => {
     setFormData({ ...formData, [name]: value });
     const error = validateField(name, value);
     setErrors({ ...errors, [name]: error }); 
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -69,10 +70,20 @@ const SignUp = () => {
 
     try {
       dispatch(setIsLoading(true));
-      const response = await axios.post(
+       await axios.post(
         `${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/user/signup`,
         formData
       );
+      dispatch(
+        setToast({
+          toast: {
+            message:"Account created successfully",
+            variant: "success",
+          },
+          showToast: true,
+        })
+      );
+
       navigate("/login");
     } catch (err) {
       console.error(err);
@@ -98,19 +109,19 @@ const SignUp = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="signup-page">
+        <div className="signup_page">
           <Container>
             <Row className="flex-column-reverse flex-lg-row">
-              <Col xs={12} lg={6} className="signup-page__image-container px-0">
+              <Col xs={12} lg={6} className="signup_page__image-container px-0">
                 <img
                   src={banner2}
                   alt="Sign Up Visual"
-                  className="signup-page__image-container__img"
+                  className="signup_page__image-container__img"
                 />
               </Col>
-              <Col xs={12} lg={6} className="signup-form-section">
-                <Form onSubmit={handleSubmit}>
-                  <h3>Create Account</h3>
+              <Col xs={12} lg={6} className="signup_form_section">
+                <Form onSubmit={handleSubmit} class="signup_form_section__form">
+                  <h3 className="mb-3">Create Account</h3>
 
                   <Form.Group className="mb-3" controlId="formBasicUsername">
                     <Form.Label>User Name</Form.Label>
@@ -179,11 +190,11 @@ const SignUp = () => {
                     </Form.Control.Feedback>
                   </Form.Group>
 
-                  <Button variant="warning" type="submit" className="w-100">
+                  <Button variant="warning" type="submit" className="w-100 signup_form_section__form__button">
                     Create your account
                   </Button>
                   <div className="mt-3 text-center">
-                    Already have an account? <a href="/login">Sign in</a>
+                    Already have an account? <a className="signup_form_section__login"href="/login">Sign in</a>
                   </div>
                 </Form>
               </Col>
