@@ -1,7 +1,5 @@
 .login {
-    display: grid;
-    place-items: center;
-    height: 100vh;
+    @extend %grid-center;
 
     &__form {
 
