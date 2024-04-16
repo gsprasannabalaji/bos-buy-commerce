@@ -100,6 +100,10 @@ const AdminHome = () => {
       await axios.put(`${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/product/edit/${editProduct.productId}`, editProduct);
       fetchProducts();  
       setShowModal(false);
+      dispatch(setToast({
+        message: "Product Updated Successfully",
+        variant: "success",
+      }));
     } catch (error) {
       console.error("Failed to update product:", error);
       dispatch(setToast({
