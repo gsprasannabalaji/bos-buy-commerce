@@ -130,7 +130,7 @@ const AdminHome = () => {
               <Nav.Item><Nav.Link href="/admin">Dashboard</Nav.Link></Nav.Item>
               <Nav.Item><Nav.Link href="/allorders">Orders</Nav.Link></Nav.Item>
               <Nav.Item><Nav.Link href="#products">Products</Nav.Link></Nav.Item>
-              <Nav.Item><Nav.Link href="#customers">Customers</Nav.Link></Nav.Item>
+              <Nav.Item><Nav.Link href="/login">Logout</Nav.Link></Nav.Item>
             </Nav>
           </Col>
           <Col md={10}>

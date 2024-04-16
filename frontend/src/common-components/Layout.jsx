@@ -10,7 +10,7 @@ const Layout = ({ children }) => {
   const isAdminRole = role === "admin";
   const location = useLocation();
   const currentPathname = location.pathname + location.search;
-  const adminRoutes = ["/admin", "/addproducts", "/allorders"];
+  const adminRoutes = ["/admin", "/addproducts", "/allorders", "/login"];
   const customerRoutes = [
     "/",
     "/cart",
