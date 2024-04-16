@@ -14,21 +14,19 @@ import { setProductDetailsData } from "../features/products/productsSlice";
 import CustomToast from "../common-components/CustomToast";
 
 const ProductDetail = () => {
-  const productDetailsData = useSelector(
-    (state) => state.products.productDetailsData
-  );
+  const productDetailsData = useSelector((state) => state?.products?.productDetailsData);
   const { productId } = useParams();
-  const cartItems = useSelector((state) => state.cart.cartItems);
+  const cartItems = useSelector((state) => state?.cart?.cartItems);
   const dispatch = useDispatch();
   const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     async function fetchProductDetails() {
       try {
-        const response = await axios.get(
+        const results = await axios.get(
           `${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/product/${productId}`
         );
-        dispatch(setProductDetailsData(response.data));
+        dispatch(setProductDetailsData(results?.data));
       } catch (error) {
         setShowToast(true); 
       }
@@ -37,8 +35,10 @@ const ProductDetail = () => {
   }, [productId, dispatch]);
 
   const addToCartHandler = (product) => {
-    const itemExists = cartItems.find((item) => item.id === product.productId);
-    if (itemExists) {
+    const isItemsExist = cartItems?.find(
+      (item) => item?.id === product?.productId
+    );
+    if (isItemsExist) {
       dispatch(
         updateQuantity({
           ...itemExists,
@@ -48,12 +48,13 @@ const ProductDetail = () => {
     } else {
       dispatch(
         addToCart({
-          id: product.productId,
-          name: product.productName,
-          imageURL: product.imageURL,
-          rating: product.rating,
-          description: product.description,
-          price: product.price,
+          id: product?.productId,
+          name: product?.productName,
+          imageURL: product?.imageURL,
+          rating: product?.rating,
+          description: product?.description,
+          price: product?.price,
+          currentPrice: product?.price,
           quantity: 1,
         })
       );
@@ -79,11 +80,11 @@ const ProductDetail = () => {
         {productDetailsData ? (
           <Row>
             <Col md={6} sm={12}>
-              <Image src={productDetailsData.imageURL} fluid />
+            <Image src={productDetailsData?.imageURL} fluid />
             </Col>
             <Col md={6} sm={12}>
-              <h2>{productDetailsData.productName}</h2>
-              {productDetailsData.description ? (
+              <h2>{productDetailsData?.productName}</h2>
+              {productDetailsData?.description ? (
                 getDescriptionAsList(productDetailsData.description)
               ) : (
                 <p>No description available.</p>
