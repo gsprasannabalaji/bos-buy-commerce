@@ -6,21 +6,21 @@
   }
 
   th {
-    background-color: $header-bg-color;
-    color: $header-text-color;
+    background-color: $primary-blue;
+    color: $primary-white;
     text-align: center; 
   }
 
   tbody tr:nth-child(odd) {
-    background-color: $row-odd-color;
+    background-color: $white-smoke;
   }
 
   tbody tr:nth-child(even) {
-    background-color: $row-even-color;
+    background-color: $primary-white;
   }
 
   tbody tr:hover {
-    background-color: $hover-color; 
+    background-color: $lightwhite-smoke; 
   }
 }
 
