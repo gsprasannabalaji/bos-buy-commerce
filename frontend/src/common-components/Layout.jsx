@@ -9,26 +9,32 @@ const Layout = ({ children }) => {
   const { isCookieLoading } = useCookieVerifier();
   const isAdminRole = role === "admin";
   const location = useLocation();
-  const currentPathname = location.pathname;
+  const currentPathname = location.pathname + location.search;
   const adminRoutes = ["/admin", "/addProducts"];
   const customerRoutes = [
     "/",
-    "/searchResults",
     "/cart",
     "/products",
     "/products/category",
     "/orders",
+    "/orders?payment=done"
   ];
 
-  if(isCookieLoading) {
+  const pattern = /^\/(products\/\w+|searchResults\?(category|q)=.+)$/;
+
+  const matchesProductPattern = (pathname) => {
+    return pattern?.test(pathname);
+  };
+
+  if (isCookieLoading) {
     return "";
   }
 
   if (isUserValid && currentPathname === "/login") {
     if (isAdminRole) {
-      return <Navigate to="/admin" replace />
-    } else { 
-      return <Navigate to="/" replace />
+      return <Navigate to="/admin" replace />;
+    } else {
+      return <Navigate to="/" replace />;
     }
   } else if (!isUserValid && currentPathname === "/login") {
     return <div>{children}</div>;
@@ -43,10 +49,10 @@ const Layout = ({ children }) => {
         </>
       );
     } else {
-      return <Navigate to="/admin" replace />
+      return <Navigate to="/admin" replace />;
     }
   } else {
-    if (customerRoutes?.includes(currentPathname)) {
+    if (customerRoutes?.includes(currentPathname) || matchesProductPattern(currentPathname)) {
       return (
         <>
           <Header />
@@ -54,7 +60,7 @@ const Layout = ({ children }) => {
         </>
       );
     } else {
-      return <Navigate to="/" replace />
+      return <Navigate to="/" replace />;
     }
   }
 };
