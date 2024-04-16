@@ -103,7 +103,7 @@ exports.createOrder = async (req, res) => {
       } catch (err) {
         throw err;
       }
-      return "http://localhost:5173/Orders?payment=done";
+      return "http://localhost:5173/orders?payment=done";
     } catch (err) {
       throw err;
     }
