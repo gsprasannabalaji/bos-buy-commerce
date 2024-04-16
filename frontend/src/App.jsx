@@ -2,13 +2,12 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SearchResults from "./pages/SearchResults";
 import Home from "./pages/Home";
 import WithLayout from "./common-components/WithLayout";
-import AdminWithLayout from "./common-components/AdminWithLayout";
 import Cart from "./pages/Cart";
 import Orders from "./pages/Orders";
 import ProductDetail from "./pages/ProductDetail";
 import AddProducts from "./pages/AddProducts";
 import ProductCategory from "./components/ProductCategory";
-import Admin from "./pages/AdminHome";
+import AdminHome from "./pages/AdminHome";
 import Login from "./pages/Login";
 import CustomToast from "./common-components/CustomToast";
 import { useSelector, useDispatch } from "react-redux";
@@ -42,16 +41,20 @@ const router = createBrowserRouter([
     element: WithLayout(ProductCategory),
   },
   {
-    path: "/addproducts",
-    element: AdminWithLayout(AddProducts),
+    path: "/addProducts",
+    element: WithLayout(AddProducts),
   },
   {
     path: "/admin",
-    element: AdminWithLayout(Admin),
+    element: WithLayout(AdminHome),
   },
   {
     path: "/login",
-    element: <Login />,
+    element: WithLayout(Login),
+  },
+  {
+    path: "*",
+    element: WithLayout(Home),
   },
   {
     path:"/signup",

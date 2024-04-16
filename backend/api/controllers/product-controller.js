@@ -37,7 +37,7 @@ exports.delete = async (req, res) => {
   try {
     const { id } = req.params;
     const deleteData = await productService.delete(id);
-    if (deleteData.status === 404) {
+    if (deleteData?.status === 404) {
       res.status(404).send({ message: "No product found with that ID" });
     } else {
       res.json(deleteData);
