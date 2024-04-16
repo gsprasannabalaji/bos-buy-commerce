@@ -1,13 +1,8 @@
-body {
-  font-family: $font-family-base;
-}
-
-
 .table-custom {
   th, td {
     text-align: left;
     vertical-align: middle;
-    padding: 12px; 
+    padding: toRem(12px); 
   }
 
   th {
