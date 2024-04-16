@@ -19,6 +19,19 @@ function AllOrders() {
     }
   };
 
+  const handleLogOut = async () => {
+    try {
+      await axios.get(
+        `${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/user/clearCookies`,
+        { withCredentials: true }
+      );
+      localStorage.removeItem("userDetails");
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
   };
@@ -55,11 +68,11 @@ function AllOrders() {
       <Container fluid>
         <Row>
           <Col md={2} className="d-none d-md-block bg-light sidebar">
-            <Nav className="flex-column">
+          <Nav className="flex-column">
               <Nav.Item><Nav.Link href="/admin">Dashboard</Nav.Link></Nav.Item>
               <Nav.Item><Nav.Link href="/allorders">Orders</Nav.Link></Nav.Item>
-              <Nav.Item><Nav.Link href="#products">Products</Nav.Link></Nav.Item>
-              <Nav.Item><Nav.Link href="#customers">Customers</Nav.Link></Nav.Item>
+              <Nav.Item><Nav.Link href="/addproducts">Create</Nav.Link></Nav.Item>
+              <Nav.Item><Nav.Link onClick={handleLogOut}>Logout</Nav.Link></Nav.Item>
             </Nav>
           </Col>
           <Col md={10} className="p-0">
