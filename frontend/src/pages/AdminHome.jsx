@@ -55,9 +55,9 @@ const AdminHome = () => {
     if (!productIdToDelete) return;
     try {
       await axios.delete(`${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/product/delete/${productIdToDelete}`);
-      fetchProducts();  // Refresh the list after deletion
+      fetchProducts(); 
       dispatch(setToast({
-        message: "Product successfully deleted",
+        message: "Product Deleted Successfully",
         variant: "success",
       }));
     } catch (error) {
