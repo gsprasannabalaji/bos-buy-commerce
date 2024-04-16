@@ -18,7 +18,7 @@
             width: 100%;
 
             &:hover {
-                background-color: darken($greyish-yellow, 10%);
+                background-color: darken($greyish-yellow, $hover-darken-percentage);
                 cursor: pointer;
             }
         }
