@@ -11,6 +11,7 @@ import {
   InputGroup,
   Nav
 } from "react-bootstrap";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setToast } from "../features/toast/toastSlice";
@@ -23,6 +24,7 @@ const AdminHome = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [productIdToDelete, setProductIdToDelete] = useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProducts();
@@ -79,11 +81,24 @@ const AdminHome = () => {
     setEditProduct(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleLogOut = async () => {
+    try {
+      await axios.get(
+        `${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/user/clearCookies`,
+        { withCredentials: true }
+      );
+      localStorage.removeItem("userDetails");
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleSaveChanges = async () => {
     if (!editProduct) return;
     try {
       await axios.put(`${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/product/edit/${editProduct.productId}`, editProduct);
-      fetchProducts();  // Refresh the list after update
+      fetchProducts();  
       setShowModal(false);
     } catch (error) {
       console.error("Failed to update product:", error);
@@ -130,7 +145,7 @@ const AdminHome = () => {
               <Nav.Item><Nav.Link href="/admin">Dashboard</Nav.Link></Nav.Item>
               <Nav.Item><Nav.Link href="/allorders">Orders</Nav.Link></Nav.Item>
               <Nav.Item><Nav.Link href="#products">Products</Nav.Link></Nav.Item>
-              <Nav.Item><Nav.Link href="/login">Logout</Nav.Link></Nav.Item>
+              <Nav.Item><Nav.Link onClick={handleLogOut}>Logout</Nav.Link></Nav.Item>
             </Nav>
           </Col>
           <Col md={10}>
