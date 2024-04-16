@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Container, Row, Col, Form, Button, Nav } from "react-bootstrap";
 import { setNewProduct } from "../features/products/productsSlice";
@@ -11,15 +11,19 @@ const AddProducts = () => {
   const handleChange = (event) => {
     const { name, value } = event?.target;
     if (name === "imageURL") {
-      dispatch(setNewProduct({
-        ...newProductData,
-        [name]: event?.target?.files[0],
-      }));
+      dispatch(
+        setNewProduct({
+          ...newProductData,
+          [name]: event?.target?.files[0],
+        })
+      );
     } else {
-      dispatch(setNewProduct({
-        ...newProductData,
-        [name]: value,
-      }));
+      dispatch(
+        setNewProduct({
+          ...newProductData,
+          [name]: value,
+        })
+      );
     }
   };
 
@@ -43,7 +47,7 @@ const AddProducts = () => {
       if (Array.isArray(value)) {
         value.forEach((item) => formData.append(`${key}[]`, item));
       } else if (value instanceof File) {
-        formData.append('file', value, value.name);
+        formData.append("file", value, value.name);
       } else {
         formData.append(key, value);
       }
@@ -66,14 +70,22 @@ const AddProducts = () => {
   return (
     <Container fluid>
       <Row>
-      <Col md={2} className="d-none d-md-block bg-light sidebar">
-            <Nav className="flex-column">
-              <Nav.Item><Nav.Link href="/admin">Dashboard</Nav.Link></Nav.Item>
-              <Nav.Item><Nav.Link href="/allorders">Orders</Nav.Link></Nav.Item>
-              <Nav.Item><Nav.Link href="/addproducts">Create</Nav.Link></Nav.Item>
-              <Nav.Item><Nav.Link onClick={handleLogOut}>Logout</Nav.Link></Nav.Item>
-            </Nav>
-          </Col>
+        <Col md={2} className="d-none d-md-block bg-light sidebar">
+          <Nav className="flex-column">
+            <Nav.Item>
+              <Nav.Link href="/admin">Dashboard</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link href="/allorders">Orders</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link href="/addproducts">Create</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link onClick={handleLogOut}>Logout</Nav.Link>
+            </Nav.Item>
+          </Nav>
+        </Col>
         <Col md={10}>
           <Container className="mt-5">
             <h1>Add Product</h1>
@@ -86,12 +98,14 @@ const AddProducts = () => {
                   value={newProductData?.name || ""}
                   onChange={handleChange}
                   name="name"
+                  id="name"
                 />
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="imageUpload">
                 <Form.Label>Upload Image</Form.Label>
                 <Form.Control
+                  id="imageUpload"
                   type="file"
                   onChange={handleChange}
                   name="imageURL"
@@ -107,6 +121,7 @@ const AddProducts = () => {
                   value={newProductData?.description || ""}
                   onChange={handleChange}
                   name="description"
+                  id="description"
                 />
               </Form.Group>
 
@@ -118,6 +133,7 @@ const AddProducts = () => {
                   value={newProductData?.price || ""}
                   onChange={handleChange}
                   name="price"
+                  id="price"
                 />
               </Form.Group>
 
@@ -129,6 +145,7 @@ const AddProducts = () => {
                   value={newProductData?.stock || ""}
                   onChange={handleChange}
                   name="stock"
+                  id="stock"
                 />
               </Form.Group>
 
@@ -140,6 +157,7 @@ const AddProducts = () => {
                   value={newProductData?.category || ""}
                   onChange={handleChange}
                   name="category"
+                  id="category"
                 />
               </Form.Group>
 
