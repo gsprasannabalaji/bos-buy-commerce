@@ -3,6 +3,7 @@
 // abstracts
 @import './abstracts/variables';
 @import './abstracts/functions';
+@import './abstracts/placeholders';
 
 // layouts
 @import 'layout/header';
@@ -18,4 +19,5 @@
 
 // pages
 @import 'pages/Login.scss';
-@import 'pages/GetAllOrders.scss';
+@import 'pages/AllOrders.scss';
+@import 'pages/Signup.scss'

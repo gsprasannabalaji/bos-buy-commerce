@@ -1,35 +1,42 @@
 .login {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: toRem(16px);
-    height: 100vh;
+    @extend %grid-center;
 
     &__form {
-        border: 1px solid #ddd;
-        border-radius: toRem(16px);
-        padding: toRem(20px);
-        width: toRem(316px);
 
-        &__input:focus  {
+        &__input:focus {
             box-shadow: 0 0 0 0;
             border-color: $golden-rod;
         }
 
         &__cta {
-            background-color: $primary-yellow;
+            background-color: $greyish-green;
+            border: none;
             border-radius: toRem(8px);
-            border: 1px solid $secondary-yellow;
             color: $primary-black;
             margin-top: toRem(16px);
             padding: toRem(8px);
             width: 100%;
+
             &:hover {
-                background: #F7CA00;
-                border-color: #F2C200;
+                background-color: darken($greyish-yellow, $hover-darken-percentage);
                 cursor: pointer;
             }
+        }
+    }
+
+    &__wrapper {
+        &-left {
+            &__img {
+                height: 100%;
+                width: 100%;
+            }
+        }
+
+        &-right {
+            background: $primary-white;
+            padding: toRem(32px);
+            border-radius: toRem(8px);
+            box-shadow: $box-shadow-1;
         }
     }
 }

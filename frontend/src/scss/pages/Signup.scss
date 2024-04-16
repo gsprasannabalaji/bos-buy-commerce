@@ -1,0 +1,38 @@
+.signup_page {
+  @extend %grid-center;
+  .signup_form_section {
+    padding: toRem(32px);
+    border-radius: toRem(8px);
+    box-shadow: $box-shadow-1;
+
+    &__form {
+
+      &__button {
+        background-color: $greyish-green;
+        color: $primary-black;
+        border: none;
+        padding: toRem(12px) toRem(16px);
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: darken($greyish-yellow, $hover-darken-percentage);
+        }
+      }
+    }
+    &__login {
+      color: $primary-blue;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__image-container {
+    &__img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
