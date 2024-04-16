@@ -1,19 +1,19 @@
-import  { useState } from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import banner2 from '../assets/logo.webp';
-import { useSelector, useDispatch } from 'react-redux';
+import { useState } from "react";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import banner2 from "../assets/logo.webp";
+import { useSelector, useDispatch } from "react-redux";
 import { setToast } from "../features/toast/toastSlice";
-import { setIsLoading } from '../features/loader/loaderSlice';
-import Loader from '../common-components/Loader';
+import { setIsLoading } from "../features/loader/loaderSlice";
+import Loader from "../common-components/Loader";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -22,32 +22,36 @@ const SignUp = () => {
 
   const validateField = (name, value) => {
     switch (name) {
-      case 'email':
+      case "email":
         if (!/\S+@\S+\.\S+/.test(value)) {
-          return 'Invalid email format';
+          return "Invalid email format";
         }
         break;
-      case 'password':
-        if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/.test(value)) {
-          return 'Password must be at least 6 characters and include a combination of uppercase and lowercase letters, numbers, and symbols.';
+      case "password":
+        if (
+          !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/.test(
+            value
+          )
+        ) {
+          return "Password must be at least 6 characters and include a combination of uppercase and lowercase letters, numbers, and symbols.";
         }
         break;
-      case 'confirmPassword':
+      case "confirmPassword":
         if (value !== formData.password) {
-          return 'Passwords do not match';
+          return "Passwords do not match";
         }
         break;
       default:
         break;
     }
-    return '';
+    return "";
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
     const error = validateField(name, value);
-    setErrors({ ...errors, [name]: error });  // Update only the error for the changed field
+    setErrors({ ...errors, [name]: error }); // Update only the error for the changed field
   };
 
   const handleSubmit = async (event) => {
@@ -66,8 +70,11 @@ const SignUp = () => {
 
     try {
       dispatch(setIsLoading(true));
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/user/signup`, formData);
-      navigate('/login');
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/user/signup`,
+        formData
+      );
+      navigate("/login");
     } catch (err) {
       console.error(err);
       setTimeout(() => {
@@ -92,14 +99,12 @@ const SignUp = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <Container fluid className="signup-page">
+        <div className="signup-page">
           <Row className="justify-content-center">
-          <Col md={6} className="graphic-section px-0">
-              <img src={banner2} alt="Sign Up Visual" className="img-fluid" />
+            <Col sm={12} lg={6} className="graphic-section px-0">
+              <img src={banner2} alt="Sign Up Visual" className="" />
             </Col>
-            <Col md={6} className="signup-form-section ">
-              
-
+            <Col sm={12} lg={6} className="signup-form-section ">
               <Form onSubmit={handleSubmit}>
                 <h3>Create Account</h3>
 
@@ -151,7 +156,10 @@ const SignUp = () => {
                   </Form.Control.Feedback>
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
+                <Form.Group
+                  className="mb-3"
+                  controlId="formBasicConfirmPassword"
+                >
                   <Form.Label>Confirm Password</Form.Label>
                   <Form.Control
                     type="password"
@@ -176,7 +184,7 @@ const SignUp = () => {
               </Form>
             </Col>
           </Row>
-        </Container>
+        </div>
       )}
     </>
   );
