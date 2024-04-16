@@ -51,8 +51,7 @@ const SignUp = () => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
     const error = validateField(name, value);
-    setErrors({ ...errors, [name]: error }); // Update only the error for the changed field
-  };
+    setErrors({ ...errors, [name]: error }); 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
