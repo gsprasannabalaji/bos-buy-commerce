@@ -1,13 +1,19 @@
-import { useSelector, useDispatch } from "react-redux";
-import { Container, Row, Col, Image, Button } from "react-bootstrap";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Image,
+  Button,
+} from "react-bootstrap";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { addToCart, updateQuantity } from "../features/cart/cartSlice";
 import {
   setPrimaryImageURL,
   setProductDetailsData,
 } from "../features/products/productsSlice";
-import axios from "axios";
 import CustomToast from "../common-components/CustomToast";
 
 const ProductDetail = () => {
@@ -26,22 +32,22 @@ const ProductDetail = () => {
 
   const { productId } = useParams();
   const cartItems = useSelector((state) => state?.cart?.cartItems);
+  const dispatch = useDispatch();
   const [showToast, setShowToast] = useState(false);
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
-    (async () => {
+    async function fetchProductDetails() {
       try {
         const results = await axios.get(
           `${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/product/${productId}`
         );
         dispatch(setProductDetailsData(results?.data));
       } catch (error) {
-        setShowToast(true);
+        setShowToast(true); 
       }
-    })();
-  }, []);
+    }
+    fetchProductDetails();
+  }, [productId, dispatch]);
 
   const addToCartHandler = (product) => {
     const isItemsExist = cartItems?.find(
@@ -50,14 +56,8 @@ const ProductDetail = () => {
     if (isItemsExist) {
       dispatch(
         updateQuantity({
-          id: isItemsExist?.id,
-          name: isItemsExist?.name,
-          imageURL: isItemsExist?.imageURL,
-          rating: isItemsExist?.rating,
-          description: isItemsExist?.description,
-          price: isItemsExist?.price,
-          currentPrice: product?.price,
-          quantity: isItemsExist?.quantity + 1,
+          ...itemExists,
+          quantity: itemExists.quantity + 1,
         })
       );
     } else {
@@ -76,13 +76,26 @@ const ProductDetail = () => {
     }
   };
 
+  const getDescriptionAsList = (description) => {
+    const points = description
+      .split(/(?=\d+\.)/)
+      .filter((point) => point.trim() !== "");
+    return (
+      <ul>
+        {points.map((point, index) => (
+          <li key={index}>{point.replace(/^\d+\./, "").trim()}</li>
+        ))}
+      </ul>
+    );
+  };
+
   return (
     <>
       <Container className="mt-5 product-detail">
         {productDetailsData ? (
           <Row>
             <Col md={6} sm={12}>
-              <Image
+             <Image
                 src={primaryImageURL || productDetailsData?.imageURL}
                 fluid
               />
@@ -103,12 +116,12 @@ const ProductDetail = () => {
             </Col>
             <Col md={6} sm={12}>
               <h2>{productDetailsData?.productName}</h2>
-              <p
-                dangerouslySetInnerHTML={{
-                  __html: productDetailsData?.description,
-                }}
-              />
-              <p>Price: ${productDetailsData?.price}</p>
+              {productDetailsData?.description ? (
+                getDescriptionAsList(productDetailsData.description)
+              ) : (
+                <p>No description available.</p>
+              )}
+              <p>Price: ${productDetailsData.price}</p>
               <Button
                 variant="primary"
                 onClick={() => addToCartHandler(productDetailsData)}
@@ -118,9 +131,7 @@ const ProductDetail = () => {
             </Col>
           </Row>
         ) : (
-          <h1 className="d-flex justify-content-center align-items-center font-weight-bold">
-            Page Not found
-          </h1>
+          <h1 className="text-center">Product Not Found</h1>
         )}
         {showToast && (
           <CustomToast

@@ -1,0 +1,31 @@
+.table-custom {
+  th, td {
+    text-align: left;
+    vertical-align: middle;
+    padding: toRem(12px); 
+  }
+
+  th {
+    background-color: $primary-blue;
+    color: $primary-white;
+    text-align: center; 
+  }
+
+  tbody tr:nth-child(odd) {
+    background-color: $white-smoke;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: $primary-white;
+  }
+
+  tbody tr:hover {
+    background-color: $lightwhite-smoke; 
+  }
+}
+
+@media (max-width: 768px) {
+  .table-custom {
+    font-size: 14px;
+  }
+}

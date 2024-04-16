@@ -9,6 +9,7 @@ import AddProducts from "./pages/AddProducts";
 import ProductCategory from "./components/ProductCategory";
 import AdminHome from "./pages/AdminHome";
 import Login from "./pages/Login";
+import AllOrders from "./pages/AllOrders";
 import CustomToast from "./common-components/CustomToast";
 import { useSelector, useDispatch } from "react-redux";
 import { setToast } from "./features/toast/toastSlice";
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: WithLayout(AdminHome),
+  },
+  {
+    path: "/allorders",
+    element: WithLayout(AllOrders),
   },
   {
     path: "/login",
