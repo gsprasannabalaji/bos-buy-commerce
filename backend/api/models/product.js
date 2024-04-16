@@ -1,6 +1,14 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const previewImagesSchema = new Schema({
+  filename: {
+    type: String,
+  },
+  path: {
+    type: String,
+  },
+});
 
 const productSchema = new Schema(
   {
@@ -26,13 +34,14 @@ const productSchema = new Schema(
       required: true,
     },
     category: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     stock: {
       type: Number,
-      required: true
-  },
+      required: true,
+    },
+    previewImages: [previewImagesSchema],
   },
   { collection: "Productlist" }
 );
