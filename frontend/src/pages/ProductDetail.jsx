@@ -5,11 +5,6 @@ import {
   Col,
   Image,
   Button,
-  Modal,
-  Form,
-  ToastContainer,
-  InputGroup,
-  FormControl,
 } from "react-bootstrap";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,8 +30,7 @@ const ProductDetail = () => {
         );
         dispatch(setProductDetailsData(response.data));
       } catch (error) {
-        console.log("Error fetching product details:", error);
-        setShowToast(true);
+        setShowToast(true); 
       }
     }
     fetchProductDetails();
@@ -106,12 +100,14 @@ const ProductDetail = () => {
         ) : (
           <h1 className="text-center">Product Not Found</h1>
         )}
-        <CustomToast
-          toastMessage="Network error, please try again later."
-          showToast={showToast}
-          onClose={() => setShowToast(false)}
-          position="top-end"
-        />
+        {showToast && (
+          <CustomToast
+            toastMessage="Network Failed. Please try again later"
+            showToast={showToast}
+            toggleToast={() => setShowToast(false)}
+            position="top-end"
+          />
+        )}
       </Container>
     </>
   );
