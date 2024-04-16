@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Table, InputGroup, FormControl, Nav } from "react-bootstrap";
 import axios from "axios";
 
-function App() {
+function AllOrders() {
   const [orders, setOrders] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -56,8 +56,8 @@ function App() {
         <Row>
           <Col md={2} className="d-none d-md-block bg-light sidebar">
             <Nav className="flex-column">
-              <Nav.Item><Nav.Link href="#dashboard">Dashboard</Nav.Link></Nav.Item>
-              <Nav.Item><Nav.Link href="#orders">Orders</Nav.Link></Nav.Item>
+              <Nav.Item><Nav.Link href="/admin">Dashboard</Nav.Link></Nav.Item>
+              <Nav.Item><Nav.Link href="/allorders">Orders</Nav.Link></Nav.Item>
               <Nav.Item><Nav.Link href="#products">Products</Nav.Link></Nav.Item>
               <Nav.Item><Nav.Link href="#customers">Customers</Nav.Link></Nav.Item>
             </Nav>
@@ -102,4 +102,4 @@ function App() {
   );
 }
 
-export default App;
+export default AllOrders;
