@@ -1,0 +1,12 @@
+.product-detail {
+    &__imgwrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: toRem(8px);
+        justify-items: center;
+
+        &__img {
+            width: 100%;
+        }
+    }
+}
