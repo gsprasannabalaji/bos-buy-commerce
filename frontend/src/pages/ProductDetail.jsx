@@ -14,9 +14,6 @@ import {
   setPrimaryImageURL,
   setProductDetailsData,
 } from "../features/products/productsSlice";
-import axios from "axios";
-import CustomToast from "../common-components/CustomToast";
-import { setProductDetailsData } from "../features/products/productsSlice";
 import CustomToast from "../common-components/CustomToast";
 
 const ProductDetail = () => {
