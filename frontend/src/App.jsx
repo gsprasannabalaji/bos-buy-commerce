@@ -40,7 +40,7 @@ const router = createBrowserRouter([
     element: WithLayout(ProductCategory),
   },
   {
-    path: "/addproducts",
+    path: "/addProducts",
     element: WithLayout(AddProducts),
   },
   {
