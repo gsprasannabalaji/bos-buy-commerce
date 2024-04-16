@@ -90,7 +90,7 @@ const AddProducts = () => {
           <Container className="mt-5">
             <h1>Add Product</h1>
             <Form onSubmit={handleSubmit}>
-              <Form.Group className="mb-3" controlId="name">
+              <Form.Group className="mb-3" htmlFor="name">
                 <Form.Label>Product Name</Form.Label>
                 <Form.Control
                   type="text"
@@ -102,7 +102,7 @@ const AddProducts = () => {
                 />
               </Form.Group>
 
-              <Form.Group className="mb-3" controlId="imageUpload">
+              <Form.Group className="mb-3" htmlFor="imageUpload">
                 <Form.Label>Upload Image</Form.Label>
                 <Form.Control
                   id="imageUpload"
@@ -112,7 +112,7 @@ const AddProducts = () => {
                 />
               </Form.Group>
 
-              <Form.Group className="mb-3" controlId="description">
+              <Form.Group className="mb-3" htmlFor="description">
                 <Form.Label>Description</Form.Label>
                 <Form.Control
                   as="textarea"
@@ -125,7 +125,7 @@ const AddProducts = () => {
                 />
               </Form.Group>
 
-              <Form.Group className="mb-3" controlId="price">
+              <Form.Group className="mb-3" htmlFor="price">
                 <Form.Label>Price</Form.Label>
                 <Form.Control
                   type="number"
@@ -137,7 +137,7 @@ const AddProducts = () => {
                 />
               </Form.Group>
 
-              <Form.Group className="mb-3" controlId="stock">
+              <Form.Group className="mb-3" htmlFor="stock">
                 <Form.Label>Stock</Form.Label>
                 <Form.Control
                   type="number"
@@ -149,7 +149,7 @@ const AddProducts = () => {
                 />
               </Form.Group>
 
-              <Form.Group className="mb-3" controlId="category">
+              <Form.Group className="mb-3" htmlFor="category">
                 <Form.Label>Category</Form.Label>
                 <Form.Control
                   type="text"
