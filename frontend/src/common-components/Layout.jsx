@@ -10,14 +10,14 @@ const Layout = ({ children }) => {
   const isAdminRole = role === "admin";
   const location = useLocation();
   const currentPathname = location.pathname + location.search;
-  const adminRoutes = ["/admin", "/addProducts"];
+  const adminRoutes = ["/admin", "/addproducts", "/allorders"];
   const customerRoutes = [
     "/",
     "/cart",
     "/products",
     "/products/category",
     "/orders",
-    "/orders?payment=done"
+    "/orders?payment=done",
   ];
 
   const pattern = /^\/(products\/\w+|searchResults\?(category|q)=.+)$/;
@@ -52,7 +52,10 @@ const Layout = ({ children }) => {
       return <Navigate to="/admin" replace />;
     }
   } else {
-    if (customerRoutes?.includes(currentPathname) || matchesProductPattern(currentPathname)) {
+    if (
+      customerRoutes?.includes(currentPathname) ||
+      matchesProductPattern(currentPathname)
+    ) {
       return (
         <>
           <Header />
