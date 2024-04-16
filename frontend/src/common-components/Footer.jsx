@@ -23,19 +23,19 @@ const Footer = () => {
           <Col md={4}>
             <h5>Explore</h5>
             <ul className="list-unstyled">
-              <li><a href="/about-us">About Us</a></li>
-              <li><a href="/products/laptops">Laptops</a></li>
-              <li><a href="/products/desktops">Desktops</a></li>
-              <li><a href="/contact">Contact Us</a></li>
-              <li><a href="/support">Support</a></li>
+              <li><a href="/">About Us</a></li>
+              <li><a href="/">Laptops</a></li>
+              <li><a href="/">Desktops</a></li>
+              <li><a href="/">Contact Us</a></li>
+              <li><a href="/">Support</a></li>
             </ul>
           </Col>
           <Col md={4}>
             <h5>Customer Service</h5>
             <ul className="list-unstyled">
-              <li><a href="/faq">FAQ</a></li>
-              <li><a href="/return-policy">Return Policy</a></li>
-              <li><a href="/warranty">Warranty Information</a></li>
+              <li><a href="/">FAQ</a></li>
+              <li><a href="/">Return Policy</a></li>
+              <li><a href="/">Warranty Information</a></li>
             </ul>
             <h5>Contact Information</h5>
             <p>Phone: 800-123-4567</p>
