@@ -15,7 +15,6 @@
       margin-bottom: 0.5rem;
     }
 
-
     Form {
       h3 {
         font-size: 1.5rem;
@@ -23,55 +22,24 @@
         margin-bottom: 1.5rem;
       }
 
-      .form-group {
-        margin-bottom: 1rem;
-
-        .form-label {
-          font-size: 1rem;
-          color: #333;
-          font-weight: 600;
-          margin-bottom: 0.5rem;
-        }
-
-        .form-control {
-          font-size: 1rem;
-          border-radius: 0.25rem;
-          border: 1px solid #ced4da;
-          padding: 0.75rem 1rem;
-        }
-
-        .text-muted {
-          font-size: 0.875rem;
-          color: #6c757d;
-        }
-      }
-
       .btn-warning {
         background-color: #eaddbc;
         color: #333;
         border: none;
         padding: 0.75rem 1rem;
-        font-size: 1rem;
-        border-radius: 0.25rem;
         transition: background-color 0.3s ease;
 
         &:hover {
-          background-color: darken(#D3D4C4, 10%);
+          background-color: darken(#d3d4c4, 10%);
         }
       }
     }
+    a {
+      color: #007bff;
+      text-decoration: none;
 
-    .text-center {
-      margin-top: 1.5rem;
-      font-size: 0.9rem;
-
-      a {
-        color: #007bff;
-        text-decoration: none;
-
-        &:hover {
-          text-decoration: underline;
-        }
+      &:hover {
+        text-decoration: underline;
       }
     }
   }
