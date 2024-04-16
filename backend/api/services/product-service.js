@@ -77,8 +77,13 @@ exports.delete = async (id) => {
       path.basename(product.imageURL)
     );
     await Product.deleteOne({ _id: product._id });
-    fs.unlink(imagePath);
-    return { message: "Product deleted successfully" };
+    fs.unlink(imagePath, (err) => {
+      if (err) {
+        throw err;
+      } else {
+        return { message: "Product deleted successfully" };
+      }
+    });
   } catch (err) {
     throw err;
   }
