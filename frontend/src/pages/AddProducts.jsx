@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Container, Form, Button } from "react-bootstrap";
 import { setNewProduct } from "../features/products/productsSlice";
 import axios from "axios";
+import { setToast } from "../features/toast/toastSlice";
 
 const AddProducts = () => {
   const newProductData = useSelector((state) => state?.products?.newProduct);
@@ -9,11 +10,11 @@ const AddProducts = () => {
 
   const handleChange = (event) => {
     const { name, value } = event?.target;
-    if (name === "imageURL") {
+    if (name === "files") {
       dispatch(
         setNewProduct({
           ...newProductData,
-          [name]: event?.target?.files[0],
+          [name]: event?.target?.files,
         })
       );
     } else {
@@ -30,29 +31,70 @@ const AddProducts = () => {
     event.preventDefault();
     const formData = new FormData();
     Object.entries(newProductData).forEach(([key, value]) => {
-      if (Array.isArray(value)) { 
+      if (Array.isArray(value)) {
         value.forEach((item) => {
-          formData.append(`${key}[]`, item); 
+          formData.append(`${key}[]`, item);
         });
-      } else if (value instanceof File) { 
-        formData.append('file', value, value.name);
+      } else if (value instanceof FileList) {
+        for (let i = 0; i < value.length; i++) {
+          formData.append(`files`, value[i], value[i].name);
+        }
+      } else if (value instanceof File) {
+        formData.append("file", value, value.name);
       } else {
         formData.append(key, value);
       }
     });
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/product/create`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
+
+    const imageFiles = formData?.getAll("files");
+    if (imageFiles?.length < 4) {
+      dispatch(
+        setToast({
+          toast: {
+            message: "Minimum 4 images is required for the product",
+            variant: "error",
           },
-        }
+          showToast: true,
+        })
       );
-      window.location.reload();
-    } catch (error) {
-      console.error("Error Posting Data:", error.response.data);
+    } else {
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/product/create`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        dispatch(
+          setToast({
+            toast: {
+              message: "Product Created Successfully",
+              variant: "success",
+            },
+            showToast: true,
+          })
+        );
+        dispatch(
+          setNewProduct(null)
+        );
+        setTimeout(()=> {
+          window.location.reload();
+        }, 300)
+      } catch (error) {
+        console.error("Error Posting Data:", error.response.data);
+        dispatch(
+          setToast({
+            toast: {
+              message: error.response?.data?.message || "Product Creation Failed",
+              variant: "error",
+            },
+            showToast: true,
+          })
+        );
+      }
     }
   };
 
@@ -73,14 +115,15 @@ const AddProducts = () => {
             />
           </Form.Group>
 
-          <Form.Group htmlFor="imageUpload" className="mb-3">
+          <Form.Group htmlFor="files" className="mb-3">
             <Form.Label>Upload Image</Form.Label>
             <Form.Control
               id="imageUpload"
               label="Choose file"
               type="file"
               onChange={handleChange}
-              name="imageURL"
+              name="files"
+              multiple
             />
           </Form.Group>
 
