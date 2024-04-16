@@ -148,7 +148,7 @@ const AdminHome = () => {
             <Nav className="flex-column">
               <Nav.Item><Nav.Link href="/admin">Dashboard</Nav.Link></Nav.Item>
               <Nav.Item><Nav.Link href="/allorders">Orders</Nav.Link></Nav.Item>
-              <Nav.Item><Nav.Link href="#products">Products</Nav.Link></Nav.Item>
+              <Nav.Item><Nav.Link href="/addproducts">Create</Nav.Link></Nav.Item>
               <Nav.Item><Nav.Link onClick={handleLogOut}>Logout</Nav.Link></Nav.Item>
             </Nav>
           </Col>
