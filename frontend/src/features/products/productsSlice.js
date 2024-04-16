@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   productsList: [],
   productDetailsData: null,
-  topProducts: []
+  topProducts: [],
+  primaryImageURL: null,
 };
 
 export const productsSlice = createSlice({
@@ -21,10 +22,13 @@ export const productsSlice = createSlice({
     },
     setTopProducts: (state, action) => {
       state.topProducts = action.payload;
+    },
+    setPrimaryImageURL: (state, action) => {
+      state.primaryImageURL = action.payload;
     }
   },
 });
 
-export const { setSearchedProducts, setNewProduct, setProductDetailsData, setTopProducts } = productsSlice.actions;
+export const { setSearchedProducts, setNewProduct, setProductDetailsData, setTopProducts, setPrimaryImageURL } = productsSlice.actions;
 
 export default productsSlice.reducer;

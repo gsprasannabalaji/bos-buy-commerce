@@ -3,12 +3,26 @@ import { Container, Row, Col, Image, Button } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { addToCart, updateQuantity } from "../features/cart/cartSlice";
-import { setProductDetailsData } from "../features/products/productsSlice";
+import {
+  setPrimaryImageURL,
+  setProductDetailsData,
+} from "../features/products/productsSlice";
 import axios from "axios";
 import CustomToast from "../common-components/CustomToast";
 
 const ProductDetail = () => {
-  const productDetailsData = useSelector((state) => state?.products?.productDetailsData);
+  const productDetailsData = useSelector(
+    (state) => state?.products?.productDetailsData
+  );
+  const primaryImageURL = useSelector(
+    (state) => state?.products?.primaryImageURL
+  );
+  const additionalImages = [
+    "http://localhost:3002/assets/productImages/Acer.jpeg",
+    "http://localhost:3002/assets/productImages/Acer.jpeg",
+    "http://localhost:3002/assets/productImages/Asus.jpeg",
+    "http://localhost:3002/assets/productImages/laptop.jpeg",
+  ]; // this has to be updated once api is integrated with respective changes
 
   const { productId } = useParams();
   const cartItems = useSelector((state) => state?.cart?.cartItems);
@@ -64,15 +78,36 @@ const ProductDetail = () => {
 
   return (
     <>
-      <Container className="mt-5">
+      <Container className="mt-5 product-detail">
         {productDetailsData ? (
           <Row>
             <Col md={6} sm={12}>
-              <Image src={productDetailsData?.imageURL} fluid />
+              <Image
+                src={primaryImageURL || productDetailsData?.imageURL}
+                fluid
+              />
+              <div className="product-detail__imgwrapper">
+                {additionalImages?.map((imageUrl, index) => {
+                  return (
+                    <Image
+                      src={imageUrl}
+                      onClick={() => {
+                        dispatch(setPrimaryImageURL(additionalImages[index]));
+                      }}
+                      className="mt-3 product-detail__imgwrapper__img"
+                      key={index}
+                    />
+                  );
+                })}
+              </div>
             </Col>
             <Col md={6} sm={12}>
               <h2>{productDetailsData?.productName}</h2>
-              <p dangerouslySetInnerHTML={{__html: productDetailsData?.description}} />
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: productDetailsData?.description,
+                }}
+              />
               <p>Price: ${productDetailsData?.price}</p>
               <Button
                 variant="primary"
