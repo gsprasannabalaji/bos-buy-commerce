@@ -1,7 +1,6 @@
 const Stripe = require("stripe");
 const dotenv = require("dotenv");
 const Order = require("../models/orders");
-const Product = require("../models/product");
 const mongoose = require("mongoose");
 dotenv.config();
 
