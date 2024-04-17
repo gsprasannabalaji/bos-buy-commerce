@@ -125,7 +125,7 @@ const ProductDetail = () => {
                 ) : (
                   <p>No description available.</p>
                 )}
-                <p>Price: ${productDetailsData.price}</p>
+                <p className="fw-bold">Price: ${productDetailsData.price}</p>
                 <Button
                   variant="primary"
                   onClick={() => addToCartHandler(productDetailsData)}
@@ -135,7 +135,7 @@ const ProductDetail = () => {
               </Col>
             </Row>
             <h3 className="mb-3">Similar Products</h3>
-            <TopProducts variant="similar" />
+            <TopProducts />
           </>
         ) : (
           <h1 className="text-center">Product Not Found</h1>

@@ -4,7 +4,7 @@ import {
   MdOutlineRemoveCircleOutline,
 } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ShoppingCart = ({
   handleCheckout,
@@ -23,16 +23,22 @@ const ShoppingCart = ({
 
   return (
     <>
-      <Row>
+      <Row className="mb-5">
         <Col xs={12} lg={8}>
           {cartItems?.length > 0 &&
             cartItems?.map((item, index) => {
               return (
                 <Row key={index} className="mb-3">
                   <Col xs={2}>
-                    <img src={item?.imageURL} className="col-12" />
+                    <Link to={`/products/${item?.id}`} className="btn-link">
+                      <img src={item?.imageURL} className="col-12" />
+                    </Link>
                   </Col>
-                  <Col xs={4}>{item?.name}</Col>
+                  <Col xs={4}>
+                    <Link to={`/products/${item?.id}`} className="btn-link">
+                      {item?.name}
+                    </Link>
+                  </Col>
                   <Col xs={3} className="d-flex flex-column align-items-center">
                     <div className="d-flex">
                       {
