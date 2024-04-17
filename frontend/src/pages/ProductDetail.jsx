@@ -49,8 +49,14 @@ const ProductDetail = () => {
     if (isItemsExist) {
       dispatch(
         updateQuantity({
-          ...itemExists,
-          quantity: itemExists.quantity + 1,
+          id: isItemsExist?.id,
+          name: isItemsExist?.name,
+          imageURL: isItemsExist?.imageURL,
+          rating: isItemsExist?.rating,
+          description: isItemsExist?.description,
+          price: isItemsExist?.price,
+          currentPrice: product?.price,
+          quantity: isItemsExist?.quantity + 1,
         })
       );
     } else {
