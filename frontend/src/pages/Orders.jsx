@@ -53,12 +53,13 @@ const Orders = () => {
   return (
     <Container className="container">
       <h1>Your Orders</h1>
+      <hr />
       {orders.length > 0 ? (
         orders.map((order) => (
           <OrderItem key={order._id.$oid} order={order} />
         ))
       ) : (
-        <p>No orders found.</p>
+        <p className="no_result">No orders found.</p>
       )}
     </Container>
   );
