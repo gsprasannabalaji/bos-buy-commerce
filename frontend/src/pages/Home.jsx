@@ -3,6 +3,7 @@ import banner1 from "../assets/banner1.webp";
 import banner2 from "../assets/banner2.webp";
 import ProductCategory from "../components/ProductCategory";
 import TopProducts from "../components/TopProducts";
+import Footer from "../common-components/Footer";
 
 const Home = () => {
   return (
@@ -23,6 +24,7 @@ const Home = () => {
         <h2 className="my-4">Top Products</h2>
         <TopProducts />
       </Container>
+      <Footer />
     </>
   );
 };

@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+const { v4: uuidv4 } = require('uuid');
 
 exports.search = async (id) => {
   try {
@@ -23,24 +24,30 @@ const storage = multer.diskStorage({
       null,
       file.fieldname +
         "-" +
-        Date.now() +
+        Date.now() + '-' + uuidv4() +
         (ext === ".jpeg" || ext === ".jpg" ? ext : ".jpg")
     );
   },
 });
 
-const upload = multer({ storage: storage }).single("file");
+const upload = multer({ storage: storage, limits: { fileSize: 10 * 1024 * 1024 } }).array("files", 4);
 
 exports.create = (req, res) => {
   upload(req, res, async (err) => {
     if (err) {
       return { status: 404 };
     }
-    if (!req.file) {
+    if (!req.files) {
       return { status: 404 };
     }
-    const { name, description, price, category, stock } = req.body;
-    const pathfile = `http://localhost:3002/assets/productImages/${req.file.filename}`;
+    const uploadedFiles = req?.files?.map((file) => {
+      return {
+        filename: file?.filename,
+        path: `${DOMAIN_URL}/assets/productImages/${file.filename}`
+      };
+    });
+    const { name, description, price, category, stock } = req?.body;
+    const pathfile = uploadedFiles?.[0]?.filename ? `${DOMAIN_URL}/assets/productImages/${uploadedFiles?.[0]?.filename}` : "";
     const productId = new mongoose.Types.ObjectId();
     try {
       const value = new Product({
@@ -51,6 +58,7 @@ exports.create = (req, res) => {
         productId: productId,
         stock: stock,
         imageURL: pathfile,
+        previewImages: uploadedFiles
       });
       await value.save();
       return {
