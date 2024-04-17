@@ -117,7 +117,7 @@ const AddProducts = () => {
         dispatch(setNewProduct(null));
         setTimeout(() => {
           window.location.reload();
-        }, 300);
+        }, 3000);
       } catch (error) {
         console.error("Error Posting Data:", error.response.data);
         dispatch(
