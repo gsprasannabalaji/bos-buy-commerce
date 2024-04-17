@@ -5,7 +5,6 @@ import ProductCategory from "../components/ProductCategory";
 import TopProducts from "../components/TopProducts";
 import banner3 from "../assets/banner3.jpg";
 import { useNavigate } from "react-router-dom";
-import Footer from "../common-components/Footer";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -99,7 +98,6 @@ const Home = () => {
         <h2 className="my-4">Top Products</h2>
         <TopProducts />
       </Container>
-      <Footer />
     </>
   );
 };

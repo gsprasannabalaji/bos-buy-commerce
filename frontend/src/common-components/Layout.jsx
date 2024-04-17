@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import useCookieVerifier from "../custom-hooks/useCookieVerifier";
 import AdminHeader from "./AdminHeader";
 import Header from "./Header";
+import Footer from "./Footer";
 
 const Layout = ({ children }) => {
   const { isUserValid, role } = useSelector((state) => state?.user?.user);
@@ -60,6 +61,7 @@ const Layout = ({ children }) => {
         <>
           <Header />
           <div>{children}</div>
+          <Footer />
         </>
       );
     } else {
