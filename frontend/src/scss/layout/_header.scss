@@ -8,6 +8,10 @@
         }
     }
 
+    &__logo {
+        cursor: pointer;
+    }
+
     &__dropdown {
         &__toggle {
             color: $primary-black;

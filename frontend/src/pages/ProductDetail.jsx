@@ -48,7 +48,6 @@ const ProductDetail = () => {
           id: isItemsExist?.id,
           name: isItemsExist?.name,
           imageURL: isItemsExist?.imageURL,
-          rating: isItemsExist?.rating,
           description: isItemsExist?.description,
           price: isItemsExist?.price,
           currentPrice: product?.price,
@@ -61,7 +60,6 @@ const ProductDetail = () => {
           id: product?.productId,
           name: product?.productName,
           imageURL: product?.imageURL,
-          rating: product?.rating,
           description: product?.description,
           price: product?.price,
           currentPrice: product?.price,
@@ -104,6 +102,7 @@ const ProductDetail = () => {
                         className={`product-detail__imgwrapper ${
                           primaryImageURL === item?.path ? "active" : ""
                         }`}
+                        key={index}
                       >
                         <Image
                           src={item?.path}
@@ -125,7 +124,7 @@ const ProductDetail = () => {
                 ) : (
                   <p>No description available.</p>
                 )}
-                <p>Price: ${productDetailsData.price}</p>
+                <p className="fw-bold">Price: ${productDetailsData.price}</p>
                 <Button
                   variant="primary"
                   onClick={() => addToCartHandler(productDetailsData)}
@@ -135,7 +134,7 @@ const ProductDetail = () => {
               </Col>
             </Row>
             <h3 className="mb-3">Similar Products</h3>
-            <TopProducts variant="similar" />
+            <TopProducts />
           </>
         ) : (
           <h1 className="text-center">Product Not Found</h1>

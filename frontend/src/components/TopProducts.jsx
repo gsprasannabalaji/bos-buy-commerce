@@ -7,7 +7,7 @@ import axios from "axios";
 import { setIsLoading } from "../features/loader/loaderSlice";
 import Loader from "../common-components/Loader";
 
-const TopProducts = ({ variant = "top" }) => {
+const TopProducts = () => {
   const topProducts = useSelector((state) => state?.products?.topProducts);
   const isLoading = useSelector((state) => state?.loader?.isLoading);
   const dispatch = useDispatch();
@@ -38,59 +38,40 @@ const TopProducts = ({ variant = "top" }) => {
         <Loader />
       ) : (
         <>
-          {variant === "top" ? (
-            <Row className="top-products__row">
-              {topProducts?.length > 0 &&
-                topProducts?.map((product, index) => {
-                  return (
-                    <Col
-                      xs={6}
-                      sm={6}
-                      md={6}
-                      lg={3}
-                      key={index}
-                      className="top-products__card"
-                    >
-                      <div className="top-products__card__img-container">
-                        <Card.Img variant="top" src={product?.imageURL} />
-                      </div>
-                      <div className="top-products__card__info">
-                        <div className="top-products__card__info__title">
-                          <Link
-                            to={`/products/${product?.productId}`}
-                            className="btn-link"
-                          >
-                            {product?.productName}
-                          </Link>
-                        </div>
-                        <div className="top-products__card__info__price">
-                          Price: ${product?.price}
-                        </div>
-                      </div>
-                    </Col>
-                  );
-                })}
-            </Row>
-          ) : (
-            <div className="similar-products mb-4">
-              {topProducts?.length > 0 &&
-                topProducts?.map((product, index) => {
-                  return (
-                    <div className="similar-products__img__container">
-                      <Link
-                        to={`/products/${product?.productId}`}
-                        className="btn-link"
-                      >
-                        <Image
-                          src={product?.imageURL}
-                          className="similar-products__img"
-                        />
+          <Row className="top-products__row">
+            {topProducts?.length > 0 &&
+              topProducts?.map((product, index) => {
+                return (
+                  <Col
+                    xs={6}
+                    sm={6}
+                    md={6}
+                    lg={3}
+                    key={index}
+                    className="top-products__card"
+                  >
+                    <div className="top-products__card__img-container d-flex justify-content-center mb-2">
+                      <Link to={`/products/${product?.productId}`}>
+                        <Card.Img src={product?.imageURL} />
                       </Link>
                     </div>
-                  );
-                })}
-            </div>
-          )}
+                    <div className="top-products__card__info">
+                      <div className="top-products__card__info__title">
+                        <Link
+                          to={`/products/${product?.productId}`}
+                          className="btn-link"
+                        >
+                          {product?.productName}
+                        </Link>
+                      </div>
+                      <div className="top-products__card__info__price">
+                        Price: ${product?.price}
+                      </div>
+                    </div>
+                  </Col>
+                );
+              })}
+          </Row>
         </>
       )}
     </>
