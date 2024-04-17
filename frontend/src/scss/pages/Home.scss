@@ -1,0 +1,22 @@
+.carousel {
+  &__content1-right {
+    background-color: $silver;
+
+    &____subtitle {
+      color: $primary-white;
+    }
+  }
+  &__content2-right {
+    background-color: $dark-blue;
+    &__title {
+      color: $primary-white;
+    }
+    &__subtitle {
+      color: $primary-white;
+    }
+  }
+
+  &__content3-right {
+    background-color: $grey;
+  }
+}
