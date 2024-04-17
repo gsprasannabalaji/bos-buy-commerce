@@ -8,8 +8,8 @@ import {
   setPrimaryImageURL,
   setProductDetailsData,
 } from "../features/products/productsSlice";
-import CustomToast from "../common-components/CustomToast";
 import TopProducts from "../components/TopProducts";
+import { setToast } from "../features/toast/toastSlice";
 
 const ProductDetail = () => {
   const productDetailsData = useSelector(
@@ -18,10 +18,10 @@ const ProductDetail = () => {
   const primaryImageURL = useSelector(
     (state) => state?.products?.primaryImageURL
   );
+  const isLoading = useSelector((state) => state?.loader?.isLoading);
   const { productId } = useParams();
   const cartItems = useSelector((state) => state?.cart?.cartItems);
   const dispatch = useDispatch();
-  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     async function fetchProductDetails() {
@@ -32,7 +32,10 @@ const ProductDetail = () => {
         dispatch(setProductDetailsData(results?.data));
         dispatch(setPrimaryImageURL(results?.data?.previewImages?.[0]?.path));
       } catch (error) {
-        setShowToast(true);
+        dispatch(setToast({
+          message: "Network Failed. Please try again later",
+          variant: "error",
+        }));
       }
     }
     fetchProductDetails();
@@ -138,14 +141,6 @@ const ProductDetail = () => {
           </>
         ) : (
           <h1 className="text-center">Product Not Found</h1>
-        )}
-        {showToast && (
-          <CustomToast
-            toastMessage="Network Failed. Please try again later"
-            showToast={showToast}
-            toggleToast={() => setShowToast(false)}
-            position="top-end"
-          />
         )}
       </Container>
     </>
