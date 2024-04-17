@@ -89,12 +89,13 @@ const Header = () => {
         sticky="top"
         key={expand}
         expand={expand}
-        className="bg-body-tertiary mb-3"
+        className="mb-3 header__navbar"
       >
         <Container className="gap-3 flex-nowrap">
           <Navbar.Brand onClick={() => navigate("/")}>BOSBuy</Navbar.Brand>
-          <InputGroup className="w-auto flex-grow-1">
+          <div className="w-auto flex-grow-1 header__navbar__search-bar position-relative">
             <FormControl
+              className="header__navbar__search-bar__input"
               placeholder="Search for laptops"
               aria-label="Search"
               aria-describedby="search-icon"
@@ -102,10 +103,10 @@ const Header = () => {
               onKeyUp={handleKeyPress}
               value={searchQuery}
             />
-            <Button variant="primary" onClick={handleSearchSubmit}>
-              <BiSearch size={16} />
+            <Button variant="primary" className="header__navbar__search-bar__cta" onClick={handleSearchSubmit}>
+              <BiSearch size={16} className="header__navbar__search-bar__cta-icon" />
             </Button>
-          </InputGroup>
+          </div>
           <div className="position-relative header__cart">
             <FaShoppingCart
               size={32}
@@ -115,7 +116,7 @@ const Header = () => {
             />
             {cartQuantitites > 0 && (
               <Badge
-                bg="primary"
+                bg="white"
                 className="position-absolute header__cart__badge"
                 onClick={handleCartClick}
                 role="button"

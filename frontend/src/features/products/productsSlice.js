@@ -5,6 +5,7 @@ const initialState = {
   productDetailsData: null,
   topProducts: [],
   primaryImageURL: null,
+  newProduct: null
 };
 
 export const productsSlice = createSlice({

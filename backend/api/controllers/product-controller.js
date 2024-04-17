@@ -19,8 +19,8 @@ exports.search = async (req, res) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const uploadResponse = await productService.create(req, res, next);
-    if (uploadResponse.status === 404) {
+    const uploadResponse = await productService?.create(req, res, next);
+    if (uploadResponse?.status === 404) {
       res.status(404).send({ message: "Error Occured" });
     } else {
       res.json(uploadResponse);
