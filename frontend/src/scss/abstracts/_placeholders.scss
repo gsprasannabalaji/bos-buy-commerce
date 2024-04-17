@@ -6,7 +6,9 @@
 
 %link-color {
     color: $primary-black;
+    text-decoration: none;
     &:hover {
         color: $orange;
+        text-decoration: underline;
     }
 }

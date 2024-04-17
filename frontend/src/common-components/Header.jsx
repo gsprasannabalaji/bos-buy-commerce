@@ -165,10 +165,10 @@ const Header = () => {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item onClick={() => navigate("/orders")}>
+                      <Dropdown.Item onClick={() => navigate("/orders")} className="header__dropdown__item">
                         Orders
                       </Dropdown.Item>
-                      <Dropdown.Item onClick={handleLogOut}>
+                      <Dropdown.Item onClick={handleLogOut} className="header__dropdown__item">
                         Logout
                       </Dropdown.Item>
                     </Dropdown.Menu>
