@@ -137,34 +137,34 @@ const AddProducts = () => {
   return (
     <Container fluid>
       <Row>
-      <Col md={2} className="d-none vh-100 d-md-block bg-light sidebar">
-            <Nav className="flex-column">
-              <Nav.Item>
-                <Nav.Link href="/admin" className="btn-link">
-                  <FontAwesomeIcon icon={faTachometerAlt} className="me-2" />
-                  Dashboard
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="/allorders" className="btn-link">
-                  <FontAwesomeIcon icon={faBoxOpen} className="me-2" />
-                  Orders
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="/addproducts" className="btn-link">
-                  <FontAwesomeIcon icon={faPlusSquare} className="me-2" />
-                  Create
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link onClick={handleLogOut} className="btn-link">
-                  <FontAwesomeIcon icon={faSignOutAlt} className="me-2" />
-                  Logout
-                </Nav.Link>
-              </Nav.Item>
-            </Nav>
-          </Col>
+        <Col md={2} className="d-none vh-100 d-md-block bg-light sidebar">
+          <Nav className="flex-column">
+            <Nav.Item>
+              <Nav.Link href="/admin" className="btn-link">
+                <FontAwesomeIcon icon={faTachometerAlt} className="me-2" />
+                Dashboard
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link href="/allorders" className="btn-link">
+                <FontAwesomeIcon icon={faBoxOpen} className="me-2" />
+                Orders
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link href="/addproducts" className="btn-link">
+                <FontAwesomeIcon icon={faPlusSquare} className="me-2" />
+                Create
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link onClick={handleLogOut} className="btn-link">
+                <FontAwesomeIcon icon={faSignOutAlt} className="me-2" />
+                Logout
+              </Nav.Link>
+            </Nav.Item>
+          </Nav>
+        </Col>
         <Col md={10}>
           <Container className="mt-5">
             <h1 className="mb-4">
@@ -247,14 +247,19 @@ const AddProducts = () => {
                 <InputGroup.Text>
                   <FontAwesomeIcon icon={faSitemap} />
                 </InputGroup.Text>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter category"
+                <Form.Select
+                  type="select"
+                  placeholder="Select category"
                   value={newProductData?.category || ""}
                   onChange={handleChange}
                   name="category"
                   id="category"
-                />
+                >
+                  <option value="">Select a Category</option>
+                  <option value="laptops">Laptop</option>
+                  <option value="desktops">Desktop</option>
+                  <option value="gaming">Gaming Laptop</option>
+                </Form.Select>
               </InputGroup>
 
               <Button variant="primary" type="submit">
