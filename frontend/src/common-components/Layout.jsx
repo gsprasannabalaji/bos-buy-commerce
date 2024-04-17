@@ -33,7 +33,7 @@ const Layout = ({ children }) => {
 
   if (isUserValid && currentPathname === "/login") {
     if (isAdminRole) {
-      return <Navigate to="/admin" replace />;
+      return <Navigate to="/login" replace />;
     } else {
       return <Navigate to="/" replace />;
     }
