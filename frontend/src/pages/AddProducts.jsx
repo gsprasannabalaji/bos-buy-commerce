@@ -1,8 +1,25 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Container, Row, Col, Form, Button, Nav } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Form,
+  Button,
+  Nav,
+  InputGroup,
+} from "react-bootstrap";
 import { setNewProduct } from "../features/products/productsSlice";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faUpload,
+  faTag,
+  faDollarSign,
+  faWarehouse,
+  faSitemap,
+  faPlusCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import { setToast } from "../features/toast/toastSlice";
 
 const AddProducts = () => {
@@ -114,7 +131,7 @@ const AddProducts = () => {
   return (
     <Container fluid>
       <Row>
-        <Col md={2} className="d-none d-md-block bg-light sidebar">
+        <Col md={2} className="d-none d-md-block bg-light sidebar vh-100">
           <Nav className="flex-column">
             <Nav.Item>
               <Nav.Link href="/admin">Dashboard</Nav.Link>
@@ -132,10 +149,15 @@ const AddProducts = () => {
         </Col>
         <Col md={10}>
           <Container className="mt-5">
-            <h1>Add Product</h1>
+            <h1>
+              <FontAwesomeIcon icon={faPlusCircle} />
+              Add Product
+            </h1>
             <Form onSubmit={handleSubmit}>
-              <Form.Group className="mb-3" htmlFor="name">
-                <Form.Label>Product Name</Form.Label>
+              <InputGroup className="mb-3" htmlFor="name">
+                <InputGroup.Text>
+                  <FontAwesomeIcon icon={faTag} />
+                </InputGroup.Text>
                 <Form.Control
                   type="text"
                   placeholder="Enter product name"
@@ -144,10 +166,12 @@ const AddProducts = () => {
                   name="name"
                   id="name"
                 />
-              </Form.Group>
+              </InputGroup>
 
-              <Form.Group htmlFor="files" className="mb-3">
-                <Form.Label>Upload Image</Form.Label>
+              <InputGroup className="mb-3" htmlFor="imageUpload">
+                <InputGroup.Text>
+                  <FontAwesomeIcon icon={faUpload} />
+                </InputGroup.Text>
                 <Form.Control
                   id="imageUpload"
                   label="Choose file"
@@ -156,23 +180,27 @@ const AddProducts = () => {
                   name="files"
                   multiple
                 />
-              </Form.Group>
+              </InputGroup>
 
-              <Form.Group className="mb-3" htmlFor="description">
-                <Form.Label>Description</Form.Label>
+              <InputGroup className="mb-3" htmlFor="description">
+                <InputGroup.Text>
+                  <FontAwesomeIcon icon={faSitemap} />
+                </InputGroup.Text>
                 <Form.Control
                   as="textarea"
                   rows={3}
-                  placeholder="Enter product description"
+                  placeholder="Enter product description (Add as points)"
                   value={newProductData?.description || ""}
                   onChange={handleChange}
                   name="description"
                   id="description"
                 />
-              </Form.Group>
+              </InputGroup>
 
-              <Form.Group className="mb-3" htmlFor="price">
-                <Form.Label>Price</Form.Label>
+              <InputGroup className="mb-3" htmlFor="price">
+                <InputGroup.Text>
+                  <FontAwesomeIcon icon={faDollarSign} />
+                </InputGroup.Text>
                 <Form.Control
                   type="number"
                   placeholder="Enter price"
@@ -181,10 +209,12 @@ const AddProducts = () => {
                   name="price"
                   id="price"
                 />
-              </Form.Group>
+              </InputGroup>
 
-              <Form.Group className="mb-3" htmlFor="stock">
-                <Form.Label>Stock</Form.Label>
+              <InputGroup className="mb-3" htmlFor="stock">
+                <InputGroup.Text>
+                  <FontAwesomeIcon icon={faWarehouse} />
+                </InputGroup.Text>
                 <Form.Control
                   type="number"
                   placeholder="Enter stock"
@@ -193,10 +223,12 @@ const AddProducts = () => {
                   name="stock"
                   id="stock"
                 />
-              </Form.Group>
+              </InputGroup>
 
-              <Form.Group className="mb-3" htmlFor="category">
-                <Form.Label>Category</Form.Label>
+              <InputGroup className="mb-3" htmlFor="category">
+                <InputGroup.Text>
+                  <FontAwesomeIcon icon={faSitemap} />
+                </InputGroup.Text>
                 <Form.Control
                   type="text"
                   placeholder="Enter category"
@@ -205,10 +237,10 @@ const AddProducts = () => {
                   name="category"
                   id="category"
                 />
-              </Form.Group>
+              </InputGroup>
 
               <Button variant="primary" type="submit">
-                Add Product
+                <FontAwesomeIcon icon={faPlusCircle} /> Add Product
               </Button>
             </Form>
           </Container>
