@@ -9,6 +9,7 @@ import {
   setProductDetailsData,
 } from "../features/products/productsSlice";
 import CustomToast from "../common-components/CustomToast";
+import TopProducts from "../components/TopProducts";
 
 const ProductDetail = () => {
   const productDetailsData = useSelector(
@@ -87,51 +88,55 @@ const ProductDetail = () => {
     <>
       <Container className="mt-5 product-detail">
         {productDetailsData ? (
-          <Row className="mb-5">
-            <Col md={6} sm={12}>
-              <div className="product-detail__img-container">
-                <Image
-                  src={primaryImageURL || productDetailsData?.imageURL}
-                  className="product-detail__img-container__img"
-                />
-              </div>
-              <div className="product-detail__preview-container mb-5">
-                {productDetailsData?.previewImages?.map((item, index) => {
-                  return (
-                    <div
-                      className={`product-detail__imgwrapper ${
-                        primaryImageURL === item?.path ? "active" : ""
-                      }`}
-                    >
-                      <Image
-                        src={item?.path}
-                        onClick={() => {
-                          dispatch(setPrimaryImageURL(item?.path));
-                        }}
-                        className="mt-3 product-detail__imgwrapper__img"
-                        key={index}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            </Col>
-            <Col md={6} sm={12}>
-              <h2>{productDetailsData?.productName}</h2>
-              {productDetailsData?.description ? (
-                getDescriptionAsList(productDetailsData.description)
-              ) : (
-                <p>No description available.</p>
-              )}
-              <p>Price: ${productDetailsData.price}</p>
-              <Button
-                variant="primary"
-                onClick={() => addToCartHandler(productDetailsData)}
-              >
-                Add to Cart
-              </Button>
-            </Col>
-          </Row>
+          <>
+            <Row className="mb-3">
+              <Col md={6} sm={12}>
+                <div className="product-detail__img-container">
+                  <Image
+                    src={primaryImageURL || productDetailsData?.imageURL}
+                    className="product-detail__img-container__img"
+                  />
+                </div>
+                <div className="product-detail__preview-container mb-5">
+                  {productDetailsData?.previewImages?.map((item, index) => {
+                    return (
+                      <div
+                        className={`product-detail__imgwrapper ${
+                          primaryImageURL === item?.path ? "active" : ""
+                        }`}
+                      >
+                        <Image
+                          src={item?.path}
+                          onClick={() => {
+                            dispatch(setPrimaryImageURL(item?.path));
+                          }}
+                          className="mt-3 product-detail__imgwrapper__img"
+                          key={index}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              </Col>
+              <Col md={6} sm={12}>
+                <h2>{productDetailsData?.productName}</h2>
+                {productDetailsData?.description ? (
+                  getDescriptionAsList(productDetailsData.description)
+                ) : (
+                  <p>No description available.</p>
+                )}
+                <p>Price: ${productDetailsData.price}</p>
+                <Button
+                  variant="primary"
+                  onClick={() => addToCartHandler(productDetailsData)}
+                >
+                  Add to Cart
+                </Button>
+              </Col>
+            </Row>
+            <h3 className="mb-3">Similar Products</h3>
+            <TopProducts variant="similar" />
+          </>
         ) : (
           <h1 className="text-center">Product Not Found</h1>
         )}
