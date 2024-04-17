@@ -10,7 +10,7 @@ const Home = () => {
   const navigate = useNavigate();
   return (
     <>
-      <Carousel class="carousel">
+      <Carousel className="carousel">
         <Carousel.Item>
           <div className="row">
             <div className="col-xs-12 col-lg-8 pe-0">
