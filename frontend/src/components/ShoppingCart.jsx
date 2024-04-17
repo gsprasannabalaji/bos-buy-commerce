@@ -98,7 +98,7 @@ const ShoppingCart = ({
           {isUserValid ? (
             cartItems?.length > 0 && (
               <Button
-                variant="warning"
+                variant="primary"
                 disabled={
                   cartItems?.length > purchaseLimit || checkQuantityLength()
                 }
@@ -111,7 +111,7 @@ const ShoppingCart = ({
             )
           ) : (
             <Button
-              variant="warning"
+              variant="primary"
               onClick={() => {
                 navigate("/login");
               }}
