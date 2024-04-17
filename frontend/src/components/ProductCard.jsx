@@ -6,8 +6,6 @@ const ProductCard = ({
   productId,
   productName,
   productImg,
-  productRating,
-  productDesc,
   productPrice,
   handlerClick,
   btnName,
@@ -21,7 +19,6 @@ const ProductCard = ({
         <Card.Body>
           <Card.Title><Link to={`/products/${productId}`} className="btn-link">{productName}</Link></Card.Title>
           <Card.Text>Price : {productPrice}</Card.Text>
-          <p>Rating: {productRating}</p>
           <Button variant="primary" onClick={() => handlerClick(product)}>
             {btnName}
           </Button>

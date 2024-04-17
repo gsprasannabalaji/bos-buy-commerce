@@ -78,7 +78,6 @@ const SearchResults = () => {
           id: isItemsExist?.id,
           name: isItemsExist?.name,
           imageURL: isItemsExist?.imageURL,
-          rating: isItemsExist?.rating,
           description: isItemsExist?.description,
           price: isItemsExist?.price,
           currentPrice: isItemsExist?.price,
@@ -91,7 +90,6 @@ const SearchResults = () => {
           id: product?.productId,
           name: product?.productName,
           imageURL: product?.imageURL,
-          rating: product?.rating,
           description: product?.description,
           price: product?.price,
           currentPrice: product?.price,
@@ -122,7 +120,6 @@ const SearchResults = () => {
                   productName={item?.productName}
                   productDesc={item?.description}
                   productImg={item?.imageURL}
-                  productRating={item?.rating}
                   productPrice={item?.price}
                   product={item}
                   handlerClick={(product) => addToCartHandler(product)}
