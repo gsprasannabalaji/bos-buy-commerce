@@ -67,17 +67,27 @@ const AdminHome = () => {
     if (!productIdToDelete) return;
     try {
       await axios.delete(`${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/product/delete/${productIdToDelete}`);
+      dispatch(
+        setToast({
+          toast: {
+            message: "Product Deleted Successfully",
+            variant: "success",
+          },
+          showToast: true,
+        })
+      );
       fetchProducts(); 
-      dispatch(setToast({
-        message: "Product Deleted Successfully",
-        variant: "success",
-      }));
     } catch (error) {
       console.error("Failed to delete product:", error);
-      dispatch(setToast({
-        message: "Failed to delete product",
-        variant: "error",
-      }));
+      dispatch(
+        setToast({
+          toast: {
+            message: "Failed to delete product",
+            variant: "error",
+          },
+          showToast: true,
+        })
+      );
     }
     setShowDeleteModal(false);
     setProductIdToDelete(null);
