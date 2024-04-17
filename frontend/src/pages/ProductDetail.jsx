@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Image,
-  Button,
-} from "react-bootstrap";
+import { Container, Row, Col, Image, Button } from "react-bootstrap";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -35,8 +29,9 @@ const ProductDetail = () => {
           `${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/product/${productId}`
         );
         dispatch(setProductDetailsData(results?.data));
+        dispatch(setPrimaryImageURL(results?.data?.previewImages?.[0]?.path));
       } catch (error) {
-        setShowToast(true); 
+        setShowToast(true);
       }
     }
     fetchProductDetails();
@@ -92,23 +87,31 @@ const ProductDetail = () => {
     <>
       <Container className="mt-5 product-detail">
         {productDetailsData ? (
-          <Row>
+          <Row className="mb-5">
             <Col md={6} sm={12}>
-             <Image
-                src={primaryImageURL || productDetailsData?.imageURL}
-                fluid
-              />
-              <div className="product-detail__imgwrapper">
+              <div className="product-detail__img-container">
+                <Image
+                  src={primaryImageURL || productDetailsData?.imageURL}
+                  className="product-detail__img-container__img"
+                />
+              </div>
+              <div className="product-detail__preview-container mb-5">
                 {productDetailsData?.previewImages?.map((item, index) => {
                   return (
-                    <Image
-                      src={item?.path}
-                      onClick={() => {
-                        dispatch(setPrimaryImageURL(item?.path));
-                      }}
-                      className="mt-3 product-detail__imgwrapper__img"
-                      key={index}
-                    />
+                    <div
+                      className={`product-detail__imgwrapper ${
+                        primaryImageURL === item?.path ? "active" : ""
+                      }`}
+                    >
+                      <Image
+                        src={item?.path}
+                        onClick={() => {
+                          dispatch(setPrimaryImageURL(item?.path));
+                        }}
+                        className="mt-3 product-detail__imgwrapper__img"
+                        key={index}
+                      />
+                    </div>
                   );
                 })}
               </div>

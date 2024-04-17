@@ -1,12 +1,31 @@
 .product-detail {
-    &__imgwrapper {
+
+    &__img-container {
+        height: toRem(350px);
+        &__img {
+            height: toRem(310px);
+            width: 100%;
+            object-fit: contain;
+        }
+    }
+
+    &__preview-container {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
         gap: toRem(8px);
         justify-items: center;
+    }
 
+    &__imgwrapper {
+        border: toRem(1px) solid $primary;
+        border-radius: toRem(12px);
+        padding: toRem(12px);
         &__img {
             width: 100%;
         }
+        &.active {
+            border: toRem(1px) solid $orange;
+        }
     }
+
 }
