@@ -3,6 +3,8 @@
         &__badge {
             top: toRem(-4px);
             right: toRem(-12px);
+            color: $primary-black;
+            border-radius: 50%;
         }
     }
 
@@ -10,6 +12,7 @@
         &__toggle {
             color: $primary-black;
             border: none;
+
             &::after {
                 display: none;
             }
@@ -19,7 +22,9 @@
                 text-decoration: underline;
             }
 
-            &:active, &:first-child:active, &.show {
+            &:active,
+            &:first-child:active,
+            &.show {
                 border: none;
             }
         }
@@ -27,8 +32,35 @@
 
     &__cta {
         &--login {
-            &:active , &:first-child:active {
-                border:none;
+
+            &:active,
+            &:first-child:active {
+                border: none;
+            }
+        }
+    }
+
+    &__navbar {
+        background-color: $greyish-green;
+
+        &__search-bar {
+            &__input {
+                border-radius: toRem(24px);
+                padding: toRem(8px) toRem(52px) toRem(8px) toRem(16px);
+            }
+
+            &__cta {
+                position: absolute;
+                right: toRem(12px);
+                border-radius: 50%;
+                padding: toRem(4px) toRem(10px);
+                top: toRem(4px);
+                height: toRem(32px);
+                width: toRem(36px);
+
+                &-icon {
+                    margin-top: toRem(-4px);
+                }
             }
         }
     }

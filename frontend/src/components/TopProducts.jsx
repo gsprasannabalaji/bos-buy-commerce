@@ -54,7 +54,7 @@ const TopProducts = () => {
                   </div>
                   <div className="top-products__card__info">
                     <div className="top-products__card__info__title">
-                      <Link to={`/products/${product?.productId}`}>
+                      <Link to={`/products/${product?.productId}`} className="btn-link">
                         {product?.productName}
                       </Link>
                     </div>

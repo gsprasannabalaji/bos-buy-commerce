@@ -1,7 +1,9 @@
+// abstracts
+@import './abstracts/variables';
+
 @import 'bootstrap/scss/bootstrap';
 
 // abstracts
-@import './abstracts/variables';
 @import './abstracts/functions';
 @import './abstracts/placeholders';
 
@@ -13,6 +15,7 @@
 @import './common-components/Loader.scss';
 
 // components
+@import 'components/buttons';
 @import 'components/ProductCard.scss';
 @import 'components/ProductCategory.scss';
 @import 'components/TopProducts.scss';
