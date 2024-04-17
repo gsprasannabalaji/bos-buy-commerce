@@ -102,6 +102,7 @@ const ProductDetail = () => {
                         className={`product-detail__imgwrapper ${
                           primaryImageURL === item?.path ? "active" : ""
                         }`}
+                        key={index}
                       >
                         <Image
                           src={item?.path}
