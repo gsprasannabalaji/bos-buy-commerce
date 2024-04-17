@@ -19,7 +19,7 @@ const ProductCard = ({
       <Card className="product-card flex-row mb-4">
         <Card.Img src={productImg} className="p-4" />
         <Card.Body>
-          <Card.Title><Link to={`/products/${productId}`}>{productName}</Link></Card.Title>
+          <Card.Title><Link to={`/products/${productId}`} className="btn-link">{productName}</Link></Card.Title>
           <Card.Text>Price : {productPrice}</Card.Text>
           <p>Rating: {productRating}</p>
           <Button variant="primary" onClick={() => handlerClick(product)}>
