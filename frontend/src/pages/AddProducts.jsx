@@ -87,7 +87,7 @@ const AddProducts = () => {
   return (
     <Container fluid>
       <Row>
-        <Col md={2} className="d-none d-md-block bg-light sidebar">
+        <Col md={2} className="d-none d-md-block bg-light sidebar vh-100">
           <Nav className="flex-column">
             <Nav.Item>
               <Nav.Link href="/admin">Dashboard</Nav.Link>
