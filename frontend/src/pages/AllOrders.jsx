@@ -8,6 +8,7 @@ import {
   FormControl,
   Nav,
 } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -16,10 +17,15 @@ import {
   faPlusSquare,
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { setUser } from "../features/user/userSlice";
 
 function AllOrders() {
   const [orders, setOrders] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((state) => state?.user?.user);
 
   useEffect(() => {
     fetchOrders();
@@ -43,7 +49,15 @@ function AllOrders() {
         { withCredentials: true }
       );
       localStorage.removeItem("userDetails");
-      window.location.reload();
+      dispatch(
+        setUser({
+          ...user,
+          email: "",
+          password: "",
+          isUserValid: false,
+        })
+      );
+      navigate("/login", { replace: true });
     } catch (error) {
       console.error(error);
     }
