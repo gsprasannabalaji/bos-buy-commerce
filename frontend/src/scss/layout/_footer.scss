@@ -1,0 +1,7 @@
+.footer__cta {
+    color: $primary;
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
+}
