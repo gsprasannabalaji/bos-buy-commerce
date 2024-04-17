@@ -128,7 +128,7 @@ const SearchResults = () => {
               );
             })
           ) : (
-            <h1 className="d-flex justify-content-center align-items-center font-weight-bold">
+            <h1 className="no_results">
               No results found
             </h1>
           )}
