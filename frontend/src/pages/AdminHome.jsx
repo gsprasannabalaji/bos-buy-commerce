@@ -14,7 +14,7 @@ import {
 } from "react-bootstrap";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setToast } from "../features/toast/toastSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -23,8 +23,10 @@ import {
   faPlusSquare,
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
+import { setUser } from "../features/user/userSlice";
 
 const AdminHome = () => {
+  const user = useSelector((state) => state?.user?.user);
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -42,14 +44,18 @@ const AdminHome = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/product/getAll`);
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/product/getAll`
+      );
       setProducts(response.data);
     } catch (error) {
       console.error("Failed to fetch products:", error);
-      dispatch(setToast({
-        message: error.response?.data?.message || "Network Error",
-        variant: "error",
-      }));
+      dispatch(
+        setToast({
+          message: error.response?.data?.message || "Network Error",
+          variant: "error",
+        })
+      );
     }
   };
 
@@ -98,7 +104,7 @@ const AdminHome = () => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setEditProduct(prev => ({ ...prev, [name]: value }));
+    setEditProduct((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleLogOut = async () => {
@@ -108,7 +114,15 @@ const AdminHome = () => {
         { withCredentials: true }
       );
       localStorage.removeItem("userDetails");
-      window.location.reload();
+      dispatch(
+        setUser({
+          ...user,
+          email: "",
+          password: "",
+          isUserValid: false,
+        })
+      );
+      navigate("/login", { replace: true });
     } catch (error) {
       console.error(error);
     }
@@ -117,19 +131,28 @@ const AdminHome = () => {
   const handleSaveChanges = async () => {
     if (!editProduct) return;
     try {
-      await axios.put(`${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/product/edit/${editProduct.productId}`, editProduct);
-      fetchProducts();  
+      await axios.put(
+        `${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/product/edit/${
+          editProduct.productId
+        }`,
+        editProduct
+      );
+      fetchProducts();
       setShowModal(false);
-      dispatch(setToast({
-        message: "Product Updated Successfully",
-        variant: "success",
-      }));
+      dispatch(
+        setToast({
+          message: "Product Updated Successfully",
+          variant: "success",
+        })
+      );
     } catch (error) {
       console.error("Failed to update product:", error);
-      dispatch(setToast({
-        message: "Failed to update product",
-        variant: "error",
-      }));
+      dispatch(
+        setToast({
+          message: "Failed to update product",
+          variant: "error",
+        })
+      );
     }
   };
 
@@ -138,9 +161,10 @@ const AdminHome = () => {
     setCurrentPage(1);
   };
 
-  const filteredProducts = products.filter(product =>
-    product.productName.toLowerCase().includes(searchTerm) ||
-    product.description.toLowerCase().includes(searchTerm)
+  const filteredProducts = products.filter(
+    (product) =>
+      product.productName.toLowerCase().includes(searchTerm) ||
+      product.description.toLowerCase().includes(searchTerm)
   );
 
   const pageCount = Math.ceil(filteredProducts.length / itemsPerPage);
@@ -159,10 +183,17 @@ const AdminHome = () => {
       <td>{product.stock}</td>
       <td>{product.description}</td>
       <td>
-        <Button variant="warning" onClick={() => handleEdit(product)} className="mb-2 w-100">
+        <Button
+          variant="warning"
+          onClick={() => handleEdit(product)}
+          className="mb-2 w-100"
+        >
           Edit
         </Button>
-        <Button variant="danger" onClick={() => handleDeleteProduct(product.productId)}>
+        <Button
+          variant="danger"
+          onClick={() => handleDeleteProduct(product.productId)}
+        >
           Delete
         </Button>
       </td>
@@ -173,7 +204,7 @@ const AdminHome = () => {
     <>
       <Container fluid>
         <Row>
-        <Col md={2} className="d-none d-md-block bg-light sidebar">
+          <Col md={2} className="d-none d-md-block bg-light sidebar">
             <Nav className="flex-column">
               <Nav.Item>
                 <Nav.Link href="/admin" className="btn-link">
@@ -214,7 +245,9 @@ const AdminHome = () => {
                     value={searchTerm}
                     onChange={handleSearchChange}
                   />
-                  <InputGroup.Text><i className="fa fa-search"></i></InputGroup.Text>
+                  <InputGroup.Text>
+                    <i className="fa fa-search"></i>
+                  </InputGroup.Text>
                 </InputGroup>
               </Col>
             </Row>
@@ -275,8 +308,12 @@ const AdminHome = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>Close</Button>
-          <Button variant="primary" onClick={handleSaveChanges}>Save Changes</Button>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSaveChanges}>
+            Save Changes
+          </Button>
         </Modal.Footer>
       </Modal>
 
@@ -286,8 +323,12 @@ const AdminHome = () => {
         </Modal.Header>
         <Modal.Body>Are you sure you want to delete this product?</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={cancelDelete}>Cancel</Button>
-          <Button variant="danger" onClick={confirmDelete}>Delete</Button>
+          <Button variant="secondary" onClick={cancelDelete}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={confirmDelete}>
+            Delete
+          </Button>
         </Modal.Footer>
       </Modal>
     </>
