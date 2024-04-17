@@ -15,6 +15,13 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setToast } from "../features/toast/toastSlice";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTachometerAlt,
+  faBoxOpen,
+  faPlusSquare,
+  faSignOutAlt,
+} from "@fortawesome/free-solid-svg-icons";
 
 const AdminHome = () => {
   const [products, setProducts] = useState([]);
@@ -144,12 +151,32 @@ const AdminHome = () => {
     <>
       <Container fluid>
         <Row>
-          <Col md={2} className="d-none d-md-block bg-light sidebar">
+        <Col md={2} className="d-none d-md-block bg-light sidebar">
             <Nav className="flex-column">
-              <Nav.Item><Nav.Link href="/admin">Dashboard</Nav.Link></Nav.Item>
-              <Nav.Item><Nav.Link href="/allorders">Orders</Nav.Link></Nav.Item>
-              <Nav.Item><Nav.Link href="/addproducts">Create</Nav.Link></Nav.Item>
-              <Nav.Item><Nav.Link onClick={handleLogOut}>Logout</Nav.Link></Nav.Item>
+              <Nav.Item>
+                <Nav.Link href="/admin" className="btn-link">
+                  <FontAwesomeIcon icon={faTachometerAlt} className="me-2" />
+                  Dashboard
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link href="/allorders" className="btn-link">
+                  <FontAwesomeIcon icon={faBoxOpen} className="me-2" />
+                  Orders
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link href="/addproducts" className="btn-link">
+                  <FontAwesomeIcon icon={faPlusSquare} className="me-2" />
+                  Create
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link onClick={handleLogOut} className="btn-link">
+                  <FontAwesomeIcon icon={faSignOutAlt} className="me-2" />
+                  Logout
+                </Nav.Link>
+              </Nav.Item>
             </Nav>
           </Col>
           <Col md={10}>
