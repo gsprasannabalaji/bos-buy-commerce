@@ -20,16 +20,4 @@
         font-weight: bold;
     }
 
-    .shop-button {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        border-radius: 0;
-
-        &:hover {
-            background-color: darken($primary-blue, $hover-darken-percentage);
-        }
-    }
-
 }

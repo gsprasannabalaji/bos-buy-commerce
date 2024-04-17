@@ -30,7 +30,7 @@ const ProductCategory = () => {
                 </Card.Title>
               </Card.ImgOverlay>
               <Button
-                className="shop-button"
+                variant="primary"
                 onClick={() => navigateToCategory(category.path)}
               >
                 Shop
