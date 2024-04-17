@@ -4,6 +4,8 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const { v4: uuidv4 } = require('uuid');
+const dotenv = require("dotenv");
+dotenv.config();
 
 exports.search = async (id) => {
   try {
@@ -43,11 +45,11 @@ exports.create = (req, res) => {
     const uploadedFiles = req?.files?.map((file) => {
       return {
         filename: file?.filename,
-        path: `${DOMAIN_URL}/assets/productImages/${file.filename}`
+        path: `${process?.env?.DOMAIN_URL}/assets/productImages/${file?.filename}`
       };
     });
     const { name, description, price, category, stock } = req?.body;
-    const pathfile = uploadedFiles?.[0]?.filename ? `${DOMAIN_URL}/assets/productImages/${uploadedFiles?.[0]?.filename}` : "";
+    const pathfile = uploadedFiles?.[0]?.filename ? `${process?.env?.DOMAIN_URL}/assets/productImages/${uploadedFiles?.[0]?.filename}` : "";
     const productId = new mongoose.Types.ObjectId();
     try {
       const value = new Product({
