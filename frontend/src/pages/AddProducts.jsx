@@ -21,6 +21,12 @@ import {
   faPlusCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { setToast } from "../features/toast/toastSlice";
+import {
+  faTachometerAlt,
+  faBoxOpen,
+  faPlusSquare,
+  faSignOutAlt,
+} from "@fortawesome/free-solid-svg-icons";
 
 const AddProducts = () => {
   const newProductData = useSelector((state) => state?.products?.newProduct);
@@ -131,25 +137,37 @@ const AddProducts = () => {
   return (
     <Container fluid>
       <Row>
-        <Col md={2} className="d-none d-md-block bg-light sidebar vh-100">
+        <Col md={2} className="d-none vh-100 d-md-block bg-light sidebar">
           <Nav className="flex-column">
             <Nav.Item>
-              <Nav.Link href="/admin">Dashboard</Nav.Link>
+              <Nav.Link href="/admin" className="btn-link">
+                <FontAwesomeIcon icon={faTachometerAlt} className="me-2" />
+                Dashboard
+              </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link href="/allorders">Orders</Nav.Link>
+              <Nav.Link href="/allorders" className="btn-link">
+                <FontAwesomeIcon icon={faBoxOpen} className="me-2" />
+                Orders
+              </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link href="/addproducts">Create</Nav.Link>
+              <Nav.Link href="/addproducts" className="btn-link">
+                <FontAwesomeIcon icon={faPlusSquare} className="me-2" />
+                Create
+              </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link onClick={handleLogOut}>Logout</Nav.Link>
+              <Nav.Link onClick={handleLogOut} className="btn-link">
+                <FontAwesomeIcon icon={faSignOutAlt} className="me-2" />
+                Logout
+              </Nav.Link>
             </Nav.Item>
           </Nav>
         </Col>
         <Col md={10}>
           <Container className="mt-5">
-            <h1>
+            <h1 className="mb-4">
               <FontAwesomeIcon icon={faPlusCircle} />
               Add Product
             </h1>
@@ -229,18 +247,23 @@ const AddProducts = () => {
                 <InputGroup.Text>
                   <FontAwesomeIcon icon={faSitemap} />
                 </InputGroup.Text>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter category"
+                <Form.Select
+                  type="select"
+                  placeholder="Select category"
                   value={newProductData?.category || ""}
                   onChange={handleChange}
                   name="category"
                   id="category"
-                />
+                >
+                  <option value="">Select a Category</option>
+                  <option value="laptops">Laptop</option>
+                  <option value="desktops">Desktop</option>
+                  <option value="gaming">Gaming Laptop</option>
+                </Form.Select>
               </InputGroup>
 
               <Button variant="primary" type="submit">
-                <FontAwesomeIcon icon={faPlusCircle} /> Add Product
+                <FontAwesomeIcon icon={faPlusCircle} /> Create Product
               </Button>
             </Form>
           </Container>
