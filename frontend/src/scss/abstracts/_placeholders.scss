@@ -3,3 +3,10 @@
     place-items: center;
     height: 100vh;
 }
+
+%link-color {
+    color: $primary-black;
+    &:hover {
+        color: $orange;
+    }
+}
