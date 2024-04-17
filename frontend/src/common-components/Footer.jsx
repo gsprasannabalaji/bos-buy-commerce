@@ -5,7 +5,7 @@ import { faFacebook, faTwitter, faLinkedin, faInstagram } from '@fortawesome/fre
 
 const Footer = () => {
   return (
-    <footer className="mt-auto py-3 bg-dark text-white">
+    <footer className="mt-auto py-3 bg-dark text-white footer">
       <Container>
         <Row>
           <Col md={4}>
@@ -23,19 +23,19 @@ const Footer = () => {
           <Col md={4}>
             <h5>Explore</h5>
             <ul className="list-unstyled">
-              <li><a href="/">About Us</a></li>
-              <li><a href="/">Laptops</a></li>
-              <li><a href="/">Desktops</a></li>
-              <li><a href="/">Contact Us</a></li>
-              <li><a href="/">Support</a></li>
+              <li><a href="/" className='footer__cta'>About Us</a></li>
+              <li><a href="/" className='footer__cta'>Laptops</a></li>
+              <li><a href="/" className='footer__cta'>Desktops</a></li>
+              <li><a href="/" className='footer__cta'>Contact Us</a></li>
+              <li><a href="/" className='footer__cta'>Support</a></li>
             </ul>
           </Col>
           <Col md={4}>
             <h5>Customer Service</h5>
             <ul className="list-unstyled">
-              <li><a href="/">FAQ</a></li>
-              <li><a href="/">Return Policy</a></li>
-              <li><a href="/">Warranty Information</a></li>
+              <li><a href="/" className='footer__cta'>FAQ</a></li>
+              <li><a href="/" className='footer__cta'>Return Policy</a></li>
+              <li><a href="/" className='footer__cta'>Warranty Information</a></li>
             </ul>
             <h5>Contact Information</h5>
             <p>Phone: 800-123-4567</p>
