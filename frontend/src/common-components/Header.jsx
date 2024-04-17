@@ -4,7 +4,6 @@ import {
   Badge,
   Button,
   FormControl,
-  InputGroup,
   Nav,
   Offcanvas,
   Dropdown,
@@ -89,10 +88,12 @@ const Header = () => {
         sticky="top"
         key={expand}
         expand={expand}
-        className="mb-3 header__navbar"
+        className="header__navbar"
       >
         <Container className="gap-3 flex-nowrap">
-          <Navbar.Brand onClick={() => navigate("/")}>BOSBuy</Navbar.Brand>
+          <Navbar.Brand className="header__logo" onClick={() => navigate("/")}>
+            BOSBuy
+          </Navbar.Brand>
           <div className="w-auto flex-grow-1 header__navbar__search-bar position-relative">
             <FormControl
               className="header__navbar__search-bar__input"
@@ -103,8 +104,15 @@ const Header = () => {
               onKeyUp={handleKeyPress}
               value={searchQuery}
             />
-            <Button variant="primary" className="header__navbar__search-bar__cta" onClick={handleSearchSubmit}>
-              <BiSearch size={16} className="header__navbar__search-bar__cta-icon" />
+            <Button
+              variant="primary"
+              className="header__navbar__search-bar__cta"
+              onClick={handleSearchSubmit}
+            >
+              <BiSearch
+                size={16}
+                className="header__navbar__search-bar__cta-icon"
+              />
             </Button>
           </div>
           <div className="position-relative header__cart">
@@ -165,10 +173,16 @@ const Header = () => {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item onClick={() => navigate("/orders")} className="header__dropdown__item">
+                      <Dropdown.Item
+                        onClick={() => navigate("/orders")}
+                        className="header__dropdown__item"
+                      >
                         Orders
                       </Dropdown.Item>
-                      <Dropdown.Item onClick={handleLogOut} className="header__dropdown__item">
+                      <Dropdown.Item
+                        onClick={handleLogOut}
+                        className="header__dropdown__item"
+                      >
                         Logout
                       </Dropdown.Item>
                     </Dropdown.Menu>
