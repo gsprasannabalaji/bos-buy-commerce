@@ -137,7 +137,7 @@ const ProductDetail = () => {
             <TopProducts />
           </>
         ) : (
-          <h1 className="text-center">Product Not Found</h1>
+          <h1 className="no_results">Product Not Found</h1>
         )}
         {showToast && (
           <CustomToast
