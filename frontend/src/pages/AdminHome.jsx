@@ -9,7 +9,8 @@ import {
   Form,
   FormControl,
   InputGroup,
-  Nav
+  Nav, 
+  Pagination
 } from "react-bootstrap";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
@@ -30,6 +31,8 @@ const AdminHome = () => {
   const [editProduct, setEditProduct] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [productIdToDelete, setProductIdToDelete] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);  // Display 5 items per page
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -122,6 +125,7 @@ const AdminHome = () => {
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
+    setCurrentPage(1);
   };
 
   const filteredProducts = products.filter(product =>
@@ -129,7 +133,15 @@ const AdminHome = () => {
     product.description.toLowerCase().includes(searchTerm)
   );
 
-  const renderTableRows = filteredProducts.map((product) => (
+  const pageCount = Math.ceil(filteredProducts.length / itemsPerPage);
+
+  const paginationItems = Array.from({ length: pageCount }, (_, i) => (
+    <Pagination.Item key={i + 1} active={i + 1 === currentPage} onClick={() => setCurrentPage(i + 1)}>
+      {i + 1}
+    </Pagination.Item>
+  ));
+
+  const renderTableRows = filteredProducts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((product) => (
     <tr key={product._id}>
       <td>{product.productName}</td>
       <td>{product.productId}</td>
@@ -209,6 +221,7 @@ const AdminHome = () => {
               </thead>
               <tbody>{renderTableRows}</tbody>
             </Table>
+            <Pagination className="justify-content-center">{paginationItems}</Pagination>
           </Col>
         </Row>
       </Container>
