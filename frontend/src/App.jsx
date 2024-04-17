@@ -62,9 +62,9 @@ const router = createBrowserRouter([
     element: WithLayout(Home),
   },
   {
-    path:"/signup",
+    path: "/signup",
     element: <SignUp />,
-  }
+  },
 ]);
 
 const App = () => {

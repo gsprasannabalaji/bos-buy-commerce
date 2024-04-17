@@ -2,18 +2,17 @@ import { useSearchParams, useLocation } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, updateQuantity } from "../features/cart/cartSlice";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import { setSearchedProducts } from "../features/products/productsSlice";
-import CustomToast from "../common-components/CustomToast";
 import Loader from "../common-components/Loader";
 import { setIsLoading } from "../features/loader/loaderSlice";
+import { setToast } from "../features/toast/toastSlice";
 
 const SearchResults = () => {
   const productData = useSelector((state) => state?.products?.productsList);
   const [searchParams] = useSearchParams();
   const cartItems = useSelector((state) => state?.cart?.cartItems);
-  const [showToast, setShowToast] = useState(false);
   let location = useLocation();
   let queryParams = new URLSearchParams(location?.search);
   const isLoading = useSelector((state) => state?.loader?.isLoading);
@@ -37,7 +36,10 @@ const SearchResults = () => {
         } catch (error) {
           setTimeout(() => {
             dispatch(setIsLoading(false));
-            setShowToast(true);
+            dispatch(setToast({
+              message: "Network Failed. Please try again later",
+              variant: "error",
+            }));
           }, 500);
         }
       })();
@@ -61,7 +63,10 @@ const SearchResults = () => {
         } catch (error) {
           setTimeout(() => {
             dispatch(setIsLoading(false));
-            setShowToast(true);
+            dispatch(setToast({
+              message: "Network Failed. Please try again later",
+              variant: "error",
+            }));
           }, 500);
         }
       })();
@@ -131,14 +136,6 @@ const SearchResults = () => {
             <h1 className="no_results">
               No results found
             </h1>
-          )}
-          {showToast && (
-            <CustomToast
-              toastMessage="Network Failed. Please try again later"
-              showToast={showToast}
-              toggleToast={() => setShowToast(false)}
-              position="top-end"
-            />
           )}
         </div>
       )}
