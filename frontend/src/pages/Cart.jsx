@@ -109,7 +109,7 @@ const Cart = () => {
           updatedCartQuantity={updatedCartQuantity}
         />
       ) : (
-        <p className="no_result">
+        <p className="no_results">
         Cart is empty
     </p>
     

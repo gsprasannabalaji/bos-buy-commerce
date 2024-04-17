@@ -59,7 +59,7 @@ const Orders = () => {
           <OrderItem key={order._id.$oid} order={order} />
         ))
       ) : (
-        <p className="no_result">No orders found.</p>
+        <p className="no_results">No orders found.</p>
       )}
     </Container>
   );
