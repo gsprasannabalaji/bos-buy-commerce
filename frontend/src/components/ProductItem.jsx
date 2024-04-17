@@ -15,7 +15,7 @@ const ProductItem = ({ product }) => {
         </Link>
       </Col>
       <Col md={10}>
-        <Link to={`/products/${product.productId}`}>
+        <Link to={`/products/${product.productId}`} className='btn-link'>
           <div>
             <strong>{product.productName}</strong>
           </div>
