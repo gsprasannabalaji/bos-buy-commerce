@@ -1,4 +1,5 @@
 const orderService = require("../services/order-service");
+// Controller function to get all orders
 exports.getAllOrders = async (req, res) => {
   try {
     const orders = await orderService.getAllOrders(req, res);
@@ -14,7 +15,7 @@ exports.getAllOrders = async (req, res) => {
       .send({ message: "An error occurred while fetching the orders" });
   }
 };
-
+// Controller function to get user orders
 exports.getUserOrders = async (req, res) => {
   try {
     const orders = await orderService.getUserOrders(req, res);
