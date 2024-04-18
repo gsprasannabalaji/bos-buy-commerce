@@ -118,7 +118,7 @@ exports.makePayments = async (req) => {
     invoice_creation: {
       enabled: true,
     },
-    success_url: `${DOMAIN_URL}/stripe/updateOrder?session_id={CHECKOUT_SESSION_ID}&order_id=${orderId}`,
+    success_url: `${process.env.DOMAIN_URL}/stripe/updateOrder?session_id={CHECKOUT_SESSION_ID}&order_id=${orderId}`,
     cancel_url: "http://localhost:5173/cart",
   });
 

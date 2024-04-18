@@ -6,6 +6,16 @@ import {
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
+/**
+ * ShoppingCart component displays the items in the shopping cart and handles checkout functionality.
+ * 
+ * @param {Function} handleCheckout - Function to handle the checkout process.
+ * @param {Function} addToCartHandler - Function to add items to the cart.
+ * @param {Function} removeFromCartHandler - Function to remove items from the cart.
+ * @param {Function} checkQuantityLength - Function to check if cart quantity exceeds a limit.
+ * @param {Function} updatedCartQuantity - Function to update the quantity of an item in the cart.
+ * @returns {JSX.Element} - Returns the JSX element for the ShoppingCart component.
+ */
 const ShoppingCart = ({
   handleCheckout,
   addToCartHandler,
@@ -81,21 +91,21 @@ const ShoppingCart = ({
             <p className="text-capitalize mb-3 fw-bold">Order Summary</p>
             <Col lg={12} className="mb-4">
               <Row>
-                <Col lg={6}>Sub Total</Col>
-                <Col lg={6} className="text-end">
+                <Col xs={6} className="mb-2 mb-lg-0">Sub Total</Col>
+                <Col xs={6} className="text-end">
                   {`$${subTotal}`}
                 </Col>
               </Row>
               <Row>
-                <Col lg={6}>Shipping</Col>
-                <Col lg={6} className="text-end text-success">
+                <Col xs={6}>Shipping</Col>
+                <Col xs={6} className="text-end text-success">
                   Free
                 </Col>
               </Row>
               <hr />
               <Row>
-                <Col lg={6}>Total</Col>
-                <Col lg={6} className="text-end">
+                <Col xs={6}>Total</Col>
+                <Col xs={6} className="text-end">
                   {`$${subTotal}`}
                 </Col>
               </Row>

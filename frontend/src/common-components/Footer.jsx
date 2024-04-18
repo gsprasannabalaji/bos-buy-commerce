@@ -20,7 +20,7 @@ const Footer = () => {
               needs. Explore our extensive range of products from top brands,
               get expert advice, and unmatched customer support.
             </p>
-            <div className="d-flex">
+            <div className="d-flex mb-3 mb-lg-0">
               <FontAwesomeIcon
                 icon={faFacebook}
                 className="me-3 footer__social-links"

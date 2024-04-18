@@ -9,8 +9,8 @@ import {
   Form,
   FormControl,
   InputGroup,
-  Nav, 
-  Pagination
+  Nav,
+  Pagination,
 } from "react-bootstrap";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
@@ -34,7 +34,7 @@ const AdminHome = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [productIdToDelete, setProductIdToDelete] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5);  // Display 5 items per page
+  const [itemsPerPage] = useState(5); // Display 5 items per page
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -52,8 +52,11 @@ const AdminHome = () => {
       console.error("Failed to fetch products:", error);
       dispatch(
         setToast({
-          message: error.response?.data?.message || "Network Error",
-          variant: "error",
+          toast: {
+            message: error.response?.data?.message || "Network Error",
+            variant: "error",
+          },
+          showToast: true,
         })
       );
     }
@@ -72,7 +75,11 @@ const AdminHome = () => {
   const confirmDelete = async () => {
     if (!productIdToDelete) return;
     try {
-      await axios.delete(`${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/product/delete/${productIdToDelete}`);
+      await axios.delete(
+        `${
+          import.meta.env.VITE_BACKEND_ENDPOINT_URL
+        }/product/delete/${productIdToDelete}`
+      );
       dispatch(
         setToast({
           toast: {
@@ -82,7 +89,7 @@ const AdminHome = () => {
           showToast: true,
         })
       );
-      fetchProducts(); 
+      fetchProducts();
     } catch (error) {
       console.error("Failed to delete product:", error);
       dispatch(
@@ -141,16 +148,22 @@ const AdminHome = () => {
       setShowModal(false);
       dispatch(
         setToast({
-          message: "Product Updated Successfully",
-          variant: "success",
+          toast: {
+            message: "Product Updated Successfully",
+            variant: "success",
+          },
+          showToast: true,
         })
       );
     } catch (error) {
       console.error("Failed to update product:", error);
       dispatch(
         setToast({
-          message: "Failed to update product",
-          variant: "error",
+          toast: {
+            message: "Failed to update product",
+            variant: "error",
+          },
+          showToast: true,
         })
       );
     }
@@ -170,35 +183,41 @@ const AdminHome = () => {
   const pageCount = Math.ceil(filteredProducts.length / itemsPerPage);
 
   const paginationItems = Array.from({ length: pageCount }, (_, i) => (
-    <Pagination.Item key={i + 1} active={i + 1 === currentPage} onClick={() => setCurrentPage(i + 1)}>
+    <Pagination.Item
+      key={i + 1}
+      active={i + 1 === currentPage}
+      onClick={() => setCurrentPage(i + 1)}
+    >
       {i + 1}
     </Pagination.Item>
   ));
 
-  const renderTableRows = filteredProducts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((product) => (
-    <tr key={product._id}>
-      <td>{product.productName}</td>
-      <td>{product.productId}</td>
-      <td>${product.price.toFixed(2)}</td>
-      <td>{product.stock}</td>
-      <td>{product.description}</td>
-      <td>
-        <Button
-          variant="warning"
-          onClick={() => handleEdit(product)}
-          className="mb-2 w-100"
-        >
-          Edit
-        </Button>
-        <Button
-          variant="danger"
-          onClick={() => handleDeleteProduct(product.productId)}
-        >
-          Delete
-        </Button>
-      </td>
-    </tr>
-  ));
+  const renderTableRows = filteredProducts
+    .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+    .map((product) => (
+      <tr key={product._id}>
+        <td>{product.productName}</td>
+        <td>{product.productId}</td>
+        <td>${product.price.toFixed(2)}</td>
+        <td>{product.stock}</td>
+        <td>{product.description}</td>
+        <td>
+          <Button
+            variant="warning"
+            onClick={() => handleEdit(product)}
+            className="mb-2 w-100"
+          >
+            Edit
+          </Button>
+          <Button
+            variant="danger"
+            onClick={() => handleDeleteProduct(product.productId)}
+          >
+            Delete
+          </Button>
+        </td>
+      </tr>
+    ));
 
   return (
     <>
@@ -264,7 +283,9 @@ const AdminHome = () => {
               </thead>
               <tbody>{renderTableRows}</tbody>
             </Table>
-            <Pagination className="justify-content-center">{paginationItems}</Pagination>
+            <Pagination className="justify-content-center">
+              {paginationItems}
+            </Pagination>
           </Col>
         </Row>
       </Container>

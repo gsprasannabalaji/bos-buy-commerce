@@ -91,7 +91,7 @@ const Cart = () => {
 
   return (
     <Container className="cart">
-      <h1>Shopping Cart</h1>
+      <h2 className="my-3">Shopping Cart</h2>
       <hr />
       {cartItems?.length > purchaseLimit ||
         (checkQuantityLength() && (
