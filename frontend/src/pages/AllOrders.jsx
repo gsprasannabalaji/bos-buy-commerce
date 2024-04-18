@@ -70,23 +70,23 @@ function AllOrders() {
     );
 
     return filteredOrders.flatMap((order) =>
-      order.products.map((product, index) => (
-        <tr key={`${order._id}-${product.productId}`}>
+      order?.products?.map((product, index) => (
+        <tr key={`${order?._id}-${product?.productId}`}>
           {index === 0 ? (
-            <td rowSpan={order.products.length}>{order.orderId}</td>
+            <td rowSpan={order?.products?.length}>{order?.orderId}</td>
           ) : null}
-          <td>{product.productName}</td>
+          <td>{product?.productName}</td>
           {index === 0 ? (
-            <td rowSpan={order.products.length}>{order.email}</td>
+            <td rowSpan={order?.products?.length}>{order?.email}</td>
           ) : null}
           {index === 0 ? (
-            <td rowSpan={order.products.length}>
-              {`${order.shippingAddress.line1}, ${
-                order.shippingAddress.line2 || ""
-              } ${order.shippingAddress.city}, ${
-                order.shippingAddress.state
-              }, ${order.shippingAddress.postal_code}, ${
-                order.shippingAddress.country
+            <td rowSpan={order?.products?.length}>
+              {`${order?.shippingAddress?.line1 ? `${order?.shippingAddress?.line1},` : ""} ${
+                order?.shippingAddress?.line2 ? `${order?.shippingAddress?.line2},` : ""
+              } ${order?.shippingAddress?.city ? `${order?.shippingAddress?.city},` : ""} ${
+                order?.shippingAddress?.state ? `${order?.shippingAddress?.state},` : ""
+              } ${order?.shippingAddress?.postal_code ? `${order?.shippingAddress?.postal_code},` : ""} ${
+                order?.shippingAddress?.country || ""
               }`}
             </td>
           ) : null}
