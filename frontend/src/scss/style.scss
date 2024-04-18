@@ -1,0 +1,30 @@
+// abstracts
+@import './abstracts/variables';
+
+@import 'bootstrap/scss/bootstrap';
+
+// abstracts
+@import './abstracts/functions';
+@import './abstracts/placeholders';
+
+// layouts
+@import 'layout/header';
+@import 'layout/footer';
+
+// common-components
+@import './common-components/CustomToast.scss';
+@import './common-components/Loader.scss';
+@import './common-components/NoResults.scss';
+
+// components
+@import 'components/buttons';
+@import 'components/ProductCard.scss';
+@import 'components/ProductCategory.scss';
+@import 'components/TopProducts.scss';
+
+// pages
+@import 'pages/Login.scss';
+@import 'pages/AllOrders.scss';
+@import 'pages/Signup.scss';
+@import 'pages/ProductDetail.scss';
+@import 'pages/Home.scss';

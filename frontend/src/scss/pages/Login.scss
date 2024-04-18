@@ -1,0 +1,52 @@
+.login {
+    @extend %grid-center;
+
+    &__form {
+
+        &__input:focus {
+            box-shadow: 0 0 0 0;
+            border-color: $golden-rod;
+        }
+
+        &__cta {
+            background-color: $greyish-green;
+            border: none;
+            border-radius: toRem(8px);
+            color: $primary-black;
+            margin-top: toRem(16px);
+            padding: toRem(8px);
+            width: 100%;
+
+            &:hover {
+                background-color: darken($greyish-yellow, $hover-darken-percentage);
+                cursor: pointer;
+            }
+
+        }
+
+        &__link {
+            color: $primary-blue;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &__wrapper {
+        &-left {
+            &__img {
+                height: 100%;
+                width: 100%;
+            }
+        }
+
+        &-right {
+            background: $primary-white;
+            padding: toRem(32px);
+            border-radius: toRem(8px);
+            box-shadow: $box-shadow-1;
+        }
+    }
+}

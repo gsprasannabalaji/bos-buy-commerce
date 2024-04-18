@@ -1,0 +1,9 @@
+.btn-link {
+    @extend %link-color;
+}
+
+.btn-primary {
+    &:hover {
+        background-color: darken($primary, $hover-darken-percentage);
+    }
+}

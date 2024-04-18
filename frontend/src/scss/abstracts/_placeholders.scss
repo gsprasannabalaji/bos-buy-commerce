@@ -1,0 +1,14 @@
+%grid-center {
+    display: grid;
+    place-items: center;
+    height: 100vh;
+}
+
+%link-color {
+    color: $primary-black;
+    text-decoration: none;
+    &:hover {
+        color: $orange;
+        text-decoration: underline;
+    }
+}

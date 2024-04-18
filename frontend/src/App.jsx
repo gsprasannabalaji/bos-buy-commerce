@@ -1,35 +1,98 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import SearchResults from "./pages/SearchResults";
+import Home from "./pages/Home";
+import WithLayout from "./common-components/WithLayout";
+import Cart from "./pages/Cart";
+import Orders from "./pages/Orders";
+import ProductDetail from "./pages/ProductDetail";
+import AddProducts from "./pages/AddProducts";
+import ProductCategory from "./components/ProductCategory";
+import AdminHome from "./pages/AdminHome";
+import Login from "./pages/Login";
+import AllOrders from "./pages/AllOrders";
+import CustomToast from "./common-components/CustomToast";
+import { useSelector, useDispatch } from "react-redux";
+import { setToast } from "./features/toast/toastSlice";
+import "./scss/style.scss";
+import SignUp from "./pages/Signup";
 
-function App() {
-  const [count, setCount] = useState(0)
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: WithLayout(Home),
+  },
+  {
+    path: "/searchResults",
+    element: WithLayout(SearchResults),
+  },
+  {
+    path: "/cart",
+    element: WithLayout(Cart),
+  },
+  {
+    path: "/orders",
+    element: WithLayout(Orders),
+  },
+  {
+    path: "/products/:productId",
+    element: WithLayout(ProductDetail),
+  },
+  {
+    path: "/products/category",
+    element: WithLayout(ProductCategory),
+  },
+  {
+    path: "/addProducts",
+    element: WithLayout(AddProducts),
+  },
+  {
+    path: "/admin",
+    element: WithLayout(AdminHome),
+  },
+  {
+    path: "/allorders",
+    element: WithLayout(AllOrders),
+  },
+  {
+    path: "/login",
+    element: WithLayout(Login),
+  },
+  {
+    path: "*",
+    element: WithLayout(Home),
+  },
+  {
+    path: "/signup",
+    element: <SignUp />,
+  },
+]);
+
+const App = () => {
+  const { showToast, toast } = useSelector((state) => state?.toast);
+  const dispatch = useDispatch();
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <RouterProvider router={router} />
+      <CustomToast
+        show={showToast}
+        onClose={() => {
+          dispatch(
+            setToast({
+              toast: {
+                ...toast,
+                message: "",
+              },
+              showToast: false,
+            })
+          );
+        }}
+        message={toast?.message}
+        header={""}
+        variant={toast?.variant}
+      />
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;

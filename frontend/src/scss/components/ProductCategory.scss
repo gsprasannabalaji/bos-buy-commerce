@@ -1,0 +1,23 @@
+.category-card {
+    position: relative;
+    overflow: hidden;
+
+    .card-img-overlay {
+        top: 0;
+        bottom: auto;
+        padding: toRem(16px);
+    }
+
+    .category-title {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: $primary-white;
+        color: $primary-black;
+        padding: toRem(6px) toRem(12px);
+        border-radius: 0 0 10px 0;
+        font-size: toRem(16px);
+        font-weight: bold;
+    }
+
+}

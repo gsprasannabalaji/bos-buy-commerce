@@ -1,0 +1,13 @@
+.footer{
+    &__cta {
+    color: $primary;
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
+    }
+    &__social-links {
+        height: toRem(24px);
+        width: toRem(24px);
+    }
+}
