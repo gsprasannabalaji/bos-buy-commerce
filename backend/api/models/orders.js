@@ -61,10 +61,12 @@ const orderSchema = new Schema(
     },
     email: {
       type: String,
-      required: true,
     },
     products: [productItemSchema],
-    shippingAddress: shippingAddressSchema,
+    shippingAddress: { 
+      type: shippingAddressSchema,
+      default: null // Default value to null
+    },
   },
   {
     collection: "Orders",

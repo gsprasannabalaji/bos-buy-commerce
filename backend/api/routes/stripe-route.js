@@ -10,5 +10,6 @@ router
   .post(authenticateToken, stripeController?.stripePayment);
 
 router.get("/orders", stripeController?.createOrder);
+router.get("/updateOrder", stripeController?.updateOrder);
 
 module.exports = router;
