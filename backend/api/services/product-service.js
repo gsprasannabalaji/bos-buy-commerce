@@ -6,7 +6,7 @@ const fs = require("fs");
 const { v4: uuidv4 } = require('uuid');
 const dotenv = require("dotenv");
 dotenv.config();
-
+// Function to search for a product by its ID
 exports.search = async (id) => {
   try {
     const product = await Product.findOne({ productId: id.trim() });
@@ -33,7 +33,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage, limits: { fileSize: 10 * 1024 * 1024 } }).array("files", 4);
-
+// Function to create a new product
 exports.create = (req, res) => {
   upload(req, res, async (err) => {
     if (err) {
@@ -71,7 +71,7 @@ exports.create = (req, res) => {
     }
   });
 };
-
+// Function to delete a product by its ID
 exports.delete = async (id) => {
   try {
     const product = await Product.findOne({ productId: id.trim() });
@@ -98,7 +98,7 @@ exports.delete = async (id) => {
     throw err;
   }
 };
-
+// Function to get all products
 exports.getAll = async (req, res) => {
   try {
     const result = await Product.find({});
@@ -107,7 +107,7 @@ exports.getAll = async (req, res) => {
     throw error;
   }
 };
-
+// Function to edit a product by its ID
 exports.edit = async (id, data) => {
   try {
     const product = await Product.findOneAndUpdate({ productId: id.trim() }, data, { new: true });
@@ -120,7 +120,7 @@ exports.edit = async (id, data) => {
     throw error;
   }
 };
-
+// Function to search for products by name
 exports.searchByName = async (title) => {
   try {
     const regex = new RegExp(".*" + title + ".*", "i");
@@ -130,7 +130,7 @@ exports.searchByName = async (title) => {
     throw err;
   }
 };
-
+// Function to get random laptop products
 exports.getRandomLaptopProducts = async () => {
   try {
     const products = await Product.aggregate([{ $sample: { size: 4 } }]);
@@ -139,7 +139,7 @@ exports.getRandomLaptopProducts = async () => {
     throw err;
   }
 };
-
+// Function to search for products by category
 exports.searchByCategory= async (category) => {
   try {
     const product = await Product.find({ category: category  });

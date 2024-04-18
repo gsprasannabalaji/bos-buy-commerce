@@ -19,7 +19,7 @@ const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.loader.isLoading);
-
+// Function to validate form fields
   const validateField = (name, value) => {
     switch (name) {
       case "email":
@@ -46,7 +46,7 @@ const SignUp = () => {
     }
     return "";
   };
-
+// Function to handle form input changes
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -54,6 +54,7 @@ const SignUp = () => {
     setErrors({ ...errors, [name]: error }); 
   };
 
+  // Function to handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
     const newErrors = Object.keys(formData).reduce((acc, key) => {

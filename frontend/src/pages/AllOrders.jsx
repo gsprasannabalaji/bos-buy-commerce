@@ -26,11 +26,11 @@ function AllOrders() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state?.user?.user);
-
+// Fetch orders on component mount
   useEffect(() => {
     fetchOrders();
   }, []);
-
+// Function to fetch orders
   const fetchOrders = async () => {
     try {
       const { data } = await axios.get(
@@ -41,7 +41,7 @@ function AllOrders() {
       console.error("Failed to fetch orders:", error);
     }
   };
-
+// Function to handle user logout
   const handleLogOut = async () => {
     try {
       await axios.get(
@@ -62,52 +62,58 @@ function AllOrders() {
       console.error(error);
     }
   };
-
+// Function to handle search input change
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
   };
-
+// Function to render table rows
   const renderTableRows = () => {
-    const filteredOrders = orders.filter(
-      (order) =>
-        order.orderId.toLowerCase().includes(searchTerm) ||
-        order.email.toLowerCase().includes(searchTerm) ||
-        order.products.some(
-          (product) =>
-            product.productName.toLowerCase().includes(searchTerm) ||
-            product.description.toLowerCase().includes(searchTerm)
-        ) ||
-        Object.values(order.shippingAddress)
-          .join(" ")
-          .toLowerCase()
-          .includes(searchTerm)
+    const filteredOrders = orders.filter((order) =>
+      order.orderId.toLowerCase().includes(searchTerm) ||
+      (order.email && order.email.toLowerCase().includes(searchTerm)) ||
+      order.products.some(
+        (product) =>
+          (product.productName && product.productName.toLowerCase().includes(searchTerm)) ||
+          (product.description && product.description.toLowerCase().includes(searchTerm))
+      ) ||
+      (order.shippingAddress &&
+       Object.values(order.shippingAddress)
+         .filter(Boolean) // Filters out undefined or null values
+         .join(" ")
+         .toLowerCase()
+         .includes(searchTerm))
     );
-
+  
     return filteredOrders.flatMap((order) =>
-      order?.products?.map((product, index) => (
-        <tr key={`${order?._id}-${product?.productId}`}>
+      order.products.map((product, index) => (
+        <tr key={`${order._id}-${product.productId}`}>
           {index === 0 ? (
-            <td rowSpan={order?.products?.length}>{order?.orderId}</td>
+            <td rowSpan={order.products.length}>{order.orderId}</td>
           ) : null}
-          <td>{product?.productName}</td>
+          <td>{product.productName}</td>
           {index === 0 ? (
-            <td rowSpan={order?.products?.length}>{order?.email}</td>
+            <td rowSpan={order.products.length}>{order.email}</td>
           ) : null}
           {index === 0 ? (
-            <td rowSpan={order?.products?.length}>
-              {`${order?.shippingAddress?.line1 ? `${order?.shippingAddress?.line1},` : ""} ${
-                order?.shippingAddress?.line2 ? `${order?.shippingAddress?.line2},` : ""
-              } ${order?.shippingAddress?.city ? `${order?.shippingAddress?.city},` : ""} ${
-                order?.shippingAddress?.state ? `${order?.shippingAddress?.state},` : ""
-              } ${order?.shippingAddress?.postal_code ? `${order?.shippingAddress?.postal_code},` : ""} ${
-                order?.shippingAddress?.country || ""
-              }`}
+            <td rowSpan={order.products.length}>
+              {order.shippingAddress ? formatAddress(order.shippingAddress) : "No Address Provided"}
             </td>
           ) : null}
         </tr>
       ))
     );
   };
+  
+  const formatAddress = (address) => {
+    return `${address.line1 ? `${address.line1}, ` : ""}${
+      address.line2 ? `${address.line2}, ` : ""
+    }${address.city ? `${address.city}, ` : ""}${
+      address.state ? `${address.state}, ` : ""
+    }${address.postal_code ? `${address.postal_code}, ` : ""}${
+      address.country || ""
+    }`.trim();
+  };
+  
 
   return (
     <>

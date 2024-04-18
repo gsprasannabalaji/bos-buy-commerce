@@ -1,5 +1,5 @@
 const productService = require("../services/product-service");
-
+// Controller function to search for a product by ID
 exports.search = async (req, res) => {
   try {
     const { id } = req.params;
@@ -16,7 +16,7 @@ exports.search = async (req, res) => {
       .send({ message: "An error occurred while creating the product" });
   }
 };
-
+// Controller function to create a new product
 exports.create = async (req, res, next) => {
   try {
     const uploadResponse = await productService?.create(req, res, next);
@@ -32,7 +32,7 @@ exports.create = async (req, res, next) => {
       .send({ message: "An error occurred while fetching the product" });
   }
 };
-
+// Controller function to delete a product
 exports.delete = async (req, res) => {
   try {
     const { id } = req.params;
@@ -49,7 +49,7 @@ exports.delete = async (req, res) => {
       .send({ message: "An error occurred while fetching the product" });
   }
 };
-
+// Controller function to search for a product by name
 exports.searchName = async (req, res) => {
   try {
     const title = req.query.name;

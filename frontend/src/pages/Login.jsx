@@ -14,7 +14,7 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state?.loader?.isLoading);
-
+// Function to handle input changes in the form fields
   const handleChange = (event) => {
     const { name, value } = event?.target;
     dispatch(
@@ -24,7 +24,7 @@ const Login = () => {
       })
     );
   };
-
+ // Function to handle user sign in
   const handleSignIn = async (event) => {
     event.preventDefault();
     const { email, password } = user;
@@ -57,6 +57,7 @@ const Login = () => {
         );
         setTimeout(() => {
           dispatch(setIsLoading(false));
+          // Redirecting user based on their role
           if (result?.data?.role == "admin") {
             navigate("/admin");
           } else {

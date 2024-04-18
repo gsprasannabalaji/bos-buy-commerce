@@ -36,11 +36,11 @@ const Layout = ({ children }) => {
   const matchesProductPattern = (pathname) => {
     return pattern?.test(pathname);
   };
-
+// If the cookie verification process is still loading, return an empty string
   if (isCookieLoading) {
     return "";
   }
-
+// If the user is already logged in and tries to access the login page, redirect them based on their role
   if (isUserValid && currentPathname === "/login") {
     if (isAdminRole) {
       return <Navigate to="/login" replace />;
@@ -50,7 +50,7 @@ const Layout = ({ children }) => {
   } else if (!isUserValid && currentPathname === "/login") {
     return <div>{children}</div>;
   }
-
+// If the user is an admin
   if (isAdminRole) {
     if (adminRoutes?.includes(currentPathname)) {
       return (
@@ -63,6 +63,7 @@ const Layout = ({ children }) => {
       return <Navigate to="/admin" replace />;
     }
   } else {
+    // If the user is a customer
     if (
       customerRoutes?.includes(currentPathname) ||
       matchesProductPattern(currentPathname)

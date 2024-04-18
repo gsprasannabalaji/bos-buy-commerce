@@ -3,13 +3,16 @@ import { Navbar, Nav, Container } from "react-bootstrap";
 import axios from "axios";
 
 const AdminHeader = () => {
+  // Function to handle logout
   const handleLogOut = async () => {
     try {
       await axios.get(
         `${import.meta.env.VITE_BACKEND_ENDPOINT_URL}/user/clearCookies`,
         { withCredentials: true }
       );
+      // Remove user details from localStorage
       localStorage.removeItem("userDetails");
+      // Reload the window after logout
       window.location.reload();
     } catch (error) {
       console.error(error);

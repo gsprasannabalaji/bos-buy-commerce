@@ -12,6 +12,7 @@ import TopProducts from "../components/TopProducts";
 import { setToast } from "../features/toast/toastSlice";
 
 const ProductDetail = () => {
+  // Selecting necessary states from Redux store
   const productDetailsData = useSelector(
     (state) => state?.products?.productDetailsData
   );
@@ -22,7 +23,7 @@ const ProductDetail = () => {
   const { productId } = useParams();
   const cartItems = useSelector((state) => state?.cart?.cartItems);
   const dispatch = useDispatch();
-
+ // Fetching product details from backend upon component mount
   useEffect(() => {
     async function fetchProductDetails() {
       try {
@@ -32,6 +33,7 @@ const ProductDetail = () => {
         dispatch(setProductDetailsData(results?.data));
         dispatch(setPrimaryImageURL(results?.data?.previewImages?.[0]?.path));
       } catch (error) {
+        // Handling errors with fetching product details
         dispatch(
           setToast({
             toast: {
@@ -45,12 +47,13 @@ const ProductDetail = () => {
     }
     fetchProductDetails();
   }, [productId, dispatch]);
-
+// Handler function to add a product to the cart
   const addToCartHandler = (product) => {
     const isItemsExist = cartItems?.find(
       (item) => item?.id === product?.productId
     );
     if (isItemsExist) {
+      // If product already exists in the cart, update its quantity
       dispatch(
         updateQuantity({
           id: isItemsExist?.id,
@@ -63,6 +66,7 @@ const ProductDetail = () => {
         })
       );
     } else {
+      // If product does not exist in the cart, add it
       dispatch(
         addToCart({
           id: product?.productId,
@@ -85,7 +89,7 @@ const ProductDetail = () => {
       })
     );
   };
-
+ // Function to convert description string into list format
   const getDescriptionAsList = (description) => {
     const points = description
       .split(/(?=\d+\.)/)

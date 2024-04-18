@@ -4,7 +4,7 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { clearCart } from "../features/cart/cartSlice";
-import OrderItem from '../components/OrderItem'; // Make sure this path is correct
+import OrderItem from '../components/OrderItem'; 
 import { Container } from "react-bootstrap";
 import { setOrders } from "../features/orders/ordersSlice";
 
@@ -14,6 +14,7 @@ const Orders = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // Function to fetch user orders
     const fetchOrders = async () => {
       const searchParams = new URLSearchParams(location.search);
       if (searchParams.get("payment") === "done") {
@@ -27,6 +28,7 @@ const Orders = () => {
             withCredentials: true,
           }
         );
+        // Mapping fetched orders data to match the required format
         const ordersData = response.data.map((order) => ({
           ...order,
           orderId: order.orderId,
@@ -46,7 +48,7 @@ const Orders = () => {
         console.error("Error fetching orders:", error);
       }
     };
-
+    // Calling fetchOrders function
     fetchOrders();
   }, [location.search, dispatch]);
 

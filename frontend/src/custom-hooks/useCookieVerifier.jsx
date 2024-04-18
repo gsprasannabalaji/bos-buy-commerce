@@ -16,7 +16,7 @@ const useCookieVerifier = () => {
   const currentUserDetails = localStorage.getItem("userDetails")
     ? JSON?.parse(localStorage.getItem("userDetails"))
     : "";
-
+// Effect hook to perform authentication and role verification
   useEffect(() => {
     (async () => {
       try {
@@ -26,6 +26,7 @@ const useCookieVerifier = () => {
             withCredentials: true,
           }
         );
+        // Update isAdminRole state based on the response
         setIsAdminRole(isAdminRole?.data?.isAdmin || false);
         dispatch(
           setUser({

@@ -1,5 +1,5 @@
 const Order = require("../models/orders");
-
+// Function to get all orders
 exports.getAllOrders = async (req, res) => {
   try {
     const orders = await Order.find({}).sort({ date: -1 });
@@ -8,7 +8,7 @@ exports.getAllOrders = async (req, res) => {
     throw err;
   }
 };
-
+// Function to get orders for a specific user
 exports.getUserOrders = async (req, res) => {
   try {
     const userEmail = req?.userEmail;

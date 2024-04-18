@@ -12,12 +12,13 @@ const Cart = () => {
   const cartItems = useSelector((state) => state?.cart?.cartItems);
   const purchaseLimit = useSelector((state) => state?.cart?.purchaseLimit);
   const dispatch = useDispatch();
-
+// Function to remove an item from the cart
   const removeFromCartHandler = (item) => {
     dispatch(removeFromCart(item));
   };
-
+ // Function to add an item to the cart
   const addToCartHandler = (product) => {
+    // Check if the item already exists in the cart
     const isItemsExist = cartItems?.find((item) => item?.id === product?.id);
     if (isItemsExist) {
       dispatch(
@@ -45,7 +46,7 @@ const Cart = () => {
       );
     }
   };
-
+  // Function to update the quantity of an item in the cart
   const updatedCartQuantity = (product) => {
     const isItemsExist = cartItems?.find((item) => item?.id === product?.id);
     dispatch(
@@ -60,7 +61,7 @@ const Cart = () => {
       })
     );
   };
-
+// Function to handle checkout
   const handleCheckout = async () => {
     try {
       const result = await axios.post(
@@ -81,7 +82,7 @@ const Cart = () => {
       console.error(err);
     }
   };
-
+// Function to check if the total quantity exceeds the purchase limit
   const checkQuantityLength = () => {
     const totalLength = cartItems?.reduce((acc, item) => {
       return acc + item?.quantity;

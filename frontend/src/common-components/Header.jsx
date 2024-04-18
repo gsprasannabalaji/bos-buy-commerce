@@ -35,9 +35,9 @@ const Header = () => {
   const isLoading = useSelector((state) => state?.loader?.isLoading);
   const [showOffcanvas, setShowOffcanvas] = useState(false);
   const dispatch = useDispatch();
-
+ // Toggle dropdown menu visibility
   const handleToggleDropdown = () => setShowDropdown(!showDropdown);
-
+// Logout function
   const handleLogOut = async () => {
     try {
       await axios.get(
@@ -58,26 +58,26 @@ const Header = () => {
       console.error(error);
     }
   };
-
+// Handle search input change
   const handleSearchChange = (event) => {
     setSearchQuery(event?.target?.value);
   };
-
+// Handle Enter key press in search input
   const handleKeyPress = (event) => {
     event.preventDefault();
     if (event?.key === "Enter") {
       navigate(`/searchResults?q=${searchQuery}`);
     }
   };
-
+// Handle search form submission
   const handleSearchSubmit = (event) => {
     navigate(`/searchResults?q=${searchQuery}`);
   };
-
+// Handle cart icon click
   const handleCartClick = () => {
     navigate("/cart");
   };
-
+// Render loader if loading
   if (isLoading) {
     return <></>;
   }
