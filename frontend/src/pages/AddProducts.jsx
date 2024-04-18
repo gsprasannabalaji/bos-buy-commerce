@@ -12,6 +12,8 @@ import {
 import { setNewProduct } from "../features/products/productsSlice";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { setUser } from "../features/user/userSlice";
 import {
   faUpload,
   faTag,
@@ -31,6 +33,8 @@ import {
 const AddProducts = () => {
   const newProductData = useSelector((state) => state?.products?.newProduct);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((state) => state?.user?.user);
 
   const handleChange = (event) => {
     const { name, value } = event?.target;
@@ -58,7 +62,15 @@ const AddProducts = () => {
         { withCredentials: true }
       );
       localStorage.removeItem("userDetails");
-      window.location.reload();
+      dispatch(
+        setUser({
+          ...user,
+          email: "",
+          password: "",
+          isUserValid: false,
+        })
+      );
+      navigate("/login", { replace: true });
     } catch (error) {
       console.error(error);
     }
