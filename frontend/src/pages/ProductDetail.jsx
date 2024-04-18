@@ -32,10 +32,15 @@ const ProductDetail = () => {
         dispatch(setProductDetailsData(results?.data));
         dispatch(setPrimaryImageURL(results?.data?.previewImages?.[0]?.path));
       } catch (error) {
-        dispatch(setToast({
-          message: "Network Failed. Please try again later",
-          variant: "error",
-        }));
+        dispatch(
+          setToast({
+            toast: {
+              message: "Network Failed. Please try again later",
+              variant: "error",
+            },
+            showToast: true,
+          })
+        );
       }
     }
     fetchProductDetails();
@@ -70,6 +75,15 @@ const ProductDetail = () => {
         })
       );
     }
+    dispatch(
+      setToast({
+        toast: {
+          message: "Added to cart",
+          variant: "success",
+        },
+        showToast: true,
+      })
+    );
   };
 
   const getDescriptionAsList = (description) => {
