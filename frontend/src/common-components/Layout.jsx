@@ -5,6 +5,15 @@ import AdminHeader from "./AdminHeader";
 import Header from "./Header";
 import Footer from "./Footer";
 
+/**
+ * Layout component handles the layout structure based on user authentication status and role.
+ * It acts as protected layout which will restrict the user from different routes based on role.
+ * It renders different headers and footers based on the user's role (admin or customer).
+ * 
+ * @param {Object} children - The child components to be rendered within the layout.
+ * @returns {JSX.Element|string} - Returns the JSX element representing the layout structure.
+ */
+
 const Layout = ({ children }) => {
   const { isUserValid, role } = useSelector((state) => state?.user?.user);
   const { isCookieLoading } = useCookieVerifier();
@@ -23,6 +32,7 @@ const Layout = ({ children }) => {
 
   const pattern = /^\/(products\/\w+|searchResults\?(category|q)=.+)$/;
 
+  // Function to check if pathname matches product-related pattern
   const matchesProductPattern = (pathname) => {
     return pattern?.test(pathname);
   };
