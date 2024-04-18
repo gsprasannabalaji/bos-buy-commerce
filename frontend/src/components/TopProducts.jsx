@@ -13,10 +13,11 @@ import Loader from "../common-components/Loader";
  * @returns {JSX.Element} - Returns the JSX element for the TopProducts component.
  */
 const TopProducts = () => {
+  // Select topProducts and isLoading state from Redux store
   const topProducts = useSelector((state) => state?.products?.topProducts);
   const isLoading = useSelector((state) => state?.loader?.isLoading);
   const dispatch = useDispatch();
-
+ // Fetch top products from the backend on component mount
   useEffect(() => {
     (async () => {
       try {
