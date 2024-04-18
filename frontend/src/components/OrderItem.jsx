@@ -24,7 +24,7 @@ const OrderItem = ({ order }) => {
       </Card.Header>
       <ListGroup className="list-group-flush">
         {order.products.map((product, index) => (
-          <ListGroup.Item key={product._id.$oid}>
+          <ListGroup.Item key={index}>
             <ProductItem product={product} />
           </ListGroup.Item>
         ))}

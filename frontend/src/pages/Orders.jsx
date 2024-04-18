@@ -52,7 +52,7 @@ const Orders = () => {
 
   return (
     <Container className="container">
-      <h1>Your Orders</h1>
+      <h2 className="my-3">Your Orders</h2>
       <hr />
       {orders.length > 0 ? (
         orders.map((order) => (

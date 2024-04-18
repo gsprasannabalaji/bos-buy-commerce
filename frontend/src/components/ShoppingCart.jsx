@@ -91,21 +91,21 @@ const ShoppingCart = ({
             <p className="text-capitalize mb-3 fw-bold">Order Summary</p>
             <Col lg={12} className="mb-4">
               <Row>
-                <Col lg={6}>Sub Total</Col>
-                <Col lg={6} className="text-end">
+                <Col xs={6} className="mb-2 mb-lg-0">Sub Total</Col>
+                <Col xs={6} className="text-end">
                   {`$${subTotal}`}
                 </Col>
               </Row>
               <Row>
-                <Col lg={6}>Shipping</Col>
-                <Col lg={6} className="text-end text-success">
+                <Col xs={6}>Shipping</Col>
+                <Col xs={6} className="text-end text-success">
                   Free
                 </Col>
               </Row>
               <hr />
               <Row>
-                <Col lg={6}>Total</Col>
-                <Col lg={6} className="text-end">
+                <Col xs={6}>Total</Col>
+                <Col xs={6} className="text-end">
                   {`$${subTotal}`}
                 </Col>
               </Row>
