@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 dotenv.config();
 
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
-
+// Function to create an order
 const createOrder = async (req, res) => {
   try {
     const orderId = new mongoose.Types.ObjectId();
@@ -33,7 +33,7 @@ const createOrder = async (req, res) => {
     throw err;
   }
 };
-
+// Function to update an order after payment is completed
 exports.updateOrder = async (req) => {
   const { order_id: orderId, session_id } = req?.query;
 
@@ -65,7 +65,7 @@ exports.updateOrder = async (req) => {
     throw err;
   }
 };
-
+// Function to initiate payment using Stripe
 exports.makePayments = async (req) => {
   const line_items = req?.body?.cartItems?.map((item) => {
     return {
