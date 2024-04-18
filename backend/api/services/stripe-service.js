@@ -6,6 +6,66 @@ dotenv.config();
 
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
+const createOrder = async (req, res) => {
+  try {
+    const orderId = new mongoose.Types.ObjectId();
+    const { cartItems = [] } = req?.body;
+    const products = cartItems.map((item) => ({
+      productId: item?.id,
+      quantity: item?.quantity,
+      productName: item?.name,
+      price: item?.price,
+      imageURL: item?.imageURL,
+      description: item?.description,
+    }));
+
+    const newOrder = new Order({
+      orderId,
+      totalPrice: 0,
+      products: products,
+      shippingAddress: null,
+    });
+
+    await newOrder.save();
+
+    return orderId;
+  } catch (err) {
+    throw err;
+  }
+};
+
+exports.updateOrder = async (req) => {
+  const { order_id: orderId, session_id } = req?.query;
+
+  try {
+    const session = await stripe?.checkout?.sessions?.retrieve(session_id);
+    const customer = await stripe?.customers?.retrieve(session?.customer);
+    const paymentIntent = await stripe?.paymentIntents.retrieve(
+      session?.payment_intent
+    );
+
+    const order = await Order?.findOne({ orderId: orderId });
+
+    const {
+      email = "",
+      shipping: { address: shippingAddress = null },
+    } = customer;
+    let updatedObj = {
+      orderId,
+      totalPrice: paymentIntent?.amount / 100,
+      products: order?.products,
+      shippingAddress: shippingAddress,
+      email: email,
+    };
+    await Order.findOneAndUpdate({ orderId: orderId }, updatedObj, {
+      new: true,
+    });
+    return "http://localhost:5173/orders?payment=done";
+  } catch (err) {
+    throw err;
+  }
+};
+
 exports.makePayments = async (req) => {
   const line_items = req?.body?.cartItems?.map((item) => {
     return {
@@ -21,7 +81,7 @@ exports.makePayments = async (req) => {
       quantity: item?.quantity,
     };
   });
-  const encodedBody = encodeURIComponent(JSON.stringify(req.body));
+  const orderId = await createOrder(req);
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     shipping_address_collection: {
@@ -58,55 +118,9 @@ exports.makePayments = async (req) => {
     invoice_creation: {
       enabled: true,
     },
-    success_url: `http://localhost:3002/stripe/Orders?session_id={CHECKOUT_SESSION_ID}&order=${encodedBody}`,
+    success_url: `${DOMAIN_URL}/stripe/updateOrder?session_id={CHECKOUT_SESSION_ID}&order_id=${orderId}`,
     cancel_url: "http://localhost:5173/cart",
   });
 
   return session?.url;
-};
-
-exports.createOrder = async (req, res) => {
-  let { order, session_id } = req.query;
-  try {
-    const session = await stripe?.checkout?.sessions?.retrieve(session_id);
-    const customer = await stripe?.customers?.retrieve(session?.customer);
-    const paymentIntent = await stripe?.paymentIntents.retrieve(
-      session?.payment_intent
-    );
-
-    const orderId = new mongoose.Types.ObjectId();
-    const { cartItems = [] } = JSON?.parse(order);
-    const {
-      email = "",
-      shipping: { address: shippingAddress = null },
-    } = customer;
-    const products = cartItems.map((item) => ({
-      productId: item.id,
-      quantity: item.quantity,
-      productName: item.name,
-      price: item.price,
-      quantity: item.quantity,
-      imageURL: item.imageURL,
-      description: item.description,
-    }));
-    try {
-      const newOrder = new Order({
-        orderId,
-        email,
-        totalPrice: paymentIntent?.amount / 100,
-        products: products,
-        shippingAddress,
-      });
-      try {
-        await newOrder.save();
-      } catch (err) {
-        throw err;
-      }
-      return "http://localhost:5173/orders?payment=done";
-    } catch (err) {
-      throw err;
-    }
-  } catch (err) {
-    throw err;
-  }
 };

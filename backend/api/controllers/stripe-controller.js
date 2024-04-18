@@ -17,3 +17,12 @@ exports.createOrder = async (req, res) => {
         res.redirect("http://localhost:5173/cart");
     }
 }
+
+exports.updateOrder = async (req, res) => {
+    try {
+        const redirectUrl = await stripeService?.updateOrder(req, res);
+        res.redirect(redirectUrl);
+    } catch(error) {
+        res.redirect("http://localhost:5173/cart");
+    }
+}
