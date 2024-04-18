@@ -26,7 +26,7 @@ const ProductCard = ({
 
   return (
     <>
-      <Card className="product-card flex-row mb-4">
+      <Card className="product-card flex-row flex-wrap flex-md-nowrap mb-4">
         <Card.Img src={productImg} className="p-4" />
         <Card.Body>
           <Card.Title><Link to={`/products/${productId}`} className="btn-link">{productName}</Link></Card.Title>
