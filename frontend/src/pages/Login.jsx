@@ -132,7 +132,7 @@ const Login = () => {
                   </Button>
                   <div className="text-center mt-3">
                     New user?{" "}
-                    <Link to="/signup" className="text-primary">
+                    <Link to="/signup" className="login__form__link">
                       Sign up
                     </Link>
                   </div>

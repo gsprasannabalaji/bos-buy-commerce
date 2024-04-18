@@ -21,6 +21,16 @@
                 background-color: darken($greyish-yellow, $hover-darken-percentage);
                 cursor: pointer;
             }
+
+        }
+
+        &__link {
+            color: $primary-blue;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
         }
     }
 

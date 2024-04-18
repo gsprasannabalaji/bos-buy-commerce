@@ -6,6 +6,12 @@ import TopProducts from "../components/TopProducts";
 import banner3 from "../assets/banner3.jpg";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Home component represents the home page of the application.
+ * It displays carousel banners, product categories, and top products.
+ * 
+ * @returns {JSX.Element} - Returns the JSX element for the Home component.
+ */
 const Home = () => {
   const navigate = useNavigate();
   return (

@@ -36,10 +36,15 @@ const SearchResults = () => {
         } catch (error) {
           setTimeout(() => {
             dispatch(setIsLoading(false));
-            dispatch(setToast({
-              message: "Network Failed. Please try again later",
-              variant: "error",
-            }));
+            dispatch(
+              setToast({
+                toast: {
+                  message: "Network Failed. Please try again later",
+                  variant: "error",
+                },
+                showToast: true,
+              })
+            );
           }, 500);
         }
       })();
@@ -63,10 +68,15 @@ const SearchResults = () => {
         } catch (error) {
           setTimeout(() => {
             dispatch(setIsLoading(false));
-            dispatch(setToast({
-              message: "Network Failed. Please try again later",
-              variant: "error",
-            }));
+            dispatch(
+              setToast({
+                toast: {
+                  message: "Network Failed. Please try again later",
+                  variant: "error",
+                },
+                showToast: true,
+              })
+            );
           }, 500);
         }
       })();
@@ -102,6 +112,15 @@ const SearchResults = () => {
         })
       );
     }
+    dispatch(
+      setToast({
+        toast: {
+          message: "Added to cart",
+          variant: "success",
+        },
+        showToast: true,
+      })
+    );
   };
   const headingText = searchParams.get("q")
     ? `Results for ${searchParams.get("q")}`
@@ -115,7 +134,7 @@ const SearchResults = () => {
         <Loader />
       ) : (
         <div className="search-results container">
-          <h2>{headingText}</h2>
+          <h2 className="my-3">{headingText}</h2>
           {productData?.length > 0 ? (
             productData?.map((item, index) => {
               return (
