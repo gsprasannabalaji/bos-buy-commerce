@@ -35,7 +35,7 @@ const AddProducts = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state?.user?.user);
-
+ // Function to handle input change in the form
   const handleChange = (event) => {
     const { name, value } = event?.target;
     if (name === "files") {
@@ -54,7 +54,7 @@ const AddProducts = () => {
       );
     }
   };
-
+// Function to handle user logout
   const handleLogOut = async () => {
     try {
       await axios.get(
@@ -75,7 +75,9 @@ const AddProducts = () => {
       console.error(error);
     }
   };
-
+// Function to handle form submission
+ // Display success toast if product creation is successful
+ // Display error toast if product creation fails
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData();

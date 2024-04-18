@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+// Initial state for the toast slice
 const initialState = {
     toast: {
         message: "",
@@ -7,7 +7,7 @@ const initialState = {
     },
     showToast: false
 }
-
+// Create a Redux slice for managing toast notifications
 export const toastSlice = createSlice({
     name: "toast",
     initialState,
@@ -18,7 +18,7 @@ export const toastSlice = createSlice({
         },
     }
 })
-
+// Export action creator and reducer
 export const { setToast } = toastSlice.actions;
 
 export default toastSlice.reducer;

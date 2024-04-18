@@ -3,7 +3,7 @@ import { Container, Row, Col, Button, Card } from "react-bootstrap";
 import laptopcategory from "../assets/laptop_category.webp";
 import desktopcategory from "../assets/desktop_category.webp";
 import gamingcategory from "../assets/gaming_category.webp";
-
+// Define category data with name, image URL, and path
 const categories = [
   { name: "Laptops", imageUrl: laptopcategory, path: "laptops" },
   { name: "Desktops", imageUrl: desktopcategory, path: "desktops" },
@@ -12,7 +12,7 @@ const categories = [
 
 const ProductCategory = () => {
   let navigate = useNavigate();
-
+// Function to navigate to a specific category
   const navigateToCategory = (category) => {
     navigate(`/searchResults?category=${category}`);
   };

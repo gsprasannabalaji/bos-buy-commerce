@@ -18,7 +18,7 @@ const SearchResults = () => {
   const isLoading = useSelector((state) => state?.loader?.isLoading);
 
   const dispatch = useDispatch();
-
+// Fetching product data based on search query parameters
   useEffect(() => {
     if (queryParams.has("q")) {
       (async () => {
@@ -82,7 +82,7 @@ const SearchResults = () => {
       })();
     }
   }, [searchParams?.get("category")]);
-
+// Handler function to add a product to the cart
   const addToCartHandler = (product) => {
     const isItemsExist = cartItems?.find(
       (item) => item?.id === product?.productId
@@ -122,6 +122,7 @@ const SearchResults = () => {
       })
     );
   };
+  // Determine heading text based on search parameters
   const headingText = searchParams.get("q")
     ? `Results for ${searchParams.get("q")}`
     : searchParams.get("category")

@@ -37,7 +37,7 @@ const AdminHome = () => {
   const [itemsPerPage] = useState(5); // Display 5 items per page
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+// Fetch products on component mount
   useEffect(() => {
     fetchProducts();
   }, []);
@@ -61,17 +61,17 @@ const AdminHome = () => {
       );
     }
   };
-
+// Function to handle edit button click
   const handleEdit = (product) => {
     setEditProduct(product);
     setShowModal(true);
   };
-
+// Function to handle product deletion
   const handleDeleteProduct = (productId) => {
     setProductIdToDelete(productId);
     setShowDeleteModal(true);
   };
-
+// Function to confirm product deletion
   const confirmDelete = async () => {
     if (!productIdToDelete) return;
     try {
@@ -105,15 +105,15 @@ const AdminHome = () => {
     setShowDeleteModal(false);
     setProductIdToDelete(null);
   };
-
+// Function to close modal
   const handleClose = () => setShowModal(false);
   const cancelDelete = () => setShowDeleteModal(false);
-
+// Function to handle input change in the edit form
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setEditProduct((prev) => ({ ...prev, [name]: value }));
   };
-
+// Function to handle user logout
   const handleLogOut = async () => {
     try {
       await axios.get(
@@ -134,7 +134,7 @@ const AdminHome = () => {
       console.error(error);
     }
   };
-
+ // Function to save changes to the edited product
   const handleSaveChanges = async () => {
     if (!editProduct) return;
     try {
@@ -168,20 +168,20 @@ const AdminHome = () => {
       );
     }
   };
-
+// Function to handle search input change
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
     setCurrentPage(1);
   };
-
+// Filtering products based on search term
   const filteredProducts = products.filter(
     (product) =>
       product.productName.toLowerCase().includes(searchTerm) ||
       product.description.toLowerCase().includes(searchTerm)
   );
-
+// Pagination calculation
   const pageCount = Math.ceil(filteredProducts.length / itemsPerPage);
-
+// Generating pagination items
   const paginationItems = Array.from({ length: pageCount }, (_, i) => (
     <Pagination.Item
       key={i + 1}
@@ -191,7 +191,7 @@ const AdminHome = () => {
       {i + 1}
     </Pagination.Item>
   ));
-
+// Rendering table rows
   const renderTableRows = filteredProducts
     .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
     .map((product) => (

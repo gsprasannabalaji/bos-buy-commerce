@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+// Initial state for the products slice
 const initialState = {
   productsList: [],
   productDetailsData: null,
@@ -7,7 +7,7 @@ const initialState = {
   primaryImageURL: null,
   newProduct: null
 };
-
+// Create a Redux slice for managing products state
 export const productsSlice = createSlice({
   name: "products",
   initialState,
@@ -29,7 +29,7 @@ export const productsSlice = createSlice({
     }
   },
 });
-
+// Export action creators and reducer
 export const { setSearchedProducts, setNewProduct, setProductDetailsData, setTopProducts, setPrimaryImageURL } = productsSlice.actions;
 
 export default productsSlice.reducer;

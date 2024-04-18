@@ -4,7 +4,7 @@ const initialState = {
     cartItems: JSON?.parse(localStorage.getItem('cartItems')) || [],
     purchaseLimit: 4
 };
-
+// Create a Redux slice for managing the cart state
 export const cartSlice = createSlice({
     name: 'cartSlice',
     initialState,

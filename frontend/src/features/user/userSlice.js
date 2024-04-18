@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+// Initial state for the user slice
 const initialState = {
     user: {
         email: "",
@@ -9,6 +9,7 @@ const initialState = {
     }
 };
 
+// Create a Redux slice for managing user-related state
 export const userSlice = createSlice({
     name: "user",
     initialState,
@@ -18,7 +19,7 @@ export const userSlice = createSlice({
         },
     }
 })
-
+// Export action creator and reducer
 export const { setUser } = userSlice.actions;
 
 export default userSlice.reducer;

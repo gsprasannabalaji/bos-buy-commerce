@@ -1,8 +1,8 @@
-// ProductItem.js
+
 import React from 'react';
 import { Row, Col, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
+// ProductItem component represents an individual product item
 const ProductItem = ({ product }) => {
   const price = product.price;
   const quantity = product.quantity;

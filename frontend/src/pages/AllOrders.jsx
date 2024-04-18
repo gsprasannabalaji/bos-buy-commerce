@@ -26,11 +26,11 @@ function AllOrders() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state?.user?.user);
-
+// Fetch orders on component mount
   useEffect(() => {
     fetchOrders();
   }, []);
-
+// Function to fetch orders
   const fetchOrders = async () => {
     try {
       const { data } = await axios.get(
@@ -41,7 +41,7 @@ function AllOrders() {
       console.error("Failed to fetch orders:", error);
     }
   };
-
+// Function to handle user logout
   const handleLogOut = async () => {
     try {
       await axios.get(
@@ -62,11 +62,11 @@ function AllOrders() {
       console.error(error);
     }
   };
-
+// Function to handle search input change
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
   };
-
+// Function to render table rows
   const renderTableRows = () => {
     const filteredOrders = orders.filter(
       (order) =>

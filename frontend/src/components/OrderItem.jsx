@@ -1,9 +1,10 @@
-// OrderItem.js
+
 import React from 'react';
 import { Card, ListGroup, Row, Col } from 'react-bootstrap';
-import ProductItem from './ProductItem'; // Import ProductItem component
+import ProductItem from './ProductItem'; 
 
 const OrderItem = ({ order }) => {
+  // Extract order details
   const totalPrice = order?.totalPrice;
   const date = new Date(order?.date).toLocaleDateString();
 

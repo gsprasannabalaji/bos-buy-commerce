@@ -15,7 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setToast } from "./features/toast/toastSlice";
 import "./scss/style.scss";
 import SignUp from "./pages/Signup";
-
+// Create a BrowserRouter instance with route configurations
 const router = createBrowserRouter([
   {
     path: "/",
