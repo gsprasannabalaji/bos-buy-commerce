@@ -3,6 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { setUser } from "../features/user/userSlice";
 
+/**
+ * useCookieVerifier is a custom hook to verify user authentication status and role.
+ * 
+ * @returns {Object} - Returns an object containing isAdminRole, isCookieLoading, and currentUserDetails.
+ */
 const useCookieVerifier = () => {
   const user = useSelector((state) => state?.user?.user);
   const [isAdminRole, setIsAdminRole] = useState(false);

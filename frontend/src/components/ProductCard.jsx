@@ -2,6 +2,18 @@ import Card from "react-bootstrap/Card";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+/**
+ * ProductCard component displays a card representing a product.
+ * 
+ * @param {string} productId - The unique identifier of the product.
+ * @param {string} productName - The name of the product.
+ * @param {string} productImg - The URL of the product image.
+ * @param {Number} productPrice - The price of the product.
+ * @param {Function} handlerClick - Function to handle button click event.
+ * @param {string} btnName - The label for the button.
+ * @param {Object} product - The product object.
+ * @returns {JSX.Element} - Returns the JSX element for the ProductCard component.
+ */
 const ProductCard = ({
   productId,
   productName,

@@ -6,6 +6,16 @@ import {
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
+/**
+ * ShoppingCart component displays the items in the shopping cart and handles checkout functionality.
+ * 
+ * @param {Function} handleCheckout - Function to handle the checkout process.
+ * @param {Function} addToCartHandler - Function to add items to the cart.
+ * @param {Function} removeFromCartHandler - Function to remove items from the cart.
+ * @param {Function} checkQuantityLength - Function to check if cart quantity exceeds a limit.
+ * @param {Function} updatedCartQuantity - Function to update the quantity of an item in the cart.
+ * @returns {JSX.Element} - Returns the JSX element for the ShoppingCart component.
+ */
 const ShoppingCart = ({
   handleCheckout,
   addToCartHandler,

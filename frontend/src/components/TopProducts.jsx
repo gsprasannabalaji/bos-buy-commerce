@@ -7,6 +7,11 @@ import axios from "axios";
 import { setIsLoading } from "../features/loader/loaderSlice";
 import Loader from "../common-components/Loader";
 
+/**
+ * TopProducts component displays a list of top products.
+ * 
+ * @returns {JSX.Element} - Returns the JSX element for the TopProducts component.
+ */
 const TopProducts = () => {
   const topProducts = useSelector((state) => state?.products?.topProducts);
   const isLoading = useSelector((state) => state?.loader?.isLoading);
