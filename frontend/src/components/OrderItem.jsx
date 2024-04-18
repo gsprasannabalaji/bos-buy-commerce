@@ -34,7 +34,7 @@ const OrderItem = ({ order }) => {
               <div>
                 <strong>Delivery Address:</strong>
                 {} {order.shippingAddress?.line1},{order?.shippingAddress?.line2},
-                {order?.shippingAddress?.city},{orde?.shippingAddress?.state},
+                {order?.shippingAddress?.city},{order?.shippingAddress?.state},
                 {order?.shippingAddress?.postal_code}
               </div>
               <div>
