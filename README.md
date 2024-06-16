@@ -3,6 +3,10 @@
 - BOSBuy is a ecommerce website which specialises in selling laptops. Our goal is to make shopping easy, secure, and satisfying, ensuring BOSbuy becomes a trusted name for both tech enthusiasts and everyday users.
 - This web application have two roles (admin & customers).
 
+## Screenshot of Web App
+![BosBuy](https://github.com/gsprasannabalaji/bos-buy-commerce/assets/156258497/98d2ce7d-4027-466a-84ea-e5f0d95b58d6)
+
+
 ## Branching Details
 
 - Main --> This is used for production environment.
